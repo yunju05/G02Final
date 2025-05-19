@@ -12,7 +12,7 @@ st.title("🔊 Study Words with Audio")
 # Path to CSV file
 csv_path = "data/word.csv"
 
-# TTS player
+# TTS playback function
 def play_tts(text, lang="en"):
     tts = gTTS(text=text, lang=lang)
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as fp:
@@ -29,7 +29,7 @@ def play_tts(text, lang="en"):
         """
         st.markdown(audio_html, unsafe_allow_html=True)
 
-# Load word list
+# Load CSV
 if os.path.exists(csv_path):
     df = pd.read_csv(csv_path)
 
@@ -38,16 +38,18 @@ if os.path.exists(csv_path):
     else:
         st.success("✅ Word file loaded successfully!")
 
-        st.markdown("## ✏️ Learn Words")
-        for idx, row in df.iterrows():
-            st.markdown(f"**{row['Word']}** — {row['Meaning']}")
-            col1, col2 = st.columns([1, 1])
-            with col1:
+        tab1, tab2 = st.tabs(["📘 Basic Learning", "🚀 Advanced Practice"])
+
+        with tab1:
+            st.markdown("### Listen and Learn")
+            for idx, row in df.iterrows():
+                st.markdown(f"**{row['Word']}** — {row['Meaning']}")
                 if st.button(f"🔊 Hear Word {idx}", key=f"en_{idx}"):
                     play_tts(row['Word'], lang="en")
-            with col2:
-                if st.button(f"🔊 Hear Meaning {idx}", key=f"ko_{idx}"):
-                    play_tts(row['Meaning'], lang="ko")
-            st.markdown("---")
+                st.markdown("---")
+
+        with tab2:
+            st.markdown("### Advanced Practice (Coming Soon)")
+            st.info("This tab is reserved for more advanced learning tools, such as quizzes or writing practice.")
 else:
     st.error(f"File `{csv_path}` not found. Please make sure it exists.")
