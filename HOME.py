@@ -30,7 +30,7 @@ if "retry_review" not in st.session_state:
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "1. Word list", 
     "2. Listen to the word", 
-    "3. Spelling quiz", 
+    "3. Spelling quiz",
     "4. Meaning Quiz", 
     "5. Review Wrong Answers"
 ])
@@ -99,7 +99,7 @@ with tab4:
     st.markdown("### 🧠 Meaning to Word Quiz")
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
-    if "quiz_word" not in st.session_state or st.session_state.quiz_word is None:
+    if st.session_state.quiz_word is None:
         st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
 
     quiz_word = st.session_state.quiz_word
@@ -108,37 +108,34 @@ with tab4:
 
     st.markdown(f"**What is the English word for:** `{korean}`")
 
-    user_answer = st.text_input("Your answer:", key="quiz_input", value=st.session_state.get("quiz_input", ""))
+    # quiz_input 키로 상태 자동 관리
+    user_answer = st.text_input("Your answer:", key="quiz_input")
 
     if st.button("Submit Answer", key="quiz_submit"):
         if user_answer.strip().lower() == correct_english.strip().lower():
             st.success("✅ Correct!")
-            # 다음 문제로 넘어가기 위해 상태 초기화
             st.session_state.quiz_word = None
-            st.session_state.quiz_input = ""
+            st.session_state["quiz_input"] = ""  # 입력값 초기화
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
             st.session_state.wrong_words.append(quiz_word)
 
     if st.button("▶️ Next Question"):
         st.session_state.quiz_word = None
-        st.session_state.quiz_input = ""
+        st.session_state["quiz_input"] = ""
         st.experimental_rerun()
 
 # Tab 5: Review Wrong Answers
 with tab5:
     st.markdown("### 🔁 Review Your Wrong Answers")
-
     if not st.session_state.wrong_words:
         st.info("🎉 Great job! No wrong answers to review.")
     else:
-        st.write("Here are the words you got wrong:")
-        # 틀린 단어 리스트 보여주기 (중복 없이)
-        unique_wrong = {w['Word']: w['Meaning'] for w in st.session_state.wrong_words}
-        for word, meaning in unique_wrong.items():
-            st.write(f"- **{word}**: {meaning}")
+        # 틀린 단어 리스트 보여주기
+        st.markdown("#### List of Wrong Answers:")
+        for idx, w in enumerate(st.session_state.wrong_words, 1):
+            st.write(f"{idx}. {w['Word']} - {w['Meaning']}")
 
         if st.button("Clear Wrong Answers"):
-            st.session_state.wrong_words = []
-            st.success("All wrong answers cleared!")
-
+            st.session_state.wrong_words.clear()
+            st.experimental_rerun()
