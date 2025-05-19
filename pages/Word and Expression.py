@@ -123,26 +123,14 @@ with tab4:
             st.session_state.quiz_input = ""
         st.experimental_rerun()
 
-
-# Tab 5: Review Wrong Answers
+# Tab 5: Review Your Wrong Answers
 with tab5:
     st.markdown("### 🔁 Review Your Wrong Answers")
+
     if not st.session_state.wrong_words:
         st.info("🎉 Great job! No wrong answers to review.")
     else:
-        # review 변수를 고정
-        if st.session_state.retry_review is None:
-            st.session_state.retry_review = random.choice(st.session_state.wrong_words)
+        # 틀린 단어 리스트를 DataFrame으로 만들어 보여주기
+        wrong_df = pd.DataFrame(st.session_state.wrong_words)
+        st.dataframe(wrong_df[["Word", "Meaning"]], use_container_width=True)
 
-        review = st.session_state.retry_review
-
-        st.markdown(f"**Meaning:** `{review['Meaning']}`")
-        retry_input = st.text_input("Type the correct English word:", key="retry_input")
-
-        if st.button("Check Again"):
-            if retry_input.strip().lower() == review["Word"].strip().lower():
-                st.success("✅ Correct! Well done.")
-                st.session_state.wrong_words.remove(review)
-                st.session_state.retry_review = None  # 문제 해결 후 초기화
-            else:
-                st.warning("❌ That's not quite right. Try again!")
