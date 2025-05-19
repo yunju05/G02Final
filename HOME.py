@@ -8,7 +8,7 @@ image_path = 'https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505
 print("Welcome to our High-Technology English class!")
 
 # GitHub에 업로드된 이미지의 URL
-image_url = 'https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505-e6a1abfa493d'
+image_url = 'https://github.com/yunju05/G02Final/blob/main/images/app.png'
 
 # 이미지 열기
 image = Image.open(image_path)
