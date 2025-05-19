@@ -13,7 +13,7 @@ response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
 # 이미지 표시
-st.image(image, caption='QP for our app', use_container_width=True)
+st.image(image, caption='QP for our app', use_container_width=True, width=300)
 
 
 
