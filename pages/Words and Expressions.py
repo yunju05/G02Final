@@ -6,13 +6,13 @@ import random
 
 st.write("⭐ Word and Expression")
 
-tab1, tab2, tab3, tab4 = st.tabs(["1. Word list", "2. Listen to the word", "3. Spelling quiz", "4. TBA"])
+tab1, tab2, tab3, tab4 = st.tabs(["1. 📃 Word list", "2. 🎵 Listen to the word", "3. 📝 Spelling quiz", "4. TBA"])
 
 ######### TAB 1
 
 
 with tab1:
-  st.markdown("### ⭐ Word and Expression")
+  st.markdown("### 📃 Word list")
 
    # Load CSV from GitHub (update the link below)
   url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
@@ -50,7 +50,7 @@ with tab2:
 ######### TAB 3
 
 with tab3:
-    st.markdown("### 🎧 Listen and Type the Word")
+    st.markdown("### : 📝  Spelling quiz")
     st.caption("Click the button to hear a word. Then type it and press 'Check the answer'.")
 
     # Load CSV
