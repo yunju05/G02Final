@@ -110,15 +110,16 @@ with tab4:
 
     st.write(f"**Korean meaning:** {meaning}")
 
-    user_answer = st.text_input("Your answer:", key="quiz_input", value=st.session_state.quiz_input)
+    # value 인자 제거 (중요)
+    user_answer = st.text_input("Your answer:", key="quiz_input")
 
     if st.button("Check answer"):
         st.session_state.quiz_check_clicked = True
-        st.session_state.quiz_input = user_answer.strip()
+        # 직접 세션 상태를 덮어쓰지 말고 user_answer를 변수로 사용
+        answer_stripped = user_answer.strip()
 
-        if user_answer.strip().lower() == correct_word.lower():
+        if answer_stripped.lower() == correct_word.lower():
             st.success("✅ Correct!")
-            # 맞았으면 틀린 단어 리스트에서 제거
             if correct_word in st.session_state.mistakes:
                 st.session_state.mistakes.remove(correct_word)
         else:
