@@ -1,4 +1,5 @@
 # G02Final
+## Visit: https://g02final.streamlit.app/Sentence
 # Learning goals
 ## 1. Expression & Vocabulary
 Students can learn expression and vocabulary by arranging given words in the correct order. (수정하기)
