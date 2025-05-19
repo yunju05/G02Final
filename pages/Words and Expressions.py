@@ -12,7 +12,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["❄️ 1. Lesson: Word list", "❄️ 2. Acti
 
 
 with tab1:
-  st.markdown("### 📋 Words and Expressions")
+  st.markdown("### 📋 Word and Expression")
 
    # Load CSV from GitHub (update the link below)
   url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
@@ -31,7 +31,7 @@ with tab2:
   
   # --- Load CSV from GitHub ---
 
-  url = "https://github.com/yeeunk28/streamlit25/raw/main/data/word_frequency%20(1).csv"  # ← replace this!
+  url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"  # ← replace this!
   df = pd.read_csv(url)
   
   # --- Dropdown to select word ---
@@ -54,7 +54,7 @@ with tab3:
     st.caption("Click the button to hear a word. Then type it and press 'Check the answer'.")
 
     # Load CSV
-    url = "https://raw.githubusercontent.com/MK316/Digital-Literacy-Class/refs/heads/main/data/word_frequency.csv"  # Replace this!
+    url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"  # Replace this!
     df = pd.read_csv(url)
     word_list = df["Word"].dropna().tolist()
 
