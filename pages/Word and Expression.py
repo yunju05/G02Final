@@ -7,7 +7,6 @@ import random
 st.set_page_config(page_title="Vocabulary App", layout="wide")
 st.write("⭐ Word and Expression")
 
-# Load data
 @st.cache_data
 def load_data():
     url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
@@ -16,32 +15,28 @@ def load_data():
 
 df = load_data()
 
-# Initialize session state variables
 if "wrong_words" not in st.session_state:
     st.session_state.wrong_words = []
 
 if "quiz_word" not in st.session_state:
     st.session_state.quiz_word = None
 
-if "retry_review" not in st.session_state:
-    st.session_state.retry_review = None
+if "quiz_input" not in st.session_state:
+    st.session_state.quiz_input = ""
 
-# Tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "1. Word list", 
-    "2. Listen to the word", 
+    "1. Word list",
+    "2. Listen to the word",
     "3. Spelling quiz",
-    "4. Meaning Quiz", 
+    "4. Meaning Quiz",
     "5. Review Wrong Answers"
 ])
 
-# Tab 1: Word List
 with tab1:
     st.markdown("### ⭐ Word and Expression")
     if st.button("Show Word List"):
         st.dataframe(df, use_container_width=True)
 
-# Tab 2: Listen to word
 with tab2:
     st.title("🎵 Listen to the word")
     st.markdown("## Select a word to hear its pronunciation")
@@ -53,7 +48,6 @@ with tab2:
         audio_fp.seek(0)
         st.audio(audio_fp, format='audio/mp3')
 
-# Tab 3: Spelling practice
 with tab3:
     st.markdown("### 🎧 Listen and Type the Word")
     st.caption("Click the button to hear a word. Then type it and press 'Check the answer'.")
@@ -83,7 +77,8 @@ with tab3:
     if st.session_state.audio_data:
         st.audio(st.session_state.audio_data, format='audio/mp3')
 
-    st.session_state.user_input = st.text_input("Type the word you heard:", value=st.session_state.user_input)
+    # user_input은 st.session_state.user_input 키를 써서 관리
+    st.session_state.user_input = st.text_input("Type the word you heard:", key="user_input", value=st.session_state.user_input)
 
     if st.button("✅ Check the answer"):
         st.session_state.check_clicked = True
@@ -94,12 +89,10 @@ with tab3:
         else:
             st.error("❌ Try again.")
 
-# Tab 4: Meaning to English Quiz
 with tab4:
     st.markdown("### 🧠 Meaning to Word Quiz")
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
-    # 퀴즈 단어 초기화
     if st.session_state.quiz_word is None:
         st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
         st.session_state.quiz_input = ""
@@ -110,18 +103,17 @@ with tab4:
 
     st.markdown(f"**What is the English word for:** `{korean}`")
 
-    user_answer = st.text_input("Your answer:", key="quiz_input", value=st.session_state.quiz_input)
+    # quiz_input 상태로 텍스트 입력 관리
+    st.session_state.quiz_input = st.text_input("Your answer:", key="quiz_input", value=st.session_state.quiz_input)
 
     if st.button("Submit Answer", key="quiz_submit"):
-        if user_answer.strip().lower() == correct_english.strip().lower():
+        if st.session_state.quiz_input.strip().lower() == correct_english.strip().lower():
             st.success("✅ Correct!")
-            # 맞았을 경우 문제 초기화 및 입력란 초기화
             st.session_state.quiz_word = None
             st.session_state.quiz_input = ""
             st.experimental_rerun()
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
-            # 틀린 단어 추가 (중복 방지)
             if quiz_word not in st.session_state.wrong_words:
                 st.session_state.wrong_words.append(quiz_word)
 
@@ -130,7 +122,6 @@ with tab4:
         st.session_state.quiz_input = ""
         st.experimental_rerun()
 
-# Tab 5: Review Your Wrong Answers
 with tab5:
     st.markdown("### 🔁 Review Your Wrong Answers")
 
