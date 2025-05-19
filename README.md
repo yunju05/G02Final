@@ -12,19 +12,86 @@ Moved by these stories, the friends promised to protect the woods and share thei
 ![This is an image](https://github.com/MK316/Digital-Literacy-Class/blob/main/materials/story02.png?raw=true)
 - Image Description: A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees.
 
-# Learning goals
+# 📚 Story-Based Lesson Planning: Sentence Builder App
 
-## 1. Expression & Vocabulary
-Students can learn expression and vocabulary by arranging given words in the correct order. (수정하기)
+---
 
-## 2. Listening
-Students can improve their listening skills by connecting words with their correct pronunciation.
+## 🧠 Lesson Goals
 
-# App description
-## 1. Teacher's perspective
+1. **Expression & Vocabulary**  
+   - Learn and internalize expressions and vocabulary by arranging words in the correct order.  
+   - Associate expressions with illustrations via flashcards.
 
-## 2. Students' perspective
-1) they can listen a sentence from text by using TTS
-2) they can click buttons with words from the sentence are written
-3) they have to arrange words correctly by clicking the buttons
-4) they can use flashcards with illustrations in this app to learn expressions and vocabulary
+2. **Grammar**  
+   - Practice forming grammatically correct sentences through word arrangement tasks.
+
+3. **Listening**  
+   - Improve listening skills by matching spoken sentences with correct word order.
+
+---
+
+## 🧩 Procedure: Story-Based Lesson Flow
+
+**Story Theme Example**: "A Day at the Zoo", "Going to the Market", etc.
+
+---
+
+## 👩‍🏫 App Description: Teacher's Perspective (Step-by-Step)
+
+### 1. Preparation
+- Select/upload a story with relevant expressions and grammar targets.
+- Input sentences from the story into the app.
+- Add visual flashcards for vocabulary.
+- Set word buttons to appear in random order.
+
+### 2. Introduction
+- Present the story context.
+- Show flashcards and explain new expressions.
+- Use TTS to play sentences and model pronunciation.
+
+### 3. Sentence Practice
+- Ask students to listen to a sentence.
+- Guide them to click on shuffled word buttons to form the correct sentence.
+- Provide support as needed.
+
+### 4. Review & Wrap-Up
+- Check students’ sentence construction.
+- Use flashcards to review.
+- Optional: Have students retell the story using what they've learned.
+
+---
+
+## 🧒 App Description: Students' Perspective (Step-by-Step)
+
+### 1. Warm-up
+- View illustrated flashcards and learn key words/expressions.
+
+### 2. Listening Task
+- Tap the **Play** button to hear a sentence.
+- Focus on pronunciation and sentence structure.
+
+### 3. Word Arrangement
+- Tap the shuffled word buttons in the correct order to rebuild the sentence.
+
+### 4. Feedback
+- Receive immediate feedback (Correct / Try again).
+- Replay sentence if needed.
+
+### 5. Vocabulary Review
+- Return to flashcards to reinforce vocabulary.
+- Optionally play mini-games with the same material.
+
+---
+
+## ✅ Key App Features
+
+- ✔️ TTS-based pronunciation playback  
+- ✔️ Sentence reconstruction via interactive word buttons  
+- ✔️ Illustrated flashcards for vocabulary support  
+- ✔️ Real-time feedback  
+- ✔️ Designed for both teacher-led and student-driven learning
+
+---
+
+> Created for **G02Final – Story-based Sentence Builder App**  
+> Suitable for use in digital English learning environments.
