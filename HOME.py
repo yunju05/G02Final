@@ -95,12 +95,33 @@ with tab3:
             st.error("❌ Try again.")
 
 # Tab 4: Meaning to English Quiz
-with tab4:
+import streamlit as st
+import random
+
+# 예시 데이터 (사용자 데이터프레임으로 대체)
+df = [
+    {"Word": "apple", "Meaning": "사과"},
+    {"Word": "banana", "Meaning": "바나나"},
+    {"Word": "cat", "Meaning": "고양이"},
+]
+
+# 세션 상태 초기화 (최상단에 한 번만)
+if "quiz_word" not in st.session_state:
+    st.session_state.quiz_word = None
+
+if "quiz_input" not in st.session_state:
+    st.session_state.quiz_input = ""
+
+if "wrong_words" not in st.session_state:
+    st.session_state.wrong_words = []
+
+with st.container():
     st.markdown("### 🧠 Meaning to Word Quiz")
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
+    # 문제 출제
     if st.session_state.quiz_word is None:
-        st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
+        st.session_state.quiz_word = random.choice(df)
 
     quiz_word = st.session_state.quiz_word
     korean = quiz_word["Meaning"]
@@ -108,22 +129,22 @@ with tab4:
 
     st.markdown(f"**What is the English word for:** `{korean}`")
 
-    # quiz_input 키로 상태 자동 관리
-    user_answer = st.text_input("Your answer:", key="quiz_input")
+    user_answer = st.text_input("Your answer:", value=st.session_state.quiz_input, key="quiz_input")
 
-    if st.button("Submit Answer", key="quiz_submit"):
+    if st.button("Submit Answer"):
         if user_answer.strip().lower() == correct_english.strip().lower():
             st.success("✅ Correct!")
+            # 맞았으면 문제 초기화하고 입력 초기화
             st.session_state.quiz_word = None
-            st.session_state["quiz_input"] = ""  # 입력값 초기화
+            st.session_state.quiz_input = ""
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
             st.session_state.wrong_words.append(quiz_word)
 
-    if st.button("▶️ Next Question"):
+    if st.button("Next Question"):
         st.session_state.quiz_word = None
-        st.session_state["quiz_input"] = ""
-        st.experimental_rerun()
+        st.session_state.quiz_input = ""
+
 
 # Tab 5: Review Wrong Answers
 with tab5:
