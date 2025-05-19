@@ -1,5 +1,7 @@
 # G02Final
 ## App URL: https://g02final.streamlit.app/
+![image](https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505-e6a1abfa493d)
+
 
 # 🌳 The Whispering Woods
 Leo and his friends discovered a path leading to the Whispering Woods, known for the trees that could talk. The locals avoided it, saying it was bewitched, but the adventurous teens couldn’t resist exploring.
