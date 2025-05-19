@@ -25,10 +25,11 @@ def clear_selection():
 # Streamlit interface
 st.markdown("### Arrange the words in the correct order:")
 
-# Create buttons for each word
+# Create buttons for each word that is not yet selected
 for word in words:
-    if st.button(word):
-        select_word(word)
+    if word not in st.session_state.selected_words:
+        if st.button(word):
+            select_word(word)
 
 # Display selected words with enhanced visibility
 st.markdown("### Selected Words:")
