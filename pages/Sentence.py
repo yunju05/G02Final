@@ -1,15 +1,12 @@
 import streamlit as st
 import random
 
-# Correct sentence
+# Correct sentence and shuffled words
 correct_sentence = ["This", "is", "a", "sample", "sentence"]
+words = correct_sentence.copy()
+random.shuffle(words)
 
-# Initialize session state for words
-if 'words' not in st.session_state:
-    st.session_state.words = correct_sentence.copy()
-    random.shuffle(st.session_state.words)
-
-# Initialize session state for selected words
+# Initialize session state
 if 'selected_words' not in st.session_state:
     st.session_state.selected_words = []
 
@@ -29,7 +26,7 @@ def clear_selection():
 st.markdown("### Arrange the words in the correct order:")
 
 # Create buttons for each word
-for word in st.session_state.words:
+for word in words:
     if st.button(word):
         select_word(word)
 
