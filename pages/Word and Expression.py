@@ -16,15 +16,21 @@ def load_data():
 
 df = load_data()
 
-# Initialize session state
+# Initialize session state variables
 if "wrong_words" not in st.session_state:
     st.session_state.wrong_words = []
+
+if "quiz_word" not in st.session_state:
+    st.session_state.quiz_word = None
+
+if "retry_review" not in st.session_state:
+    st.session_state.retry_review = None
 
 # Tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "1. Word list", 
     "2. Listen to the word", 
-    "3. Spelling quiz"", 
+    "3. Spelling quiz",  # 여기 쌍따옴표 오류 수정
     "4. Meaning Quiz", 
     "5. Review Wrong Answers"
 ])
@@ -93,9 +99,11 @@ with tab4:
     st.markdown("### 🧠 Meaning to Word Quiz")
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
-    quiz_word = random.choice(df.to_dict(orient="records"))
-    st.session_state["current_quiz"] = quiz_word
+    # 문제 고정: quiz_word가 없으면 새로 선택
+    if st.session_state.quiz_word is None:
+        st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
 
+    quiz_word = st.session_state.quiz_word
     korean = quiz_word["Meaning"]
     correct_english = quiz_word["Word"]
 
@@ -105,9 +113,12 @@ with tab4:
     if st.button("Submit Answer", key="quiz_submit"):
         if user_answer.strip().lower() == correct_english.strip().lower():
             st.success("✅ Correct!")
+            # 문제를 풀면 새로운 문제로 교체
+            st.session_state.quiz_word = None
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
             st.session_state.wrong_words.append(quiz_word)
+            st.session_state.quiz_word = None
 
 # Tab 5: Review Wrong Answers
 with tab5:
@@ -115,7 +126,12 @@ with tab5:
     if not st.session_state.wrong_words:
         st.info("🎉 Great job! No wrong answers to review.")
     else:
-        review = random.choice(st.session_state.wrong_words)
+        # review 변수를 고정
+        if st.session_state.retry_review is None:
+            st.session_state.retry_review = random.choice(st.session_state.wrong_words)
+
+        review = st.session_state.retry_review
+
         st.markdown(f"**Meaning:** `{review['Meaning']}`")
         retry_input = st.text_input("Type the correct English word:", key="retry_input")
 
@@ -123,5 +139,6 @@ with tab5:
             if retry_input.strip().lower() == review["Word"].strip().lower():
                 st.success("✅ Correct! Well done.")
                 st.session_state.wrong_words.remove(review)
+                st.session_state.retry_review = None  # 문제 해결 후 초기화
             else:
                 st.warning("❌ That's not quite right. Try again!")
