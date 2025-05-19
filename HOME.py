@@ -12,8 +12,5 @@ image_url = 'https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505-
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
-# 이미지 표시
-st.image(image, caption='QP for our app', use_container_width=True, width=300)
-
-
-
+# 이미지 표시 (크기 조절)
+st.image(image, caption='QP for our app', width=400)  # 👈 크기를 줄임
