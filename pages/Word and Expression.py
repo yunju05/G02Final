@@ -130,7 +130,12 @@ with tab5:
     if not st.session_state.wrong_words:
         st.info("🎉 Great job! No wrong answers to review.")
     else:
-        # 틀린 단어 리스트를 DataFrame으로 만들어 보여주기
+        # 틀린 단어 리스트를 DataFrame으로 보여주기
         wrong_df = pd.DataFrame(st.session_state.wrong_words)
         st.dataframe(wrong_df[["Word", "Meaning"]], use_container_width=True)
 
+        # 틀린 단어 초기화 버튼
+        if st.button("Clear Wrong Answers"):
+            st.session_state.wrong_words = []
+            st.success("All wrong answers cleared!")
+            st.experimental_rerun()
