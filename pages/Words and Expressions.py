@@ -4,61 +4,56 @@ from gtts import gTTS
 from io import BytesIO
 import random
 
+st.set_page_config(page_title="Vocabulary App", layout="wide")
 st.write("⭐ Word and Expression")
 
-tab1, tab2, tab3, tab4 = st.tabs(["1. 📃 Word list", "2. 🎵 Listen to the word", "3. 📝 Spelling quiz", "4. TBA"])
+# Load data
+@st.cache_data
+def load_data():
+    url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
+    df = pd.read_csv(url)
+    return df
 
-######### TAB 1
+df = load_data()
 
+# Initialize session state
+if "wrong_words" not in st.session_state:
+    st.session_state.wrong_words = []
 
+# Tabs
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "1. Word list", 
+    "2. Listen to the word", 
+    "3. Spelling quiz"", 
+    "4. Meaning Quiz", 
+    "5. Review Wrong Answers"
+])
+
+# Tab 1: Word List
 with tab1:
-  st.markdown("### 📃 Word list")
+    st.markdown("### ⭐ Word and Expression")
+    if st.button("Show Word List"):
+        st.dataframe(df, use_container_width=True)
 
-   # Load CSV from GitHub (update the link below)
-  url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
-  df = pd.read_csv(url)
-
-    # Show table only when button is clicked
-  if st.button("Show Word List"):
-     st.dataframe(df, use_container_width=True)
-
-
-######### TAB 2 
-
+# Tab 2: Listen to word
 with tab2:
+    st.title("🎵 Listen to the word")
+    st.markdown("## Select a word to hear its pronunciation")
+    selected_word = st.selectbox("Choose a word:", df["Word"].dropna().unique())
+    if selected_word:
+        tts = gTTS(selected_word, lang='en')
+        audio_fp = BytesIO()
+        tts.write_to_fp(audio_fp)
+        audio_fp.seek(0)
+        st.audio(audio_fp, format='audio/mp3')
 
-  st.title("🎵 Listen to the word")
-  
-  # --- Load CSV from GitHub ---
-
-  url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"  # ← replace this!
-  df = pd.read_csv(url)
-  
-  # --- Dropdown to select word ---
-  st.markdown("## Select a word to hear its pronunciation")
-  selected_word = st.selectbox("Choose a word:", df["Word"].dropna().unique())
-  
-  # --- Generate and play audio ---
-  if selected_word:
-      tts = gTTS(selected_word, lang='en')
-      audio_fp = BytesIO()
-      tts.write_to_fp(audio_fp)
-      audio_fp.seek(0)
-      st.audio(audio_fp, format='audio/mp3')
-
-
-######### TAB 3
-
+# Tab 3: Spelling practice
 with tab3:
-    st.markdown("### : 📝  Spelling quiz")
+    st.markdown("### 🎧 Listen and Type the Word")
     st.caption("Click the button to hear a word. Then type it and press 'Check the answer'.")
 
-    # Load CSV
-    url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"  # Replace this!
-    df = pd.read_csv(url)
     word_list = df["Word"].dropna().tolist()
 
-    # Initialize session state variables
     if "current_word" not in st.session_state:
         st.session_state.current_word = None
     if "audio_data" not in st.session_state:
@@ -68,7 +63,6 @@ with tab3:
     if "check_clicked" not in st.session_state:
         st.session_state.check_clicked = False
 
-    # ▶️ Button to select and play a new random word
     if st.button("🔊 Let me listen to a word"):
         st.session_state.current_word = random.choice(word_list)
         st.session_state.user_input = ""
@@ -80,64 +74,54 @@ with tab3:
         audio_fp.seek(0)
         st.session_state.audio_data = audio_fp.read()
 
-    # 🎧 Audio playback
     if st.session_state.audio_data:
         st.audio(st.session_state.audio_data, format='audio/mp3')
 
-    # ✏️ Text input
     st.session_state.user_input = st.text_input("Type the word you heard:", value=st.session_state.user_input)
 
-    # ✅ Check answer button
     if st.button("✅ Check the answer"):
         st.session_state.check_clicked = True
 
-    # 💬 Give feedback only after clicking the check button
     if st.session_state.check_clicked and st.session_state.current_word:
         if st.session_state.user_input.strip().lower() == st.session_state.current_word.lower():
             st.success("✅ Correct!")
         else:
             st.error("❌ Try again.")
 
-######### TAB 4
-
+# Tab 4: Meaning to English Quiz
 with tab4:
     st.markdown("### 🧠 Meaning to Word Quiz")
-    st.caption("A random Korean meaning will be shown. Type the matching English word.")
+    st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
-    # Load CSV
-    url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
-    df = pd.read_csv(url)
+    quiz_word = random.choice(df.to_dict(orient="records"))
+    st.session_state["current_quiz"] = quiz_word
 
-    # Initialize session state
-    if "quiz_meaning" not in st.session_state:
-        st.session_state.quiz_meaning = None
-    if "quiz_answer" not in st.session_state:
-        st.session_state.quiz_answer = None
-    if "quiz_user_input" not in st.session_state:
-        st.session_state.quiz_user_input = ""
-    if "quiz_check_clicked" not in st.session_state:
-        st.session_state.quiz_check_clicked = False
+    korean = quiz_word["Meaning"]
+    correct_english = quiz_word["Word"]
 
-    # 🎲 Generate new quiz
-    if st.button("🎯 New Quiz"):
-        row = df.sample(1).iloc[0]
-        st.session_state.quiz_meaning = row["Meaning"]
-        st.session_state.quiz_answer = row["Word"]
-        st.session_state.quiz_user_input = ""
-        st.session_state.quiz_check_clicked = False
+    st.markdown(f"**What is the English word for:** `{korean}`")
+    user_answer = st.text_input("Your answer:", key="quiz_input")
 
-    # 🧾 Show quiz
-    if st.session_state.quiz_meaning:
-        st.markdown(f"**Korean meaning:** `{st.session_state.quiz_meaning}`")
-        st.session_state.quiz_user_input = st.text_input("Write the English word:", value=st.session_state.quiz_user_input)
+    if st.button("Submit Answer", key="quiz_submit"):
+        if user_answer.strip().lower() == correct_english.strip().lower():
+            st.success("✅ Correct!")
+        else:
+            st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
+            st.session_state.wrong_words.append(quiz_word)
 
-        if st.button("✅ Check answer"):
-            st.session_state.quiz_check_clicked = True
-
-        if st.session_state.quiz_check_clicked:
-            if st.session_state.quiz_user_input.strip().lower() == st.session_state.quiz_answer.lower():
-                st.success("✅ Correct!")
-            else:
-                st.error(f"❌ Incorrect. The correct word was **{st.session_state.quiz_answer}**.")
+# Tab 5: Review Wrong Answers
+with tab5:
+    st.markdown("### 🔁 Review Your Wrong Answers")
+    if not st.session_state.wrong_words:
+        st.info("🎉 Great job! No wrong answers to review.")
     else:
-        st.info("Click '🎯 New Quiz' to start.")
+        review = random.choice(st.session_state.wrong_words)
+        st.markdown(f"**Meaning:** `{review['Meaning']}`")
+        retry_input = st.text_input("Type the correct English word:", key="retry_input")
+
+        if st.button("Check Again"):
+            if retry_input.strip().lower() == review["Word"].strip().lower():
+                st.success("✅ Correct! Well done.")
+                st.session_state.wrong_words.remove(review)
+            else:
+                st.warning("❌ That's not quite right. Try again!")
