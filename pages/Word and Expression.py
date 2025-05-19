@@ -99,7 +99,6 @@ with tab4:
     st.markdown("### 🧠 Meaning to Word Quiz")
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
-    # 문제 고정: quiz_word가 없으면 새로 선택
     if st.session_state.quiz_word is None:
         st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
 
@@ -113,12 +112,16 @@ with tab4:
     if st.button("Submit Answer", key="quiz_submit"):
         if user_answer.strip().lower() == correct_english.strip().lower():
             st.success("✅ Correct!")
-            # 문제를 풀면 새로운 문제로 교체
-            st.session_state.quiz_word = None
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
             st.session_state.wrong_words.append(quiz_word)
-            st.session_state.quiz_word = None
+
+    # 다음 문제 버튼
+    if st.button("▶️ Next Question"):
+        st.session_state.quiz_word = None
+        st.session_state.quiz_input = ""  # 텍스트박스 초기화
+        st.experimental_rerun()  # 페이지 새로고침하여 문제 바뀌도록 함
+
 
 # Tab 5: Review Wrong Answers
 with tab5:
