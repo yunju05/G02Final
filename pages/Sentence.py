@@ -39,4 +39,4 @@ if st.button("Submit"):
 
 if st.button("Clear"):
     clear_selection()
-    st.experimental_rerun()
+    # st.experimental_rerun() is removed, state is cleared without rerun.
