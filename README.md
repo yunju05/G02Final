@@ -14,7 +14,6 @@ Moved by these stories, the friends promised to protect the woods and share thei
 
 # 📚 Story-Based Lesson Planning: Sentence Builder App
 
----
 
 ## 🧠 Lesson Goals
 
@@ -28,13 +27,11 @@ Moved by these stories, the friends promised to protect the woods and share thei
 3. **Listening**  
    - Improve listening skills by matching spoken sentences with correct word order.
 
----
 
 ## 🧩 Procedure: Story-Based Lesson Flow
 
 **Story Theme Example**: "A Day at the Zoo", "Going to the Market", etc.
 
----
 
 ## 👩‍🏫 App Description: Teacher's Perspective (Step-by-Step)
 
@@ -59,7 +56,6 @@ Moved by these stories, the friends promised to protect the woods and share thei
 - Use flashcards to review.
 - Optional: Have students retell the story using what they've learned.
 
----
 
 ## 🧒 App Description: Students' Perspective (Step-by-Step)
 
@@ -81,7 +77,6 @@ Moved by these stories, the friends promised to protect the woods and share thei
 - Return to flashcards to reinforce vocabulary.
 - Optionally play mini-games with the same material.
 
----
 
 ## ✅ Key App Features
 
