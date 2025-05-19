@@ -28,14 +28,21 @@ def select_word(word):
 def submit_answer():
     if st.session_state.selected_words == sentences[st.session_state.current_index]:
         st.success("Correct!")
-        if st.session_state.current_index < len(sentences) - 1:
-            st.session_state.current_index += 1
-            st.session_state.selected_words = []
-        else:
-            st.balloons()
-            st.session_state.quiz_started = False
+        st.session_state.show_options = True
     else:
         st.error("Incorrect. Try again!")
+
+def retry():
+    st.session_state.selected_words = []
+
+def next_problem():
+    if st.session_state.current_index < len(sentences) - 1:
+        st.session_state.current_index += 1
+        st.session_state.selected_words = []
+    else:
+        st.balloons()
+        st.session_state.quiz_started = False
+    st.session_state.show_options = False
 
 def clear_selection():
     st.session_state.selected_words = []
@@ -67,3 +74,8 @@ else:
 
     if st.button("Clear"):
         clear_selection()
+
+    # Show retry and next buttons after a correct answer
+    if 'show_options' in st.session_state and st.session_state.show_options:
+        st.button("Retry", on_click=retry)
+        st.button("Next", on_click=next_problem)
