@@ -99,9 +99,10 @@ with tab4:
     st.markdown("### 🧠 Meaning to Word Quiz")
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
-    # 퀴즈 단어가 없으면 새로 뽑기
-    if st.session_state.get("quiz_word") is None:
+    # 퀴즈 단어 초기화
+    if "quiz_word" not in st.session_state or st.session_state.quiz_word is None:
         st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
+        st.session_state.quiz_input = ""
 
     quiz_word = st.session_state.quiz_word
     korean = quiz_word["Meaning"]
@@ -109,26 +110,22 @@ with tab4:
 
     st.markdown(f"**What is the English word for:** `{korean}`")
 
-    user_answer = st.text_input("Your answer:", key="quiz_input")
+    user_answer = st.text_input("Your answer:", key="quiz_input", value=st.session_state.quiz_input)
 
     if st.button("Submit Answer", key="quiz_submit"):
         if user_answer.strip().lower() == correct_english.strip().lower():
             st.success("✅ Correct!")
-            # 퀴즈 초기화 및 입력란 초기화
+            # 맞았을 경우 문제 초기화 및 입력란 초기화
             st.session_state.quiz_word = None
-            if "quiz_input" in st.session_state:
-                del st.session_state["quiz_input"]
-            st.experimental_rerun()
+            st.session_state.quiz_input = ""
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
             st.session_state.wrong_words.append(quiz_word)
 
     if st.button("▶️ Next Question"):
+        # 다음 문제로 넘어가기
         st.session_state.quiz_word = None
-        if "quiz_input" in st.session_state:
-            del st.session_state["quiz_input"]
-        st.experimental_rerun()
-
+        st.session_state.quiz_input = ""
 
 # Tab 5: Review Your Wrong Answers
 with tab5:
