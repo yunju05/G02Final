@@ -30,7 +30,7 @@ if "retry_review" not in st.session_state:
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "1. Word list", 
     "2. Listen to the word", 
-    "3. Spelling quiz",  # 여기 쌍따옴표 오류 수정
+    "3. Spelling quiz",
     "4. Meaning Quiz", 
     "5. Review Wrong Answers"
 ])
@@ -100,7 +100,7 @@ with tab4:
     st.caption("You will be shown a Korean meaning. Type the correct English word.")
 
     # 퀴즈 단어 초기화
-    if "quiz_word" not in st.session_state or st.session_state.quiz_word is None:
+    if st.session_state.quiz_word is None:
         st.session_state.quiz_word = random.choice(df.to_dict(orient="records"))
         st.session_state.quiz_input = ""
 
@@ -118,14 +118,17 @@ with tab4:
             # 맞았을 경우 문제 초기화 및 입력란 초기화
             st.session_state.quiz_word = None
             st.session_state.quiz_input = ""
+            st.experimental_rerun()
         else:
             st.error(f"❌ Incorrect. The correct answer was: **{correct_english}**")
-            st.session_state.wrong_words.append(quiz_word)
+            # 틀린 단어 추가 (중복 방지)
+            if quiz_word not in st.session_state.wrong_words:
+                st.session_state.wrong_words.append(quiz_word)
 
     if st.button("▶️ Next Question"):
-        # 다음 문제로 넘어가기
         st.session_state.quiz_word = None
         st.session_state.quiz_input = ""
+        st.experimental_rerun()
 
 # Tab 5: Review Your Wrong Answers
 with tab5:
@@ -134,11 +137,9 @@ with tab5:
     if not st.session_state.wrong_words:
         st.info("🎉 Great job! No wrong answers to review.")
     else:
-        # 틀린 단어 리스트를 DataFrame으로 보여주기
         wrong_df = pd.DataFrame(st.session_state.wrong_words)
         st.dataframe(wrong_df[["Word", "Meaning"]], use_container_width=True)
 
-        # 틀린 단어 초기화 버튼
         if st.button("Clear Wrong Answers"):
             st.session_state.wrong_words = []
             st.success("All wrong answers cleared!")
