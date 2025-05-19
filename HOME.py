@@ -11,5 +11,5 @@ image = Image.open(BytesIO(response.content))
 # 이미지 표시
 st.image(image, caption='Your Image Caption', use_column_width=True)
 
-print "Welcome to our High-Technology English class!"
+print("Welcome to our High-Technology English class!")
 
