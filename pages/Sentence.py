@@ -1,12 +1,12 @@
 import streamlit as st
 import random
 
-# 올바른 문장과 무작위로 섞인 단어 리스트를 준비합니다.
+# Correct sentence and shuffled words
 correct_sentence = ["This", "is", "a", "sample", "sentence"]
 words = correct_sentence.copy()
 random.shuffle(words)
 
-# 상태를 위한 session state 초기화
+# Initialize session state
 if 'selected_words' not in st.session_state:
     st.session_state.selected_words = []
 
@@ -22,21 +22,21 @@ def submit_answer():
 def clear_selection():
     st.session_state.selected_words = []
 
-# Streamlit 인터페이스 설정
+# Streamlit interface
 st.markdown("### Arrange the words in the correct order:")
 
-# 각 단어에 대한 버튼 생성
+# Create buttons for each word
 for word in words:
     if st.button(word):
         select_word(word)
 
-# 선택된 단어를 보여줍니다.
-st.text("Selected Words: " + " ".join(st.session_state.selected_words))
+# Display selected words with enhanced visibility
+st.markdown("### Selected Words:")
+st.markdown(f"**{' '.join(st.session_state.selected_words)}**")
 
-# 제출 버튼과 초기화 버튼 생성
+# Create submit and clear buttons
 if st.button("Submit"):
     submit_answer()
 
 if st.button("Clear"):
     clear_selection()
-    # st.experimental_rerun() is removed, state is cleared without rerun.
