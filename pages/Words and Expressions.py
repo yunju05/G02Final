@@ -4,15 +4,15 @@ from gtts import gTTS
 from io import BytesIO
 import random
 
-st.write("🌱 Vocabulary learning")
+st.write("⭐ Word and Expression")
 
-tab1, tab2, tab3, tab4 = st.tabs(["1. Lesson: Word list", "2. Activity: Listen to the word", "3. Spelling practice", "4. TBA"])
+tab1, tab2, tab3, tab4 = st.tabs(["1. Word list", "2. Listen to the word", "3. Spelling quiz", "4. TBA"])
 
 ######### TAB 1
 
 
 with tab1:
-  st.markdown("### 📋 Word and Expression")
+  st.markdown("### ⭐ Word and Expression")
 
    # Load CSV from GitHub (update the link below)
   url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
@@ -27,7 +27,7 @@ with tab1:
 
 with tab2:
 
-  st.title("🔊 Word Pronunciation Practice")
+  st.title("🎵 Listen to the word")
   
   # --- Load CSV from GitHub ---
 
