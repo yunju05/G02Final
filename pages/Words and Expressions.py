@@ -99,5 +99,45 @@ with tab3:
             st.error("❌ Try again.")
 
 ######### TAB 4
+
 with tab4:
-  st.caption("나중에 만들게 :)")
+    st.markdown("### 🧠 Meaning to Word Quiz")
+    st.caption("A random Korean meaning will be shown. Type the matching English word.")
+
+    # Load CSV
+    url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
+    df = pd.read_csv(url)
+
+    # Initialize session state
+    if "quiz_meaning" not in st.session_state:
+        st.session_state.quiz_meaning = None
+    if "quiz_answer" not in st.session_state:
+        st.session_state.quiz_answer = None
+    if "quiz_user_input" not in st.session_state:
+        st.session_state.quiz_user_input = ""
+    if "quiz_check_clicked" not in st.session_state:
+        st.session_state.quiz_check_clicked = False
+
+    # 🎲 Generate new quiz
+    if st.button("🎯 New Quiz"):
+        row = df.sample(1).iloc[0]
+        st.session_state.quiz_meaning = row["Meaning"]
+        st.session_state.quiz_answer = row["Word"]
+        st.session_state.quiz_user_input = ""
+        st.session_state.quiz_check_clicked = False
+
+    # 🧾 Show quiz
+    if st.session_state.quiz_meaning:
+        st.markdown(f"**Korean meaning:** `{st.session_state.quiz_meaning}`")
+        st.session_state.quiz_user_input = st.text_input("Write the English word:", value=st.session_state.quiz_user_input)
+
+        if st.button("✅ Check answer"):
+            st.session_state.quiz_check_clicked = True
+
+        if st.session_state.quiz_check_clicked:
+            if st.session_state.quiz_user_input.strip().lower() == st.session_state.quiz_answer.lower():
+                st.success("✅ Correct!")
+            else:
+                st.error(f"❌ Incorrect. The correct word was **{st.session_state.quiz_answer}**.")
+    else:
+        st.info("Click '🎯 New Quiz' to start.")
