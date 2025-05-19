@@ -97,24 +97,28 @@ with tab3:
                     st.session_state.mistakes.append(st.session_state.current_word)
 
 ######### TAB 4: Quiz (Meaning → English) #########
+
 def check_quiz_answer():
     answer_stripped = st.session_state.quiz_input.strip()
     correct_word = df.iloc[st.session_state.quiz_current_idx]["Word"]
+
     if answer_stripped.lower() == correct_word.lower():
         st.session_state.quiz_feedback = "correct"
         if correct_word in st.session_state.mistakes:
             st.session_state.mistakes.remove(correct_word)
-        # 문제 바꾸기
-        st.session_state.quiz_current_idx = random.randint(0, len(df)-1)
-        st.session_state.quiz_input = ""
     else:
         st.session_state.quiz_feedback = f"wrong: 정답은 '{correct_word}' 입니다."
+        if correct_word not in st.session_state.mistakes:
+            st.session_state.mistakes.append(correct_word)
+
+    # 다음 문제로 넘어가기
+    st.session_state.quiz_current_idx = random.randint(0, len(df)-1)
+    st.session_state.quiz_input = ""
 
 # 초기 상태 변수
 if "quiz_feedback" not in st.session_state:
     st.session_state.quiz_feedback = ""
 
-######### TAB 4: Quiz (Meaning → English) #########
 with tab4:
     st.markdown("### 📝 Write the English word from the Korean meaning")
 
@@ -124,18 +128,16 @@ with tab4:
         st.session_state.quiz_feedback = ""
 
     meaning = df.iloc[st.session_state.quiz_current_idx]["Meaning"]
-    correct_word = df.iloc[st.session_state.quiz_current_idx]["Word"]
 
     st.write(f"**Korean meaning:** {meaning}")
 
-    # on_change 콜백으로 자동 체크
     st.text_input("Your answer:", key="quiz_input", on_change=check_quiz_answer)
 
-    # 피드백 표시
     if st.session_state.quiz_feedback == "correct":
         st.success("✅ Correct! 다음 문제로 넘어갑니다.")
     elif st.session_state.quiz_feedback.startswith("wrong"):
         st.error(st.session_state.quiz_feedback.split(": ")[1])
+
 
 
 ######### TAB 5: Review Mistakes #########
