@@ -45,4 +45,4 @@ for idx, comment in enumerate(st.session_state['comments']):
     st.write(f"{idx + 1}. {comment}")
 
 with tab2:
-    st.writhe(" Let's listen story ")
+    st.write(" Let's listen story ")
