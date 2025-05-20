@@ -1,5 +1,7 @@
 import streamlit as st
 import random
+from gtts import gTTS
+import os
 
 # List of correct sentences
 sentences = [
@@ -16,11 +18,27 @@ if 'selected_words' not in st.session_state:
     st.session_state.selected_words = []
 if 'quiz_started' not in st.session_state:
     st.session_state.quiz_started = False
+if 'show_options' not in st.session_state:
+    st.session_state.show_options = False
 
 def start_quiz():
     st.session_state.quiz_started = True
     st.session_state.current_index = 0
     st.session_state.selected_words = []
+    play_tts()
+
+def play_tts():
+    # Get the current sentence as a string
+    current_sentence = ' '.join(sentences[st.session_state.current_index])
+    # Generate TTS audio
+    tts = gTTS(current_sentence)
+    tts.save("current_sentence.mp3")
+    # Play audio in streamlit
+    audio_file = open("current_sentence.mp3", "rb")
+    audio_bytes = audio_file.read()
+    st.audio(audio_bytes, format="audio/mp3")
+    audio_file.close()
+    os.remove("current_sentence.mp3")
 
 def select_word(word):
     st.session_state.selected_words.append(word)
@@ -39,6 +57,7 @@ def next_problem():
     if st.session_state.current_index < len(sentences) - 1:
         st.session_state.current_index += 1
         st.session_state.selected_words = []
+        play_tts()
     else:
         st.balloons()
         st.session_state.quiz_started = False
