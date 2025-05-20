@@ -4,7 +4,7 @@ import requests
 from io import BytesIO
 
 # GitHub에 업로드된 이미지의 URL
-image_url = 'https://github.com/yourusername/yourrepo/raw/main/path/to/your/image.jpg'
+image_url = 'https://github.com/yunju05/G02Final/blob/main/images/app.png'
 
 # URL에서 이미지 불러오기
 response = requests.get(image_url)
