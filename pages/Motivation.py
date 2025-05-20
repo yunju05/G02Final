@@ -1,4 +1,12 @@
-import streamlit as st
+st.write("Motivation")
+
+tab1, tab2 = st.tabs([
+    "1. Story Guessing ", 
+    "2. Story Listening "
+])
+
+with tap1:
+    import streamlit as st
 url="https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20text%20picture.png"
 st.image(url)
 url1="https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20%EC%9B%8C%EB%93%9C%20%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.png"
@@ -33,3 +41,6 @@ st.text_input("댓글을 입력하세요:", key='comment_input', on_change=add_c
 st.write("### 댓글 목록")
 for idx, comment in enumerate(st.session_state['comments']):
     st.write(f"{idx + 1}. {comment}")
+
+with tap2:
+    st.writhe(" Let's listen story ")
