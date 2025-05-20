@@ -1,3 +1,5 @@
+import streamlit as st
+
 st.write("Motivation")
 
 tab1, tab2 = st.tabs([
