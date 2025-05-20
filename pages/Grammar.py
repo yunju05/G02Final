@@ -5,10 +5,13 @@ import os
 
 # List of correct sentences
 sentences = [
-    ["This", "is", "a", "sample", "sentence"],
-    ["Streamlit", "makes", "apps", "easy", "to", "build"],
-    ["Python", "is", "a", "versatile", "language"],
-    ["Data", "science", "is", "an", "exciting", "field"]
+    ["Leo", "and", "his", "friends", "discovered", "a", "path", "leading", "to", "the", "Whispering", "Woods,", "known", "for", "the", "trees", "that", "could", "talk."],
+    ["The", "locals", "avoided", "it,", "saying", "it", "was", "bewitched,", "but", "the", "adventurous", "teens", "couldn’t", "resist", "exploring."],
+    ["As", "they", "walked", "deeper", "into", "the", "woods,", "the", "trees", "started", "whispering."],
+    ["Each", "tree", "told", "stories", "of", "ancient", "times,", "of", "battles", "fought", "and", "lovers", "separated."],
+    ["The", "trees", "also", "warned", "them", "about", "the", "dangers", "of", "forgetting", "the", "past", "and", "the", "importance", "of", "nature."],
+    ["Moved", "by", "these", "stories,", "the", "friends", "promised", "to", "protect", "the", "woods", "and", "share", "their", "knowledge."],
+    ["They", "left", "the", "woods", "wiser,", "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories,", "ready", "to", "advocate", "for", "its", "preservation."]
 ]
 
 # Initialize session state
