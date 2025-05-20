@@ -44,5 +44,5 @@ st.write("### 댓글 목록")
 for idx, comment in enumerate(st.session_state['comments']):
     st.write(f"{idx + 1}. {comment}")
 
-with tap2:
+with tab2:
     st.writhe(" Let's listen story ")
