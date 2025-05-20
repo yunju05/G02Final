@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.write("Motivation")
+st.write("## Motivation")
 
 url="https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20text%20picture.png"
 st.image(url)
