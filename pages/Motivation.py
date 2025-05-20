@@ -17,8 +17,6 @@ st.image(url1)
 sentence = "Let's guess the content of this story and share it!"
 st.write(sentence)
 
-import streamlit as st
-
 # 초기화: 세션 상태에 'comments'가 없으면 빈 리스트로 초기화
 if 'comments' not in st.session_state:
     st.session_state['comments'] = []
