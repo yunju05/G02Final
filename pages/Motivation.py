@@ -35,4 +35,4 @@ st.write("### 댓글 목록")
 for idx, comment in enumerate(st.session_state['comments']):
     st.write(f"{idx + 1}. {comment}")
 
-st.write("### Let's listening the story")
+st.write("### Let's listening the story!")
