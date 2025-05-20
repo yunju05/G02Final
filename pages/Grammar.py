@@ -69,35 +69,35 @@ def next_problem():
 def clear_selection():
     st.session_state.selected_words = []
 
-# Streamlit interface
+# Streamlit 인터페이스
 if not st.session_state.quiz_started:
     st.button("Start Quiz", on_click=start_quiz)
 else:
-    # Current sentence and shuffled words
+    # 현재 문장과 섞인 단어들
     correct_sentence = sentences[st.session_state.current_index]
     words = correct_sentence.copy()
     random.shuffle(words)
 
     st.markdown("### Arrange the words in the correct order:")
 
-    # Create buttons for each word that is not yet selected
-    for word in words:
+    # 아직 선택되지 않은 각 단어에 대해 버튼 생성
+    for index, word in enumerate(words):
         if word not in st.session_state.selected_words:
-            if st.button(word):
+            if st.button(word, key=f"{word}_{index}"):  # 각 버튼에 고유 키 추가
                 select_word(word)
 
-    # Display selected words with enhanced visibility
+    # 선택된 단어 표시
     st.markdown("### Selected Words:")
     st.markdown(f"**{' '.join(st.session_state.selected_words)}**")
 
-    # Create submit and clear buttons
+    # 제출 및 초기화 버튼 생성
     if st.button("Submit"):
         submit_answer()
 
     if st.button("Clear"):
         clear_selection()
 
-    # Show retry and next buttons after a correct answer
+    # 정답을 맞춘 후 재시도 및 다음 버튼 표시
     if 'show_options' in st.session_state and st.session_state.show_options:
         st.button("Retry", on_click=retry)
         st.button("Next", on_click=next_problem)
