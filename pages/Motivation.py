@@ -7,7 +7,7 @@ tab1, tab2 = st.tabs([
     "2. Story Listening "
 ])
 
-with tap1:
+with tab1:
     import streamlit as st
 url="https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20text%20picture.png"
 st.image(url)
