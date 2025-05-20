@@ -26,7 +26,7 @@ with tab1:
     st.session_state['comment_input'] = ''
     st.text_input("댓글을 입력하세요:", key='comment_input', on_change=add_comment)
     st.write("### 댓글 목록")
-for idx, comment in enumerate(st.session_state['comments']):
+    for idx, comment in enumerate(st.session_state['comments']):
     st.write(f"{idx + 1}. {comment}")
 
 
