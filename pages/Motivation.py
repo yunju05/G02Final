@@ -13,6 +13,17 @@ with tab1:
     url1="https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20%EC%9B%8C%EB%93%9C%20%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.png"
     st.image(url1)
     st.write("Let's guessing the content of this story and share it!")
+    if 'comments' not in st.session_state:
+        st.session_state['comments'] = []
+    comment_input = st.text_input("댓글을 입력하세요:", key="comment_input")
+    if st.button("댓글 남기기"):
+        if comment_input:
+            if somment_inpur.strip().lower() == '댓글'
+            st.session_state['comments'].clear() else:
+
+     
+        
+        
 
 ######### TAB 1: Word List #########
 with tab2:
