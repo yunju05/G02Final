@@ -14,17 +14,23 @@ with tab1:
     st.image(url1)
     st.write("Let's guessing the content of this story and share it!")
     if 'comments' not in st.session_state:
-        st.session_state['comments'] = []
-    comment_input = st.text_input("댓글을 입력하세요:", key="comment_input")
-    if st.button("댓글 남기기"):
-        if comment_input:
-            if somment_inpur.strip().lower() == '댓글'
-            st.session_state['comments'].clear() else:
+    st.session_state['comments'] = []
+    def add_comment():
+    comment_input = st.session_state['comment_input']
+    if comment_input:
+        if comment_input.strip().lower() == '댓글':
+             st.session_state['comments'].clear()
+        else:
 
-     
-        
-        
+    st.session_state['comments'].append(comment_input)
+    st.session_state['comment_input'] = ''
+    st.text_input("댓글을 입력하세요:", key='comment_input', on_change=add_comment)
+    st.write("### 댓글 목록")
+for idx, comment in enumerate(st.session_state['comments']):
+    st.write(f"{idx + 1}. {comment}")
 
+
+            
 ######### TAB 1: Word List #########
 with tab2:
     st.write("Let's listening the story!")
