@@ -4,7 +4,8 @@ st.image(url)
 url1="https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20%EC%9B%8C%EB%93%9C%20%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C.png"
 st.image(url1)
 
-print("##Welcome to our High-Technology English class!")
+sentence = "Let's guess the content of this story and share it."
+st.write(sentence)
 
 import streamlit as st
 
