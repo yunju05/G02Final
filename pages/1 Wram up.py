@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.write("# Motivaiton")
+st.write("# 🍎 Warm up")
 
 # 이미지 URL
 url1 = "https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20text%20picture.png"
@@ -51,7 +51,7 @@ with st.expander("⚙️ Clear all guesses"):
 st.write("### Let's listen to the story!")
 
 def play_audio():
-    st.title("MP3 Audio Player")
+    st.title("##MP3 Audio Player")
 
     # Load and play an MP3 file
     audio_file = open("audio_sample.mp3", "rb")
