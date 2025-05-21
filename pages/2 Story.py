@@ -7,7 +7,7 @@ tab1, tab2 = st.tabs([
 ])
 
 with tab1:
-    st.title("### Let's listen to the story!")
+    st.title("Let's listen to the story!")
 
     def play_audio():
         st.write("Story Audio")
