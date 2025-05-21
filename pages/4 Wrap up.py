@@ -16,7 +16,9 @@ def quiz():
 
     for i, question in enumerate(questions):
         st.write(f"Question {i+1}: {question}")
+        st.markdown("<div style='margin-top:10px; margin-bottom:20px;'>", unsafe_allow_html=True)
         user_answer = st.radio("", ("O", "X"), key=f"question_{i}")
+        st.markdown("</div>", unsafe_allow_html=True)
         user_answers.append(user_answer)
 
     if st.button("Submit Answers"):
@@ -33,4 +35,3 @@ def quiz():
 
 if __name__ == "__main__":
     quiz()
-
