@@ -67,7 +67,7 @@ def clear_selection():
     st.session_state.selected_words = []
 
 # Streamlit UI
-st.title("🧠 Sentence Ordering Quiz")
+st.title("Sentence Ordering Quiz")
 
 if not st.session_state.quiz_started:
     st.write("Click the button below to start the quiz. Listen to the sentence and arrange the words in the correct order.")
@@ -80,9 +80,13 @@ else:
     st.subheader(f"Question {st.session_state.current_index + 1}")
     st.write("Listen to the sentence and rearrange the words below:")
 
-    for index, word in enumerate(words):
+    # 가로로 5개씩 단어 버튼 배치
+    num_cols = 5
+    cols = st.columns(num_cols)
+    for idx, word in enumerate(words):
         if word not in st.session_state.selected_words:
-            if st.button(word, key=f"{word}_{index}"):
+            col_idx = idx % num_cols
+            if cols[col_idx].button(word, key=f"{word}_{idx}"):
                 select_word(word)
 
     st.markdown("**Your Answer:**")
