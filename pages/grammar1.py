@@ -21,11 +21,17 @@ if 'quiz_started' not in st.session_state:
     st.session_state.quiz_started = False
 if 'show_options' not in st.session_state:
     st.session_state.show_options = False
+if 'shuffled_words' not in st.session_state:
+    st.session_state.shuffled_words = []
 
 def start_quiz():
     st.session_state.quiz_started = True
     st.session_state.current_index = 0
     st.session_state.selected_words = []
+    # 문제 시작 시 단어 셔플 초기화
+    st.session_state.shuffled_words = sentences[st.session_state.current_index].copy()
+    random.shuffle(st.session_state.shuffled_words)
+    st.session_state.show_options = False
 
 def play_tts():
     current_sentence = ' '.join(sentences[st.session_state.current_index])
@@ -48,11 +54,16 @@ def submit_answer():
 
 def retry():
     st.session_state.selected_words = []
+    # 선택 초기화시 단어 셔플 유지(초기화 하지 않음)
+    st.session_state.show_options = False
 
 def next_problem():
     if st.session_state.current_index < len(sentences) - 1:
         st.session_state.current_index += 1
         st.session_state.selected_words = []
+        # 다음 문제 단어 새로 셔플
+        st.session_state.shuffled_words = sentences[st.session_state.current_index].copy()
+        random.shuffle(st.session_state.shuffled_words)
     else:
         st.success("Congratulations! You completed all the questions.")
         st.balloons()
@@ -61,6 +72,7 @@ def next_problem():
 
 def clear_selection():
     st.session_state.selected_words = []
+    st.session_state.show_options = False
 
 st.title("Sentence Ordering Quiz")
 
@@ -71,9 +83,8 @@ else:
     audio_bytes = play_tts()
     st.audio(audio_bytes, format="audio/mp3")
 
-    correct_sentence = sentences[st.session_state.current_index]
-    words = correct_sentence.copy()
-    random.shuffle(words)
+    # 이미 셔플된 단어 유지
+    words = st.session_state.shuffled_words
 
     st.subheader(f"Question {st.session_state.current_index + 1}")
     st.write("Listen carefully, then arrange the words:")
@@ -81,12 +92,14 @@ else:
     num_cols = 5
     cols = st.columns(num_cols)
     for idx, word in enumerate(words):
+        # 선택 안 된 단어만 버튼으로 보여줌
         if word not in st.session_state.selected_words:
             col_idx = idx % num_cols
             if cols[col_idx].button(word, key=f"{word}_{idx}"):
                 select_word(word)
 
     st.markdown("**Your Answer:**")
+    # 선택한 단어를 실시간 보여줌
     st.markdown(' '.join(st.session_state.selected_words))
 
     col1, col2 = st.columns(2)
