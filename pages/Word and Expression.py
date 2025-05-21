@@ -40,7 +40,7 @@ if "quiz_input" not in st.session_state:
 if "quiz_check_clicked" not in st.session_state:
     st.session_state.quiz_check_clicked = False
 if "mistakes" not in st.session_state:
-    st.session_state.mistakes = []  # 틀린 단어 리스트, 중복 허용 안 함
+    st.session_state.mistakes = []  # Wrong words list. Disallow duplicate values 
 
 ######### TAB 1: Word List #########
 with tab1:
@@ -68,7 +68,7 @@ with tab3:
     if st.button("🔊 Let me listen to a word"):
         st.session_state.current_word = random.choice(word_list)
         st.session_state.check_clicked = False
-        st.session_state.user_input = ""  # 초기화
+        st.session_state.user_input = ""  # Reset
 
         tts = gTTS(st.session_state.current_word, lang='en')
         audio_fp = BytesIO()
@@ -84,15 +84,15 @@ with tab3:
     if st.button("✅ Check the answer"):
         st.session_state.check_clicked = True
 
-        if st.session_state.current_word:  # 답이 있는 경우에만 체크
+        if st.session_state.current_word:  
             if user_input.strip().lower() == st.session_state.current_word.lower():
                 st.success("✅ Correct!")
-                # 맞췄으면 틀린 단어 리스트에서 제거 (있으면)
+                # If the guessed word is correct, remove it from the wrong word list (if it exists)
                 if st.session_state.current_word in st.session_state.mistakes:
                     st.session_state.mistakes.remove(st.session_state.current_word)
             else:
                 st.error(f"❌ Try again. Correct answer: {st.session_state.current_word}")
-                # 틀린 단어는 중복 없이 저장
+                # Store incorrect words without duplicates
                 if st.session_state.current_word not in st.session_state.mistakes:
                     st.session_state.mistakes.append(st.session_state.current_word)
 
@@ -107,7 +107,7 @@ def check_quiz_answer():
         if correct_word in st.session_state.mistakes:
             st.session_state.mistakes.remove(correct_word)
     else:
-        st.session_state.quiz_feedback = f"wrong: 정답은 '{correct_word}' 입니다."
+        st.session_state.quiz_feedback = f"wrong: The correct answer is '{correct_word}'."
         if correct_word not in st.session_state.mistakes:
             st.session_state.mistakes.append(correct_word)
 
@@ -134,7 +134,7 @@ with tab4:
     st.text_input("Your answer:", key="quiz_input", on_change=check_quiz_answer)
 
     if st.session_state.quiz_feedback == "correct":
-        st.success("✅ Correct! 다음 문제로 넘어갑니다.")
+        st.success("✅ Correct! Let's move on to the next question.")
     elif st.session_state.quiz_feedback.startswith("wrong"):
         st.error(st.session_state.quiz_feedback.split(": ")[1])
 
