@@ -18,8 +18,7 @@ Moved by these stories, the friends promised to protect the woods and share thei
 ## 🧠 Lesson Goals
 
 1. **Expression & Vocabulary**  
-   - Learn and internalize expressions and vocabulary by arranging words in the correct order.  
-   - Associate expressions with illustrations via flashcards.
+   - Learn and internalize expressions and vocabulary via spelling practice and Meaning quiz.
 
 2. **Grammar**  
    - Practice forming grammatically correct sentences through word arrangement tasks.
@@ -28,9 +27,7 @@ Moved by these stories, the friends promised to protect the woods and share thei
    - Improve listening skills by matching spoken sentences with correct word order.
 
 
-## 🧩 Procedure: Story-Based Lesson Flow
-
-**Story Theme Example**: "A Day at the Zoo", "Going to the Market", etc.
+## 🧩 Procedure: Story-Based Lesson Flow (The whispering woods)
 
 
 ## 👩‍🏫 App Description: Teacher's Perspective (Step-by-Step)
@@ -38,12 +35,13 @@ Moved by these stories, the friends promised to protect the woods and share thei
 ### 1. Preparation
 - Select/upload a story with relevant expressions and grammar targets.
 - Input sentences from the story into the app.
-- Add visual flashcards for vocabulary.
+- Add sounds for vocabulary pronunciation.
 - Set word buttons to appear in random order.
+- upload a word cloud and story picture
 
 ### 2. Introduction
-- Present the story context.
-- Show flashcards and explain new expressions.
+- Ask the students to look at the given picture and guess the content of the story.
+- Show wordlist and explain new expressions.
 - Use TTS to play sentences and model pronunciation.
 
 ### 3. Sentence Practice
@@ -52,37 +50,34 @@ Moved by these stories, the friends promised to protect the woods and share thei
 - Provide support as needed.
 
 ### 4. Review & Wrap-Up
-- Check students’ sentence construction.
-- Use flashcards to review.
-- Optional: Have students retell the story using what they've learned.
-
+- Have the groups check with each other to ensure they understand the content.
+- Have the students take an OX quiz.
+- Conduct a story continuation activity.
 
 ## 🧒 App Description: Students' Perspective (Step-by-Step)
 
 ### 1. Warm-up
-- View illustrated flashcards and learn key words/expressions.
+- Look at the given picture, guess the story, and share it.
+- Listen to the story content.
 
-### 2. Listening Task
-- Tap the **Play** button to hear a sentence.
-- Focus on pronunciation and sentence structure.
+### 2. Word and Expression
+- Learn the vocabulary using the wordlist, then do a spelling practice and a meaning quiz.
+- Review the mistakes.
 
-### 3. Word Arrangement
+### 3. Grammar
 - Tap the shuffled word buttons in the correct order to rebuild the sentence.
 
-### 4. Feedback
-- Receive immediate feedback (Correct / Try again).
-- Replay sentence if needed.
+### 4. Wrap up
+- Share with group members what you have understood.
+- Take an OX quiz.
+- Conduct a story continuation activity.
 
-### 5. Vocabulary Review
-- Return to flashcards to reinforce vocabulary.
-- Optionally play mini-games with the same material.
 
 
 ## ✅ Key App Features
 
 - ✔️ TTS-based pronunciation playback  
-- ✔️ Sentence reconstruction via interactive word buttons  
-- ✔️ Illustrated flashcards for vocabulary support  
+- ✔️ Sentence reconstruction via interactive word buttons   
 - ✔️ Real-time feedback  
 - ✔️ Designed for both teacher-led and student-driven learning
 
