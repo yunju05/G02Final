@@ -98,12 +98,28 @@ with tab3:
 
 ######### TAB 4: Quiz (Meaning → English) #########
 
+# 초기 상태 변수 설정
+if "quiz_current_idx" not in st.session_state:
+    st.session_state.quiz_current_idx = None
+if "quiz_input" not in st.session_state:
+    st.session_state.quiz_input = ""
+if "quiz_feedback" not in st.session_state:
+    st.session_state.quiz_feedback = ""
+if "quiz_score" not in st.session_state:
+    st.session_state.quiz_score = 0
+if "quiz_total" not in st.session_state:
+    st.session_state.quiz_total = 0
+
+# 정답 확인 함수
 def check_quiz_answer():
     answer_stripped = st.session_state.quiz_input.strip()
     correct_word = df.iloc[st.session_state.quiz_current_idx]["Word"]
 
+    st.session_state.quiz_total += 1  # 시도 수 증가
+
     if answer_stripped.lower() == correct_word.lower():
         st.session_state.quiz_feedback = "correct"
+        st.session_state.quiz_score += 1  # 정답이면 점수 증가
         if correct_word in st.session_state.mistakes:
             st.session_state.mistakes.remove(correct_word)
     else:
@@ -111,16 +127,14 @@ def check_quiz_answer():
         if correct_word not in st.session_state.mistakes:
             st.session_state.mistakes.append(correct_word)
 
-    # 다음 문제로 넘어가기
+    # 다음 문제로 이동
     st.session_state.quiz_current_idx = random.randint(0, len(df)-1)
     st.session_state.quiz_input = ""
 
-# 초기 상태 변수
-if "quiz_feedback" not in st.session_state:
-    st.session_state.quiz_feedback = ""
-
+# TAB 4: 퀴즈 화면
 with tab4:
     st.markdown("### 📝 Write the English word from the Korean meaning")
+    st.write(f"**📊 Your Score:** {st.session_state.quiz_score} / {st.session_state.quiz_total}")
 
     if st.session_state.quiz_current_idx is None:
         st.session_state.quiz_current_idx = random.randint(0, len(df)-1)
@@ -128,7 +142,6 @@ with tab4:
         st.session_state.quiz_feedback = ""
 
     meaning = df.iloc[st.session_state.quiz_current_idx]["Meaning"]
-
     st.write(f"**Korean meaning:** {meaning}")
 
     st.text_input("Your answer:", key="quiz_input", on_change=check_quiz_answer)
