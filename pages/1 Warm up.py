@@ -48,19 +48,3 @@ with st.expander("⚙️ Clear all guesses"):
     if st.button("🗑️ Delete All Guesses", key="delete_guesses"):
         st.session_state.guess_notes = []
         st.success("All guesses cleared.")
-
-st.write("### Let's listen to the story!")
-
-def play_audio():
-    st.title("Story Audio")
-
-    # URL에서 파일 다운로드
-    url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
-    response = requests.get(url)
-
-    # 오디오 재생
-    st.audio(response.content, format='audio/mp3')
-
-if __name__ == "__main__":
-    play_audio()
-
