@@ -9,10 +9,10 @@ tab1, tab2 = st.tabs([
 ])
 
 with tab1:
-st.write("### Let's listen to the story!")
+st.title("### Let's listen to the story!")
 
 def play_audio():
-    st.title("Story Audio")
+    st.wirte("Story Audio")
 
     # URL에서 파일 다운로드
     url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
