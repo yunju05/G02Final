@@ -1,5 +1,7 @@
 import streamlit as st
 import requests
+from gtts import gTTS
+from io import BytesIO
 
 tab1, tab2 = st.tabs([
     "1. Listening to the story", 
