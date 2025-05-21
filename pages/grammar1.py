@@ -3,7 +3,6 @@ import random
 from gtts import gTTS
 import os
 
-# List of correct sentences
 sentences = [
     ["Leo", "and", "his", "friends", "discovered", "a", "path", "leading", "to", "the", "Whispering", "Woods", ",", "known", "for", "the", "trees", "that", "could", "talk"],
     ["The", "locals", "avoided", "it,", "saying", "it", "was", "bewitched", ",", "but", "the", "adventurous", "teens", "couldn’t", "resist", "exploring"],
@@ -14,7 +13,6 @@ sentences = [
     ["They", "left", "the", "woods", "wiser,", "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories", ",", "ready", "to", "advocate", "for", "its", "preservation"]
 ]
 
-# Initialize session state
 if 'current_index' not in st.session_state:
     st.session_state.current_index = 0
 if 'selected_words' not in st.session_state:
@@ -28,7 +26,6 @@ def start_quiz():
     st.session_state.quiz_started = True
     st.session_state.current_index = 0
     st.session_state.selected_words = []
-    play_tts()
 
 def play_tts():
     current_sentence = ' '.join(sentences[st.session_state.current_index])
@@ -36,8 +33,8 @@ def play_tts():
     tts.save("current_sentence.mp3")
     with open("current_sentence.mp3", "rb") as audio_file:
         audio_bytes = audio_file.read()
-        st.audio(audio_bytes, format="audio/mp3")
     os.remove("current_sentence.mp3")
+    return audio_bytes
 
 def select_word(word):
     st.session_state.selected_words.append(word)
@@ -56,9 +53,8 @@ def next_problem():
     if st.session_state.current_index < len(sentences) - 1:
         st.session_state.current_index += 1
         st.session_state.selected_words = []
-        play_tts()
     else:
-        st.success("Congratulations! You have completed all the questions.")
+        st.success("Congratulations! You completed all the questions.")
         st.balloons()
         st.session_state.quiz_started = False
     st.session_state.show_options = False
@@ -66,21 +62,22 @@ def next_problem():
 def clear_selection():
     st.session_state.selected_words = []
 
-# Streamlit UI
 st.title("Sentence Ordering Quiz")
 
 if not st.session_state.quiz_started:
-    st.write("Click the button below to start the quiz. Listen to the sentence and arrange the words in the correct order.")
+    st.write("Click 'Start Quiz' to begin. Listen to the sentence and arrange the words in the correct order.")
     st.button("Start Quiz", on_click=start_quiz)
 else:
+    audio_bytes = play_tts()
+    st.audio(audio_bytes, format="audio/mp3")
+
     correct_sentence = sentences[st.session_state.current_index]
     words = correct_sentence.copy()
     random.shuffle(words)
 
     st.subheader(f"Question {st.session_state.current_index + 1}")
-    st.write("Listen to the sentence and rearrange the words below:")
+    st.write("Listen carefully, then arrange the words:")
 
-    # 가로로 5개씩 단어 버튼 배치
     num_cols = 5
     cols = st.columns(num_cols)
     for idx, word in enumerate(words):
