@@ -1,7 +1,7 @@
 import streamlit as st
 
 def quiz():
-    st.title("OX Quiz on the Whispering Woods Story")
+    st.title("# ⭕✖️ Quiz on the Story")
 
     questions = [
         "Leo and his friends decided to explore the Whispering Woods because they were known for their beautiful scenery.",
