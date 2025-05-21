@@ -44,11 +44,6 @@ def play_tts():
 def select_word(word):
     st.session_state.selected_words.append(word)
 
-def remove_word(idx):
-    # idx 위치의 단어 제거
-    if 0 <= idx < len(st.session_state.selected_words):
-        st.session_state.selected_words.pop(idx)
-
 def submit_answer():
     if st.session_state.selected_words == sentences[st.session_state.current_index]:
         st.success("Correct! Good job.")
@@ -66,11 +61,11 @@ def next_problem():
         st.session_state.selected_words = []
         st.session_state.shuffled_words = sentences[st.session_state.current_index].copy()
         random.shuffle(st.session_state.shuffled_words)
-        st.session_state.show_options = False
     else:
         st.success("Congratulations! You completed all the questions.")
         st.balloons()
-        st.session_state.quiz_started = False
+        st.quiz_started = False
+    st.session_state.show_options = False
 
 def clear_selection():
     st.session_state.selected_words = []
@@ -98,13 +93,8 @@ else:
             if cols[col_idx].button(word, key=f"{word}_{idx}"):
                 select_word(word)
 
-    st.markdown("**Your Answer (click a word to remove it):**")
-
-    # 선택한 단어들을 버튼으로 표시해서 클릭 시 제거 가능하게 함
-    selected_cols = st.columns(len(st.session_state.selected_words) or 1)
-    for i, word in enumerate(st.session_state.selected_words):
-        if selected_cols[i].button(word, key=f"selected_{i}"):
-            remove_word(i)
+    st.markdown("**Your Answer:**")
+    st.markdown(' '.join(st.session_state.selected_words))
 
     col1, col2, col3 = st.columns([1,1,1])
     with col1:
@@ -112,6 +102,7 @@ else:
     with col2:
         st.button("Clear", on_click=clear_selection)
     with col3:
+        # 틀려도 넘어가는 Skip 버튼
         st.button("Skip", on_click=next_problem)
 
     if st.session_state.show_options:
