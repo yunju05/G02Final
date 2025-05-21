@@ -11,7 +11,7 @@ response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
 # 큰 글씨로 텍스트 표시
-st.markdown("# Welcome to our High-Technology English class!")
+st.markdown("# Welcome to Our Digital English class!")
 
 # 이미지 표시
 st.image(image, caption='Image from GitHub', use_container_width=True)
