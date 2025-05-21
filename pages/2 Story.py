@@ -1,11 +1,12 @@
 import streamlit as st
+import requests
 
 tab1, tab2 = st.tabs([
     "1. Listening to the story", 
     "2. reading the story",
 ])
 
-with tab1
+with tab1:
 st.write("### Let's listen to the story!")
 
 def play_audio():
