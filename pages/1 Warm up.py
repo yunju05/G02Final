@@ -52,7 +52,7 @@ with st.expander("⚙️ Clear all guesses"):
 st.write("### Let's listen to the story!")
 
 def play_audio():
-    st.title("Listen to the story first!")
+    st.title("Story Audio")
 
     # URL에서 파일 다운로드
     url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
