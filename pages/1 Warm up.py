@@ -53,11 +53,12 @@ st.write("### Let's listen to the story!")
 def play_audio():
     st.title("## MP3 Audio Player")
 
-    # Load and play an MP3 file
-    audio_file = open("https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3.mp3", "rb")
-    audio_bytes = audio_file.read()
+    # URL에서 파일 다운로드
+    url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
+    response = requests.get(url)
 
-    st.audio(audio_bytes, format='audio/mp3')
+    # 오디오 재생
+    st.audio(response.content, format='audio/mp3')
 
 if __name__ == "__main__":
     play_audio()
