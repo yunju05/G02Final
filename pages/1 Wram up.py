@@ -51,7 +51,7 @@ with st.expander("⚙️ Clear all guesses"):
 st.write("### Let's listen to the story!")
 
 def play_audio():
-    st.title("##MP3 Audio Player")
+    st.title("## MP3 Audio Player")
 
     # Load and play an MP3 file
     audio_file = open("audio_sample.mp3", "rb")
