@@ -4,7 +4,7 @@ from gtts import gTTS
 from io import BytesIO
 import random
 
-st.write("🌱 Vocabulary learning")
+st.write("⭐ Vocabulary learning")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "1. Lesson: Word list", 
@@ -44,13 +44,13 @@ if "mistakes" not in st.session_state:
 
 ######### TAB 1: Word List #########
 with tab1:
-    st.markdown("### 📋 Word and Expression")
+    st.markdown("### 🔠 Word and Expression")
     if st.button("Show Word List"):
         st.dataframe(df, use_container_width=True)
 
 ######### TAB 2: Listen to word #########
 with tab2:
-    st.title("🔊 Word Pronunciation Practice")
+    st.title("🎧 Word Pronunciation Practice")
     selected_word = st.selectbox("Choose a word to hear:", word_list)
 
     if selected_word:
