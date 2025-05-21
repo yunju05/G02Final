@@ -14,7 +14,7 @@ st.markdown(
     f"""
     <div style="text-align: center;">
         <img src="{image_url}" alt="GitHub Image" style="width:60%;">
-        <p style="font-size: 16px; color: gray;">Image from GitHub</p>
+        <p style="font-size: 16px; color: gray;">Digital class QR</p>
     </div>
     """,
     unsafe_allow_html=True
