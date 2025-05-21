@@ -1,17 +1,21 @@
-import streamlit as st
 from PIL import Image
 import requests
 from io import BytesIO
+import streamlit as st
 
-# GitHub에 업로드된 이미지의 URL
 image_url = 'https://github.com/yunju05/G02Final/raw/main/images/app.png'
-
-# URL에서 이미지 불러오기
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
-# 큰 글씨로 텍스트 표시
 st.markdown("# Welcome to Our Digital English class!")
 
-# 이미지 표시
-st.image(image, caption='Image from GitHub', use_container_width=True)
+# HTML로 이미지 크기 조절 (예: 가로 60%)
+st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <img src="{image_url}" alt="GitHub Image" style="width:60%;">
+        <p style="font-size: 16px; color: gray;">Image from GitHub</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
