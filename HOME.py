@@ -7,7 +7,7 @@ image_url = 'https://github.com/yunju05/G02Final/raw/main/images/app.png'
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
-st.markdown(" Welcome to Our Digital English class!")
+st.markdown("# Welcome to Our Digital English class!")
 
 # HTML로 이미지 크기 조절 (예: 가로 60%)
 st.markdown(
