@@ -28,7 +28,7 @@ if "guess_notes" not in st.session_state:
 
 # Form to add new guesses
 with st.form("guess_form", clear_on_submit=True):
-    new_guess = st.text_area("💭 Add a new guess or theory:", height=100)
+    new_guess = st.text_area("💭 Add a new guess:", height=100)
     submitted = st.form_submit_button("➕ Add")
 
     if submitted and new_guess.strip():
