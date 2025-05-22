@@ -2,12 +2,6 @@ import streamlit as st
 import requests
 
 st.write("# 🍎 Warm up")
-st.write("# Look at the picture and the word cloud below.")
-st.write("Can you guess what today’s story is about?")
-st.write("Think about the setting, the characters, or the main events.")
-st.write("Write down your ideas!")
-
-
 
 
 # 이미지 URL
