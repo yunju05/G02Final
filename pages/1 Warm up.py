@@ -2,6 +2,10 @@ import streamlit as st
 import requests
 
 st.write("# 🍎 Warm up")
+st.write("## Look at the picture and the word cloud below.")  
+st.write("Can you guess what today’s story is about?  Think about the setting, the characters, or the main events.  Write down your ideas!")
+
+
 
 # 이미지 URL
 url1 = "https://github.com/yunju05/G02Final/raw/main/images/%EB%94%94%EB%A6%AC%20text%20picture.png"
