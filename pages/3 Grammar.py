@@ -3,22 +3,6 @@ import random
 from gtts import gTTS
 import os
 
-tab1, tab2 = st.tabs([
-    "1. Grammar",
-    "2. Quiz",
-])
-
-with tab1:
-    st.title("Grammar")
-    pass 
-
-
-
-
-
-
-with tab2:
-    st.title("Quiz")
 
 sentences = [
     ["Leo", "and", "his", "friends", "discovered", "a", "path", "leading", "to", "the", "Whispering", "Woods", ",", "known", "for", "the", "trees", "that", "could", "talk"],
