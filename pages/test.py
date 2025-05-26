@@ -18,14 +18,14 @@ for i, text in enumerate(texts):
     
     # JavaScript를 사용하여 텍스트 클릭 이벤트 추가
     st.markdown(f"""
+        <audio id="audio{i}" style="display:none;">
+            <source src="http://localhost:8501/{filename}" type="audio/mp3">
+        </audio>
         <script>
         function playAudio{i}() {{
-            var audio = new Audio('http://localhost:8501/{filename}');
+            var audio = document.getElementById('audio{i}');
             audio.play();
         }}
         </script>
         <p onclick="playAudio{i}()" style="cursor: pointer; color: blue;">{text}</p>
     """, unsafe_allow_html=True)
-
-    # 오디오 재생
-    st.audio(filename, format="audio/mp3")
