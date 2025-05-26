@@ -27,5 +27,5 @@ for i, text in enumerate(texts):
             audio.play();
         }}
         </script>
-        <p onclick="playAudio{i}()" style="cursor: pointer; color: blue;">{text}</p>
+        <p onclick="playAudio{i}()" style="cursor: pointer; color: black;">{text}</p>
     """, unsafe_allow_html=True)
