@@ -10,6 +10,7 @@ tab1, tab2 = st.tabs([
 
 with tab1:
     st.title("Grammar")
+    pass 
 
 
 
