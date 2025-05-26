@@ -2,3 +2,6 @@ streamlit
 gtts
 pandas
 vosk
+deepspeech
+numpy
+soundfile
