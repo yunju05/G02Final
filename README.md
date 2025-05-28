@@ -1,5 +1,6 @@
-# G02Final
+# Lesson Planning with customized apps
 
++ Prepared by Group 2
 + [App URL](https://g02final.streamlit.app/)
 + [Github link](https://github.com/yunju05/G02Final)
 
