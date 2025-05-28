@@ -1,9 +1,11 @@
 # G02Final
-### App URL: https://g02final.streamlit.app/
+
++ [App URL](https://g02final.streamlit.app/)
 
 <img src="https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505-e6a1abfa493d" alt="image" width="300" height="300">
 
-### https://github.com/yunju05/G02Final
++ [Github link](https://github.com/yunju05/G02Final)
+  
 # 📚 Story-Based Lesson Planning: Sentence Builder App
 
 
