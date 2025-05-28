@@ -3,7 +3,7 @@ import numpy as np
 
 # 퍼즐 정의
 words = {
-    'PYTHON': {'direction': 'across', 'row': 0, 'col': 1},
+    'PYTHON': {'direction': 'across', 'row': 1, 'col': 1},
     'STREAMLIT': {'direction': 'down', 'row': 0, 'col': 3},
     'CODE': {'direction': 'down', 'row': 0, 'col': 4},
 }
