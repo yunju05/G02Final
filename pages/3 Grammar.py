@@ -12,4 +12,4 @@ with tab1:
 
 with tab2:
     st.header("🔁 동명사 탭 내용 작성하세요")
-     st.markdown("Write here.")
+    st.markdown("Write here.")
