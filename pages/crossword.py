@@ -5,7 +5,7 @@ import numpy as np
 words = {
     'PYTHON': {'direction': 'across', 'row': 0, 'col': 1},
     'STREAMLIT': {'direction': 'down', 'row': 0, 'col': 3},
-    'CODE': {'direction': 'across', 'row': 3, 'col': 1},
+    'CODE': {'direction': 'down', 'row': 2, 'col': 4},
 }
 
 # 그리드 생성
