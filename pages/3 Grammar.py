@@ -7,7 +7,9 @@ tab1, tab = st.tabs(["Passive Voice", "동명사"])
 
 with tab1:
     st.header("🧠 What is Passive Voice?")
+    st.markdown("Write here.")
  
 
 with tab2:
     st.header("🔁 동명사 탭 내용 작성하세요")
+     st.markdown("Write here.")
