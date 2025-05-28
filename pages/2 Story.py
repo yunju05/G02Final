@@ -1,12 +1,6 @@
 import streamlit as st
 import requests
 
-tab1, tab2 = st.tabs([
-    "1. Listening to the story", 
-    "2. Reading the story",
-])
-
-with tab1:
     st.title("Story Audio")
 
     def play_audio():
@@ -22,7 +16,6 @@ with tab1:
     if __name__ == "__main__":
         play_audio()
 
-with tab2:
     st.markdown("### 🌳 The Whispering Woods")
     st.markdown("""
     Leo and his friends discovered a path leading to the Whispering Woods, known for the trees that could talk. The locals avoided it, saying it was bewitched, but the adventurous teens couldn’t resist exploring.
