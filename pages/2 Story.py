@@ -1,20 +1,20 @@
 import streamlit as st
 import requests
 
+st.title("Listen and Read")
 
-title. st "Listen and read"
-    def play_audio():
-        st.write("Let's listen to the story!")
+def play_audio():
+    st.write("Let's listen to the story!")
 
-        # URL에서 파일 다운로드
-        url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
-        response = requests.get(url)
+    # URL에서 파일 다운로드
+    url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
+    response = requests.get(url)
 
-        # 오디오 재생
-        st.audio(response.content, format='audio/mp3')
+    # 오디오 재생
+    st.audio(response.content, format='audio/mp3')
 
-    if __name__ == "__main__":
-        play_audio()
+if __name__ == "__main__":
+    play_audio()
 
     st.markdown("### 🌳 The Whispering Woods")
     st.markdown("""
@@ -24,4 +24,8 @@ title. st "Listen and read"
 
     Moved by these stories, the friends promised to protect the woods and share their knowledge. They left the woods wiser, with a deeper respect for nature and its untold stories, ready to advocate for its preservation.
     """)
-    st.image("https://github.com/MK316/Digital-Literacy-Class/blob/main/materials/story02.png?raw=true", caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees.")
+    
+    st.image(
+        "https://github.com/MK316/Digital-Literacy-Class/blob/main/materials/story02.png?raw=true", 
+        caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees."
+    )
