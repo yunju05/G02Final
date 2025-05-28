@@ -4,7 +4,7 @@ import requests
 st.title("Listen and Read")
 
 def play_audio():
-    st.write("Let's listen to the story!")
+    st.write("Click to play an audio")
 
     # URL에서 파일 다운로드
     url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
