@@ -19,3 +19,18 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+
+st.markdown("""
+## 📚 About This Class
+
+Welcome to our **Digital English Class**!  
+This is a smart learning space where we combine language learning with technology.  
+Here, you’ll find interactive activities, games, and materials to help you improve your English skills — anytime, anywhere.
+
+🔹 **How to start:**  
+Simply scan the QR code above to enter the class homepage.  
+Each section will guide you through different learning modules step-by-step.
+
+💡 Don't forget to bookmark this page for future access. Let's make learning fun and engaging together!
+""")
