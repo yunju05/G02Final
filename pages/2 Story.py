@@ -1,8 +1,6 @@
 import streamlit as st
 import requests
 
-    st.title("Story Audio")
-
     def play_audio():
         st.write("Let's listen to the story!")
 
