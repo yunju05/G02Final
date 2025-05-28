@@ -4,7 +4,7 @@
 + [Github link](https://github.com/yunju05/G02Final)
 
   
-<img src="https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505-e6a1abfa493d" alt="image" width="300" height="300">
+<img src="https://github.com/user-attachments/assets/3a4f3c17-aa5b-427a-a505-e6a1abfa493d" alt="image" width="200" height="200">
 
 
   
