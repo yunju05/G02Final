@@ -42,13 +42,13 @@ if "quiz_check_clicked" not in st.session_state:
 if "mistakes" not in st.session_state:
     st.session_state.mistakes = []  # Wrong words list. Disallow duplicate values 
 
-######### TAB 1: Word List #########
+######### TAB 1: 📋Word List #########
 with tab1:
     st.markdown("### 🔠 Word and Expression")
     if st.button("Show Word List"):
         st.dataframe(df, use_container_width=True)
 
-######### TAB 2: Listen to word #########
+######### TAB 2: 🔈Listen to word #########
 with tab2:
     st.title("🎧 Word Pronunciation Practice")
     selected_word = st.selectbox("Choose a word to hear:", word_list)
@@ -60,7 +60,7 @@ with tab2:
         audio_fp.seek(0)
         st.audio(audio_fp, format='audio/mp3')
 
-######### TAB 3: Spelling Practice #########
+######### TAB 3: ✏️Spelling Practice #########
 with tab3:
     st.markdown("### 🎧 Listen and Type the Word")
     st.caption("Click the button to hear a word. Then type it and press 'Check the answer'.")
@@ -96,7 +96,7 @@ with tab3:
                 if st.session_state.current_word not in st.session_state.mistakes:
                     st.session_state.mistakes.append(st.session_state.current_word)
 
-######### TAB 4: Quiz (Meaning → English) #########
+######### TAB 4: 🔎Quiz (Meaning → English) #########
 
 # 초기 상태 변수 설정
 if "quiz_current_idx" not in st.session_state:
