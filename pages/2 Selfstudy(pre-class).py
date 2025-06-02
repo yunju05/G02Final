@@ -168,8 +168,8 @@ with tab5:
     </style>
     """, unsafe_allow_html=True)
 
-    st.title("가로세로 퍼즐")
-    st.markdown("### 🧩 Please enter ther alphabet in the box below.")
+    st.title("Crossword puzzle")
+    st.markdown("### 🧩 Please enter the alphabet in the box below.")
 
     words = {
         'PYTHON': {'direction': 'across', 'row': 1, 'col': 0},
