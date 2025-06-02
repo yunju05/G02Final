@@ -30,6 +30,8 @@ if __name__ == "__main__":
         caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees."
     )
 
+pip install streamlit streamlit-drawable-canvas
+
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
