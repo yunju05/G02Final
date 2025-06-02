@@ -8,10 +8,10 @@ import random
 st.write("⭐ Vocabulary learning")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "1. 📋Lesson: Word list", 
-    "2. 🔈Activity: Listen to the word", 
+    "1. 📋Word list", 
+    "2. 🔈Listen to the word", 
     "3. ✏️Spelling practice", 
-    "4. 🔎Quiz: Korean meaning → English", 
+    "4. 🔎Quiz", 
     "5. 🧩Crossword"
 ])
 
