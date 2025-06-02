@@ -40,11 +40,19 @@ with tab1:
 with tab2:
     st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
 
+   import streamlit as st
+from streamlit_drawable_canvas import st_canvas
+import numpy as np
+
+def main():
+    st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
+
+    # 사용자 입력 위젯
     stroke_width = st.slider("선 굵기", min_value=1, max_value=25, value=5)
     stroke_color = st.color_picker("선 색깔", "#000000")
 
     canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",
+        fill_color="rgba(255, 165, 0, 0.3)",  # 투명 오렌지색 배경
         stroke_width=stroke_width,
         stroke_color=stroke_color,
         background_color="#eeeeee",
@@ -57,3 +65,6 @@ with tab2:
     if canvas_result.image_data is not None:
         img = canvas_result.image_data.astype(np.uint8)
         st.image(img)
+
+if __name__ == "__main__":
+    main()
