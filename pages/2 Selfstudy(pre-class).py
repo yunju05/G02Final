@@ -8,11 +8,11 @@ import random
 st.write("⭐ Vocabulary learning")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "1. Lesson: Word list", 
-    "2. Activity: Listen to the word", 
-    "3. Spelling practice", 
-    "4. Quiz: Korean meaning → English", 
-    "5. Crossword"
+    "1. 📋Lesson: Word list", 
+    "2. 🔈Activity: Listen to the word", 
+    "3. ✏️Spelling practice", 
+    "4. 🔎Quiz: Korean meaning → English", 
+    "5. 🧩Crossword"
 ])
 
 # Load CSV once at the start to avoid repetition
@@ -169,7 +169,7 @@ with tab5:
     """, unsafe_allow_html=True)
 
     st.title("가로세로 퍼즐")
-    st.markdown("### 🧩 아래 칸에 알파벳을 입력하세요")
+    st.markdown("### 🧩 Please enter ther alphabet in the box below.")
 
     words = {
         'PYTHON': {'direction': 'across', 'row': 1, 'col': 0},
@@ -215,9 +215,9 @@ with tab5:
                 if grid[row_index, col_index] != '' and grid[row_index, col_index] != user_grid[row_index, col_index]:
                     correct = False
         if correct:
-            st.success("정답입니다!")
+            st.success("That's correct!")
         else:
-            st.error("틀렸습니다. 다시 시도해보세요.")
+            st.error("That's wrong. Try again.")
 
     st.subheader("힌트 (Hints)")
     for word, props in words.items():
