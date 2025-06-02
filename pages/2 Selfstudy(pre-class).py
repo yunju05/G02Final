@@ -157,32 +157,58 @@ with tab4:
 with tab5:
     st.markdown("### 🧩 Crossword Puzzle")
 
-    # 사용자가 선택할 단어 수 (기본값: 5)
-    num_words = st.slider("단어 개수 선택", min_value=3, max_value=10, value=5)
+    import streamlit as st
+import numpy as np
 
-    # 무작위 단어 선택
-    selected_words = random.sample(word_list, num_words)
+# 퍼즐 정의
+words = {
+    'PYTHON': {'direction': 'across', 'row': 1, 'col': 0},
+    'STREAMLIT': {'direction': 'down', 'row': 0, 'col': 2},
+    'CODE': {'direction': 'down', 'row': 0, 'col': 4},
+}
 
-    st.write("**힌트 (뜻):**")
-    for idx, word in enumerate(selected_words, 1):
-        meaning = df.loc[df["Word"] == word, "Meaning"].values[0]
-        st.write(f"{idx}. {meaning}")
+# 그리드 생성
+grid_size = 10
+grid = np.full((grid_size, grid_size), '', dtype=str)
 
-    st.write("아래 빈칸에 알맞은 영어 단어를 써보세요:")
+# 단어를 그리드에 배치
+for word, props in words.items():
+    row, col = props['row'], props['col']
+    if props['direction'] == 'across':
+        grid[row, col:col+len(word)] = list(word)
+    elif props['direction'] == 'down':
+        grid[row:row+len(word), col] = list(word)
 
-    correct = 0
-    for idx, word in enumerate(selected_words, 1):
-        user_input = st.text_input(f"{idx}.", key=f"crossword_{idx}")
-        if user_input.strip().lower() == word.lower():
-            correct += 1
+# 스트림릿을 사용하여 그리드 표시
+st.title("가로세로 퍼즐")
 
-    if st.button("📌 채점하기"):
-        st.success(f"{correct} / {num_words} 정답을 맞혔어요!")
+user_grid = np.full((grid_size, grid_size), '', dtype=str)
 
-        # 틀린 단어는 mistakes에 저장
-        for idx, word in enumerate(selected_words, 1):
-            user_input = st.session_state.get(f"crossword_{idx}", "")
-            if user_input.strip().lower() != word.lower():
-                if word not in st.session_state.mistakes:
-                    st.session_state.mistakes.append(word)
+# 사용자 입력을 위한 그리드 출력
+for row_index in range(grid_size):
+    cols = st.columns(grid_size)
+    for col_index in range(grid_size):
+        if grid[row_index, col_index] != '':
+            # 입력 필드로 표시
+            user_input = cols[col_index].text_input("", "", max_chars=1, key=f"{row_index}-{col_index}")
+            user_grid[row_index, col_index] = user_input.upper()
+
+# 제출 버튼
+if st.button("Submit"):
+    # 정답과 비교
+    correct = True
+    for row_index in range(grid_size):
+        for col_index in range(grid_size):
+            if grid[row_index, col_index] != '' and grid[row_index, col_index] != user_grid[row_index, col_index]:
+                correct = False
+    if correct:
+        st.success("정답입니다!")
+    else:
+        st.error("틀렸습니다. 다시 시도해보세요.")
+
+# 힌트 표시
+st.subheader("Hints")
+for word, props in words.items():
+    direction = '가로' if props['direction'] == 'across' else '세로'
+    st.write(f"{direction} - {word} ({props['row']+1}, {props['col']+1})")
 
