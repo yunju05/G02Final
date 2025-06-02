@@ -157,18 +157,19 @@ with tab4:
 with tab5:
     st.markdown("""
     <style>
-    .block-container {
-        padding: 0px;
-    }
-    .stTextInput>div {
-        margin: 0px; /* Remove margin */
-    }
-    .stTextInput>div>input {
-        padding: 5px; /* Adjust padding for the input */
-        text-align: center; /* Center align text */
+    .crossword-input input {
+        width: 30px !important;
+        height: 30px !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        padding: 0px !important;
+        margin: 0px !important;
     }
     </style>
     """, unsafe_allow_html=True)
+
+    st.title("가로세로 퍼즐")
+    st.markdown("### 🧩 아래 칸에 알파벳을 입력하세요")
 
     words = {
         'PYTHON': {'direction': 'across', 'row': 1, 'col': 0},
@@ -178,7 +179,6 @@ with tab5:
 
     grid_size = 10
     grid = np.full((grid_size, grid_size), '', dtype=str)
-
     for word, props in words.items():
         row, col = props['row'], props['col']
         if props['direction'] == 'across':
@@ -186,16 +186,27 @@ with tab5:
         elif props['direction'] == 'down':
             grid[row:row+len(word), col] = list(word)
 
-    st.title("가로세로 퍼즐")
-
     user_grid = np.full((grid_size, grid_size), '', dtype=str)
 
+    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)  # 위 여백 추가
+
     for row_index in range(grid_size):
-        cols = st.columns(grid_size)
+        cols = st.columns(grid_size, gap="small")
         for col_index in range(grid_size):
             if grid[row_index, col_index] != '':
-                user_input = cols[col_index].text_input("", "", max_chars=1, key=f"{row_index}-{col_index}")
-                user_grid[row_index, col_index] = user_input.upper()
+                with cols[col_index]:
+                    user_input = st.text_input(
+                        "",
+                        value="",
+                        key=f"{row_index}-{col_index}",
+                        max_chars=1,
+                        label_visibility="collapsed",
+                        placeholder=" ",
+                        help=f"{row_index},{col_index}",
+                        type="default"
+                    )
+                    st.markdown("<div class='crossword-input'></div>", unsafe_allow_html=True)
+                    user_grid[row_index, col_index] = user_input.upper()
 
     if st.button("Submit"):
         correct = True
@@ -208,8 +219,7 @@ with tab5:
         else:
             st.error("틀렸습니다. 다시 시도해보세요.")
 
-    st.subheader("Hints")
+    st.subheader("힌트 (Hints)")
     for word, props in words.items():
         direction = '가로' if props['direction'] == 'across' else '세로'
         st.write(f"{direction} - {word} ({props['row']+1}, {props['col']+1})")
-
