@@ -2,3 +2,5 @@ streamlit
 gtts
 pandas
 vosk
+treamlit-drawable-canvas
+numpy
