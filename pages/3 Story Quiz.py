@@ -80,7 +80,7 @@ def next_problem():
         st.session_state.quiz_started = False
 
 # 인터페이스 시작
-st.title("🔡 Sentence Structure Quiz (Passive, Gerund, Key Elements)")
+st.title("🔡 Sentence Structure Quiz")
 
 if not st.session_state.quiz_started:
     st.write("Click below to start the quiz.")
