@@ -13,17 +13,14 @@ tab1, tab2 = st.tabs([
 with tab1:
     st.title("Listen and Read")
 
-def play_audio():
-    st.write("Click to play an audio.")
+    def play_audio():
+        st.write("Click to play an audio.")
 
-    # URL에서 파일 다운로드
-    url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
-    response = requests.get(url)
+        url = "https://github.com/yunju05/G02Final/raw/main/pages/audio_sample.mp3"
+        response = requests.get(url)
 
-    # 오디오 재생
-    st.audio(response.content, format='audio/mp3')
+        st.audio(response.content, format='audio/mp3')
 
-if __name__ == "__main__":
     play_audio()
 
     st.markdown("### 🌳 The Whispering Woods")
@@ -34,22 +31,20 @@ if __name__ == "__main__":
 
     Moved by these stories, the friends promised to protect the woods and share their knowledge. They left the woods wiser, with a deeper respect for nature and its untold stories, ready to advocate for its preservation.
     """)
-    
+
     st.image(
         "https://github.com/MK316/Digital-Literacy-Class/blob/main/materials/story02.png?raw=true", 
         caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees."
     )
 
 with tab2:
-    def main():
     st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
 
-    # 사용자 입력 위젯
     stroke_width = st.slider("선 굵기", min_value=1, max_value=25, value=5)
     stroke_color = st.color_picker("선 색깔", "#000000")
 
     canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",  # 투명 오렌지색 배경
+        fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=stroke_width,
         stroke_color=stroke_color,
         background_color="#eeeeee",
@@ -62,7 +57,3 @@ with tab2:
     if canvas_result.image_data is not None:
         img = canvas_result.image_data.astype(np.uint8)
         st.image(img)
-
-if __name__ == "__main__":
-    main()
-
