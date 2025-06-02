@@ -2,5 +2,5 @@ streamlit
 gtts
 pandas
 vosk
-treamlit-drawable-canvas
+streamlit-drawable-canvas
 numpy
