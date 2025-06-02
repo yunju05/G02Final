@@ -40,13 +40,6 @@ with tab1:
 with tab2:
     st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
 
-   import streamlit as st
-from streamlit_drawable_canvas import st_canvas
-import numpy as np
-
-def main():
-    st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
-
     # 사용자 입력 위젯
     stroke_width = st.slider("선 굵기", min_value=1, max_value=25, value=5)
     stroke_color = st.color_picker("선 색깔", "#000000")
