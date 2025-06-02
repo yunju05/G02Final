@@ -1,7 +1,17 @@
 import streamlit as st
 import requests
+from streamlit_drawable_canvas import st_canvas
+import numpy as np
 
-st.title("Listen and Read")
+st.write("⭐ Learning Story")
+
+tab1, tab2 = st.tabs([
+    "1. 📋Listen and Read", 
+    "2. 🔈Drawing Canvas"
+])
+
+with tab1:
+    st.title("Listen and Read")
 
 def play_audio():
     st.write("Click to play an audio.")
@@ -30,11 +40,8 @@ if __name__ == "__main__":
         caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees."
     )
 
-import streamlit as st
-from streamlit_drawable_canvas import st_canvas
-import numpy as np
-
-def main():
+with tab2:
+    def main():
     st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
 
     # 사용자 입력 위젯
