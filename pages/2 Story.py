@@ -30,26 +30,4 @@ if __name__ == "__main__":
         caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees."
     )
 
-pip install streamlit streamlit-drawable-canvas
-
-import streamlit as st
-from streamlit_drawable_canvas import st_canvas
-
-st.title("Streamlit 그림판 기능")
-
-# 캔버스 설정
-canvas_result = st_canvas(
-    fill_color="rgba(255, 165, 0, 0.3)",  # 투명한 오렌지색으로 채우기
-    stroke_width=5,
-    stroke_color="#000000",
-    background_color="#eee",
-    height=400,
-    width=600,
-    drawing_mode="freedraw",
-    key="canvas",
-)
-
-# 그려진 이미지 출력
-if canvas_result.image_data is not None:
-    st.image(canvas_result.image_data)
 
