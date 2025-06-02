@@ -11,7 +11,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "2. Activity: Listen to the word", 
     "3. Spelling practice", 
     "4. Quiz: Korean meaning → English", 
-    "5. Review: Mistakes"
+    "5. Crossword"
 ])
 
 # Load CSV once at the start to avoid repetition
@@ -153,24 +153,36 @@ with tab4:
 
 
 
-######### TAB 5: Review Mistakes #########
+######### TAB 5: Crossword #########
 with tab5:
-    st.markdown("### 🔄 Review your mistakes")
+    st.markdown("### 🧩 Crossword Puzzle")
 
-    if len(st.session_state.mistakes) == 0:
-        st.info("You have no mistakes to review! 🎉")
-    else:
-        mistake_word = random.choice(st.session_state.mistakes)
-        mistake_meaning = df.loc[df["Word"] == mistake_word, "Meaning"].values[0]
+    # 사용자가 선택할 단어 수 (기본값: 5)
+    num_words = st.slider("단어 개수 선택", min_value=3, max_value=10, value=5)
 
-        st.write(f"**Korean meaning:** {mistake_meaning}")
+    # 무작위 단어 선택
+    selected_words = random.sample(word_list, num_words)
 
-        review_input = st.text_input("Write the English word:", key="review_input")
+    st.write("**힌트 (뜻):**")
+    for idx, word in enumerate(selected_words, 1):
+        meaning = df.loc[df["Word"] == word, "Meaning"].values[0]
+        st.write(f"{idx}. {meaning}")
 
-        if st.button("Check answer for review"):
-            if review_input.strip().lower() == mistake_word.lower():
-                st.success("✅ Correct! Removed from mistakes.")
-                st.session_state.mistakes.remove(mistake_word)
-            else:
-                st.error(f"❌ Incorrect! The correct word is '{mistake_word}'.")
+    st.write("아래 빈칸에 알맞은 영어 단어를 써보세요:")
+
+    correct = 0
+    for idx, word in enumerate(selected_words, 1):
+        user_input = st.text_input(f"{idx}.", key=f"crossword_{idx}")
+        if user_input.strip().lower() == word.lower():
+            correct += 1
+
+    if st.button("📌 채점하기"):
+        st.success(f"{correct} / {num_words} 정답을 맞혔어요!")
+
+        # 틀린 단어는 mistakes에 저장
+        for idx, word in enumerate(selected_words, 1):
+            user_input = st.session_state.get(f"crossword_{idx}", "")
+            if user_input.strip().lower() != word.lower():
+                if word not in st.session_state.mistakes:
+                    st.session_state.mistakes.append(word)
 
