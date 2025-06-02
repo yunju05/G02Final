@@ -2,14 +2,21 @@ import streamlit as st
 import requests
 from streamlit_drawable_canvas import st_canvas
 import numpy as np
+from PIL import Image
+from io import BytesIO
 
+st.set_page_config(page_title="Story with Canvas", layout="centered")
 st.write("⭐ Learning Story")
 
+# 탭 구성
 tab1, tab2 = st.tabs([
     "1. 📋Listen and Read", 
     "2. 🔈Drawing Canvas"
 ])
 
+# -------------------
+# 📋 Listen and Read
+# -------------------
 with tab1:
     st.title("Listen and Read")
 
@@ -35,23 +42,45 @@ with tab1:
         caption="A mystical forest path under a twilight sky, with towering trees whose leaves rustle in the wind. Silhouettes of teenagers stand listening intently to the trees, faces illuminated by a soft, eerie glow from the trees."
     )
 
+# -------------------
+# 🔈 Drawing Canvas
+# -------------------
 with tab2:
-    st.title("Streamlit 그림판 (굵기 & 색깔 변경 가능)")
+    st.title("Streamlit 그림판")
 
-    stroke_width = st.slider("선 굵기", min_value=1, max_value=25, value=5)
+    stroke_width = st.slider("선 굵기", 1, 25, 5)
     stroke_color = st.color_picker("선 색깔", "#000000")
 
+    # 지우기 버튼 처리
+    if st.button("🧹 지우기"):
+        st.session_state.canvas_key = st.session_state.get("canvas_key", 0) + 1
+    else:
+        st.session_state.canvas_key = st.session_state.get("canvas_key", 0)
+
+    # 캔버스
     canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",  # 투명 오렌지 배경
+        fill_color="rgba(255, 165, 0, 0.3)",  
         stroke_width=stroke_width,
         stroke_color=stroke_color,
-        background_color="#eeeeee",
+        background_color="#FFFFFF",
         height=400,
         width=600,
         drawing_mode="freedraw",
-        key="canvas",
+        key=f"canvas_{st.session_state.canvas_key}",
+        update_streamlit=True
     )
 
+    # 이미지 보여주기
     if canvas_result.image_data is not None:
         img = canvas_result.image_data.astype(np.uint8)
-        st.image(img)
+        st.image(img, caption="🖼️ Your Drawing")
+
+        # 저장 버튼
+        buffered = BytesIO()
+        Image.fromarray(img).save(buffered, format="PNG")
+        st.download_button(
+            label="📥 그림 다운로드 (PNG)",
+            data=buffered.getvalue(),
+            file_name="drawing.png",
+            mime="image/png"
+        )
