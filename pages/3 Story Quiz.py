@@ -120,4 +120,4 @@ else:
     with col2:
         st.button("🔄 Clear", on_click=clear_selection)
     with col3:
-        st.button("⏭️ Skip", on_click=next_problem)
+        st.button("⏭️ Next", on_click=next_problem)
