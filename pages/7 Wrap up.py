@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-# 퀴즈 데이터
+# 퀴즈 데이터 정의
 questions_data = [
     {
         "question": "Leo and his friends decided to explore the Whispering Woods because they were known for their beautiful scenery.",
@@ -26,6 +26,7 @@ questions_data = [
 ]
 
 def quiz():
+    st.set_page_config(page_title="OX Quiz")
     st.title("⭕✖️ Quiz on the Story")
 
     if "remaining_questions" not in st.session_state:
@@ -38,10 +39,6 @@ def quiz():
 
     if st.session_state.quiz_done:
         st.success(f"✅ Quiz Complete! Your score: {st.session_state.score}/{len(questions_data)}")
-        if st.session_state.score == len(questions_data):
-            st.write("🎉 Excellent! You understood the story perfectly.")
-        else:
-            st.write("📖 Review the story and try again to improve your score.")
         if st.button("Restart Quiz"):
             st.session_state.clear()
         return
@@ -73,3 +70,8 @@ def quiz():
                 st.session_state.answered = False
                 st.session_state.feedback = ""
             else:
+                st.session_state.quiz_done = True
+
+if __name__ == "__main__":
+    quiz()
+ 
