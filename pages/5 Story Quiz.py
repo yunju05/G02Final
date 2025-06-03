@@ -126,7 +126,7 @@ def next_problem():
 st.title("🧠 Sentence Structure Quiz")
 
 if not st.session_state.quiz_started:
-    st.write("Click below to start the quiz.")
+    st.write("On this page, you need to take a quiz to check how well you understood the story you learned earlier!First, listen to the audio, choose the correct words in order to fill in the blanks, and then click the submit button! If you clicked the wrong answer, press the clear button. If you don’t know the answer, you can press the show answer button!")
     if st.button("Start Quiz"):
         start_quiz()
 else:
