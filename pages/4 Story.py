@@ -51,7 +51,6 @@ with tab1:
 with tab2:
     st.header("🖍️ Drawing Canvas with Random Audio")
     st.markdown("""
-    ### ✨ Instructions
     1. Click the **"🔄 Play Random Audio"** button to listen to a short part of the story.  
     2. Based on what you heard, draw a **four-panel comic (4컷 만화)** that matches the story.  
     3. Use the tools below to adjust **line thickness** and **color**.  
