@@ -47,7 +47,7 @@ if "shuffled_buttons" not in st.session_state:
 
 # 현재 문제 정보
 question_data = st.session_state.current_question
-active_sentence = question_data.get("active", "문제가 없습니다.")
+active_sentence = question_data.get("active", "Click new question.")
 correct_passive = question_data.get("passive", [])
 
 # UI 출력
