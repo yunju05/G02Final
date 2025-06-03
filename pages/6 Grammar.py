@@ -57,11 +57,3 @@ with tab2:
     - Some verbs are always followed by gerunds, like:  
       `enjoy`, `avoid`, `finish`, `consider`, `mind`, `suggest`, `keep`
     """)
-
-    st.subheader("🎯 Quick Comparison")
-    st.markdown("""
-    | Concept        | Function           | Example                           |
-    |----------------|--------------------|-----------------------------------|
-    | Passive Voice  | Focus on object    | The book was written by her.     |
-    | Gerund         | Verb as a noun     | Reading helps you learn.         |
-    """)
