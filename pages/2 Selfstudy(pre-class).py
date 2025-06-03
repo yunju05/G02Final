@@ -164,93 +164,32 @@ with tab4:
     st.markdown("Did you get a good score? Then let’s go to the final page!")
 
 ######### TAB 5: Crossword #########
+
+
 with tab5:
+    st.title("📘 Crossword Puzzle")
+
     st.markdown("""
-    <style>
-    .crossword-input input {
-        width: 30px !important;
-        height: 30px !important;
-        text-align: center !important;
-        font-size: 16px !important;
-        padding: 0px !important;
-        margin: 0px !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    Let's solve a crossword puzzle using the words you've learned from the story.  
+    Look at the image below and try to guess the words using the definitions provided.
+    """)
 
-    st.title("Crossword puzzle")
-    st.markdown("Let’s play a crossword puzzle game using the words you just learned!")
-    st.markdown("### 🧩 Please enter the alphabet in the box below.")
+    # 이미지 불러오기 (GitHub URL 사용)
+    st.image("https://github.com/yunju05/G02Final/raw/main/pages/crossword_puzzle.png", caption="🧩 Crossword Puzzle")
 
-    # 단어 목록과 위치 설정
-    words = {
-        'BEWITCHED': {'direction': 'down', 'row': 0, 'col': 12},
-        'POLLUTION': {'direction': 'down', 'row': 0, 'col': 9},
-        'SCULPTURE': {'direction': 'across', 'row': 2, 'col': 6},
-        'PROTECTED': {'direction': 'down', 'row': 2, 'col': 5},
-        'AVOID': {'direction': 'across', 'row': 2, 'col': 0},
-        'RESPECT': {'direction': 'across', 'row': 3, 'col': 5},
-        'COMFORT': {'direction': 'across', 'row': 4, 'col': 1},
-        'WOODS': {'direction': 'across', 'row': 5, 'col': 0},
-        'NATURE': {'direction': 'across', 'row': 6, 'col': 5},
-    }
+    st.subheader("📝 Definitions (영영풀이)")
 
-    # ✅ 단어에 따라 자동으로 필요한 그리드 크기 계산
-    max_row = max(
-        props['row'] + (len(word) if props['direction'] == 'down' else 1)
-        for word, props in words.items()
-    )
-    max_col = max(
-        props['col'] + (len(word) if props['direction'] == 'across' else 1)
-        for word, props in words.items()
-    )
-    grid_rows = max(max_row, 10)
-    grid_cols = max(max_col, 10)
+    st.markdown("""
+    **Across**  
+    2. A piece of art made by carving stone, wood, or other materials  
+    3. A feeling of admiration or honor for someone or something  
+    4. A state of physical ease and freedom from pain or stress  
+    5. A large area of trees, smaller than a forest  
+    6. The physical world and all living things in it
 
-    grid = np.full((grid_rows, grid_cols), '', dtype=str)
-
-    # 정답 채우기
-    for word, props in words.items():
-        row, col = props['row'], props['col']
-        if props['direction'] == 'across':
-            grid[row, col:col + len(word)] = list(word)
-        elif props['direction'] == 'down':
-            grid[row:row + len(word), col] = list(word)
-
-    user_grid = np.full((grid_rows, grid_cols), '', dtype=str)
-
-    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
-
-    for row_index in range(grid_rows):
-        cols = st.columns(grid_cols, gap="small")
-        for col_index in range(grid_cols):
-            if grid[row_index, col_index] != '':
-                with cols[col_index]:
-                    user_input = st.text_input(
-                        "",
-                        value="",
-                        key=f"{row_index}-{col_index}",
-                        max_chars=1,
-                        label_visibility="collapsed",
-                        placeholder=" ",
-                        help=f"{row_index},{col_index}"
-                    )
-                    st.markdown("<div class='crossword-input'></div>", unsafe_allow_html=True)
-                    user_grid[row_index, col_index] = user_input.upper()
-
-    if st.button("Submit"):
-        correct = True
-        for row_index in range(grid_rows):
-            for col_index in range(grid_cols):
-                if grid[row_index, col_index] != '' and grid[row_index, col_index] != user_grid[row_index, col_index]:
-                    correct = False
-        if correct:
-            st.success("That's correct! 🎉")
-        else:
-            st.error("That's wrong. Try again.")
-
-    st.subheader("힌트 (Hints)")
-    for word, props in words.items():
-        direction = '가로' if props['direction'] == 'across' else '세로'
-        st.write(f"{direction} - {word} (시작 위치: {props['row']+1}행, {props['col']+1}열)")
-
+    **Down**  
+    1. Affected by magic or seeming magical  
+    2. Harmful or dirty substances that damage the environment  
+    3. Kept safe from harm or destruction  
+    4. To stay away from someone or something
+    """)
