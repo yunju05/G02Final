@@ -201,6 +201,5 @@ with tab5:
     # 정답 이미지 보기 버튼
     if st.button("👀 Show Answers"):
         st.image(
-            "https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C_%EC%A0%95%EB%8B%B5.png", 
-            caption="✅ Crossword Answers"
+            "https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C%20%EB%8B%B5.png"✅ Crossword Answers"
         )
