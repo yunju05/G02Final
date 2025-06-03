@@ -22,13 +22,6 @@ tab1, tab2, tab3 = st.tabs([
 # -------------------
 with tab1:
     st.title("Listen and Read")
-    st.markdown("""
-    ### ✨ Instructions
-    1. Click the **"🔄 Play Random Audio"** button to listen to a short part of the story.  
-    2. Based on what you heard, draw a **four-panel comic (4컷 만화)** that matches the story.  
-    3. Use the tools below to adjust **line thickness** and **color**.  
-    4. When finished, download your comic and upload it in the next tab!
-    """)
 
     def play_audio():
         st.write("Click to play an audio.")
@@ -57,6 +50,13 @@ with tab1:
 # -------------------
 with tab2:
     st.header("🖍️ Drawing Canvas with Random Audio")
+    st.markdown("""
+    ### ✨ Instructions
+    1. Click the **"🔄 Play Random Audio"** button to listen to a short part of the story.  
+    2. Based on what you heard, draw a **four-panel comic (4컷 만화)** that matches the story.  
+    3. Use the tools below to adjust **line thickness** and **color**.  
+    4. When finished, download your comic and upload it in the next tab!
+    """)
 
     # GitHub에 저장된 mp3 파일 URL 리스트 (실제 URL로 바꾸세요)
     audio_files = [
