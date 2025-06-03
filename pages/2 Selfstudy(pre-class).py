@@ -46,6 +46,7 @@ if "mistakes" not in st.session_state:
 ######### TAB 1: 📋Word List #########
 with tab1:
     st.markdown("### 🔠 Word and Expression")
+    st.markdown("Here are 40 words from the lesson and some basic words you need to know.")
     if st.button("Show Word List"):
         st.dataframe(df, use_container_width=True)
 
