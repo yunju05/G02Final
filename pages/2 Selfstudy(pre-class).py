@@ -18,7 +18,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 # Load CSV once at the start to avoid repetition
 @st.cache_data
 def load_data():
-    url = "https://github.com/yunju05/G02Final/raw/main/data/word.csv"
+    url = "https://raw.githubusercontent.com/yunju05/G02Final/refs/heads/main/data/word.csv"
     df = pd.read_csv(url)
     df = df.dropna(subset=["Word", "Meaning"])  # 단어, 뜻 없는 행 제거
     return df
