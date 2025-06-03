@@ -49,10 +49,13 @@ with tab1:
     st.markdown("Here are 40 words from the lesson and some basic words you need to know.")
     if st.button("Show Word List"):
         st.dataframe(df, use_container_width=True)
+    st.markdown("If you have learned all the words well, go to 🔈 page!")
 
 ######### TAB 2: 🔈Listen to word #########
 with tab2:
     st.title("🎧 Word Pronunciation Practice")
+    st.markdown("Choose a word you want, listen to the pronunciation, and try to say it!")
+    
     selected_word = st.selectbox("Choose a word to hear:", word_list)
 
     if selected_word:
@@ -61,10 +64,12 @@ with tab2:
         tts.write_to_fp(audio_fp)
         audio_fp.seek(0)
         st.audio(audio_fp, format='audio/mp3')
+    st.markdown("Did you practice the pronunciation enough? If yes, go to ✏️ page!")
 
 ######### TAB 3: ✏️Spelling Practice #########
 with tab3:
     st.markdown("### 🎧 Listen and Type the Word")
+    st.markdown("Now listen to the word in the audio and try to write the spelling!")
     st.caption("Click the button to hear a word. Then type it and press 'Check the answer'.")
 
     if st.button("🔊 Let me listen to a word"):
@@ -97,7 +102,7 @@ with tab3:
                 # Store incorrect words without duplicates
                 if st.session_state.current_word not in st.session_state.mistakes:
                     st.session_state.mistakes.append(st.session_state.current_word)
-
+                st.markdown("Great job! Now, shall we go to page?")
 ######### TAB 4: 🔎Quiz (Meaning → English) #########
 
 # 초기 상태 변수 설정
