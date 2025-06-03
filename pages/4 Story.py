@@ -58,21 +58,21 @@ with tab2:
         st.session_state.canvas_key += 1
 
   # 캔버스 위젯 표시
-canvas_result = st_canvas(
-    fill_color="rgba(255, 165, 0, 0.3)",  # 연한 주황 배경
-    stroke_width=stroke_width,
-    stroke_color=stroke_color,
-    background_color="#FFFFFF",
-    height=600,
-    width=600,
-    drawing_mode="freedraw",
-    key=f"canvas_{st.session_state.canvas_key}"
+    canvas_result = st_canvas(
+        fill_color="rgba(255, 165, 0, 0.3)",  # 연한 주황 배경
+        stroke_width=stroke_width,
+        stroke_color=stroke_color,
+        background_color="#FFFFFF",
+        height=600,
+        width=600,
+        drawing_mode="freedraw",
+        key=f"canvas_{st.session_state.canvas_key}"
 )
 
 # 저장 및 다운로드 기능 (그림이 있을 경우에만)
-if canvas_result.image_data is not None:
-    img = canvas_result.image_data.astype("uint8")
-    st.image(img, caption="🖼️ Your Drawing")
+    if canvas_result.image_data is not None:
+        img = canvas_result.image_data.astype("uint8")
+        st.image(img, caption="🖼️ Your Drawing")
 
     # 저장 버튼
     buffered = BytesIO()
