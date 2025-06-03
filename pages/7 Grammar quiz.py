@@ -9,19 +9,19 @@ quiz_bank = [
     },
     {
         "active": "She cleans the room.",
-        "passive": ["The", "room", "is", "cleaned", "by", "her"]
+        "passive": ["The", "room", "is", "cleaned", "by", "She"]
     },
     {
         "active": "They watch a movie.",
-        "passive": ["A", "movie", "is", "watched", "by", "them"]
+        "passive": ["A", "movie", "is", "watched", "by", "They"]
     },
     {
         "active": "He reads a book.",
-        "passive": ["A", "book", "is", "read", "by", "him"]
+        "passive": ["A", "book", "is", "read", "by", "He"]
     },
     {
         "active": "The dog bites the man.",
-        "passive": ["The", "man", "is", "bitten", "by", "the", "dog"]
+        "passive": ["The", "man", "is", "bitten", "by", "The", "dog"]
     }
 ]
 
@@ -34,8 +34,8 @@ def load_new_question():
     random.shuffle(shuffled)
     st.session_state.shuffled_buttons = shuffled
 
-# 세션 상태 점검 및 초기화
-if "current_question" not in st.session_state or st.session_state.current_question is None:
+# 세션 상태 초기화
+if "current_question" not in st.session_state:
     load_new_question()
 
 if "user_sentence" not in st.session_state:
@@ -45,6 +45,11 @@ if "shuffled_buttons" not in st.session_state:
     st.session_state.shuffled_buttons = st.session_state.current_question["passive"].copy()
     random.shuffle(st.session_state.shuffled_buttons)
 
+# 새 문제 버튼 먼저 처리
+if st.button("🔄 새 문제"):
+    load_new_question()
+    st.experimental_rerun()
+
 # 현재 문제 정보
 question_data = st.session_state.current_question
 active_sentence = question_data.get("active", "문제가 없습니다.")
@@ -53,40 +58,35 @@ correct_passive = question_data.get("passive", [])
 # UI 출력
 st.title("수동태 퀴즈")
 st.markdown(f"**능동태 문장:** {active_sentence}")
-st.write("아래 단어 버튼을 눌러 수동태 문장을 완성해보세요.")
+st.write("👉 아래 단어 버튼을 눌러 수동태 문장을 완성해보세요.")
 
-# 단어 선택 버튼
-cols = st.columns(len(st.session_state.shuffled_buttons))
+# 단어 선택 버튼 (가로 나열)
+st.markdown("#### 선택 가능한 단어:")
+word_cols = st.columns(len(st.session_state.shuffled_buttons))
 for i, word in enumerate(st.session_state.shuffled_buttons):
-    if cols[i].button(word, key=f"select_{i}_{word}"):
+    if word_cols[i].button(word, key=f"select_{i}_{word}"):
         st.session_state.user_sentence.append(word)
 
-# 선택된 단어 출력 + 개별 삭제
-st.markdown("#### 만든 문장:")
+# 선택된 단어들 (가로 나열 + 개별 삭제)
+st.markdown("#### 내가 만든 문장:")
 if st.session_state.user_sentence:
+    delete_cols = st.columns(len(st.session_state.user_sentence))
     for i, word in enumerate(st.session_state.user_sentence):
-        col1, col2 = st.columns([4, 1])
-        with col1:
+        with delete_cols[i]:
             st.write(f"`{word}`")
-        with col2:
-            # 삭제 요청을 감지하는 고유 버튼 키 사용
-            if st.button("❌", key=f"del_{i}_{word}"):
+            if st.button("❌", key=f"delete_{i}_{word}"):
                 st.session_state.user_sentence.pop(i)
-                # rerun 없이 로직 중단 (이후 루프 안 돌게)
-                st.stop()
+                st.experimental_rerun()
 else:
     st.write("단어를 선택해보세요!")
 
-# 정답 제출
-if st.button("제출"):
+# 제출 버튼
+if st.button("✅ 제출"):
     if st.session_state.user_sentence == correct_passive:
         st.success("정답입니다! 🎉")
     else:
         st.error("틀렸어요. 다시 시도해보세요.")
 
-# 새 문제
-if st.button("새 문제"):
-    load_new_question()
 
 
 
