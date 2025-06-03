@@ -108,6 +108,17 @@ with tab2:
             mime="image/png"
         )
 
+with tab3:
+    st.header("💬 Upload Your Drawings to Padlet")
+    st.markdown(
+        """
+        Feel free to share your drawings by uploading them to our Padlet board below.  
+        Please make sure to upload your drawing to the correct section based on your assigned story:  
+        Each section is clearly labeled on the Padlet board for your convenience.
+        """
+    )
+    padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"
+    st.components.v1.iframe(padlet_url, height=500, scrolling=True)
 
 
 with tab3:
