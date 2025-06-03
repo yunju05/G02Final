@@ -10,7 +10,7 @@ st.write("⭐ Learning Story")
 # 탭 구성
 tab1, tab2 = st.tabs([
     "1. 📋Listen and Read", 
-    "2. 🔈Drawing Canvas"
+    "2. 🖍️Drawing Canvas"
 ])
 
 # -------------------
@@ -54,7 +54,7 @@ with tab2:
     if "canvas_key" not in st.session_state:
         st.session_state.canvas_key = 0
 
-    if st.button("🧹 지우기"):
+    if st.button("🔁 초기화"):
         st.session_state.canvas_key += 1
 
   # 캔버스 위젯 표시
