@@ -83,7 +83,7 @@ def next_problem():
 st.title("🔡 Sentence Structure Quiz")
 
 if not st.session_state.quiz_started:
-    st.write("Click below to start the quiz.")
+    st.write("Start Quiz to review the plot and grammar! You can Click the words in correct order to fill the blank.")
     st.button("Start Quiz", on_click=start_quiz)
 else:
     st.subheader(f"Question {st.session_state.current_index + 1}")
