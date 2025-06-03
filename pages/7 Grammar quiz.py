@@ -51,7 +51,7 @@ active_sentence = question_data.get("active", "문제가 없습니다.")
 correct_passive = question_data.get("passive", [])
 
 # UI 출력
-st.title("수동태 퀴즈")
+st.title("Passive Voice Quiz")
 st.markdown(f"**능동태 문장:** {active_sentence}")
 st.write("아래 단어 버튼을 눌러 수동태 문장을 완성해보세요.")
 
