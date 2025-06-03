@@ -18,7 +18,7 @@ sentences = [
 important_indices = [
     [6, 7, 10, 11, 17, 18, 19],   # "discovered", "Whispering", "talk"
     [2, 6, 7, 13, 14, 15],    # "avoided", "was", "exploring"
-    [2, 10],       # "walked", "whispering"
+    [2, 3, 10, 11],       # "walked", "whispering"
     [2, 9, 13],    # "told", "battles", "separated"
     [3, 9, 14],    # "warned", "forgetting", "importance"
     [6, 8, 12],    # "promised", "protect", "share"
