@@ -17,9 +17,9 @@ with col2:
 st.markdown("""
 ### Activity Instructions
 
-1. Observe the two images above: the photo related to today’s English passage and the word cloud.
-2. Based on these, **guess the content or story** and write down your thoughts.
-3. Upload your ideas and guesses to the Padlet board embedded below to share with your classmates.
+1. Please look at the two images above: the photo connected to today’s English passage and the word cloud.
+2. Using these, try to guess the content or story and write down your ideas.
+3. Then, upload your thoughts and guesses to the Padlet board below to share with your classmates.
 """)
 
 st.write("### Let's guess the content of this story and share it!")
