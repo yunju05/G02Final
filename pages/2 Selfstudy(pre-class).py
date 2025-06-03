@@ -174,22 +174,33 @@ with tab5:
     Look at the image below and try to guess the words using the definitions provided.
     """)
 
-    # 이미지 불러오기 (GitHub URL 사용)
-    st.image("https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C.png", caption="🧩 Crossword Puzzle")
+    # 퍼즐 이미지 불러오기 (문제 이미지)
+    st.image(
+        "https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C.png", 
+        caption="🧩 Crossword Puzzle"
+    )
 
     st.subheader("📝 Definitions")
 
     st.markdown("""
-    **Across**  
-    2. A piece of art made by carving stone, wood, or other materials  
-    3. A feeling of admiration or honor for someone or something  
-    4. A state of physical ease and freedom from pain or stress  
-    5. A large area of trees, smaller than a forest  
-    6. The physical world and all living things in it
-
     **Down**  
-    1. Affected by magic or seeming magical  
-    2. Harmful or dirty substances that damage the environment  
-    3. Kept safe from harm or destruction  
-    4. To stay away from someone or something
+    1. Controlled or enchanted by magical powers  
+    2. The presence of harmful substances in the environment  
+    3. Divided or moved apart from something or someone  
+    4. To keep someone or something safe from harm or damage  
+    5. To stay away from something or prevent it from happening
+
+    **Across**  
+    3. A work of art made by shaping stone, wood, or other materials  
+    6. A feeling of deep admiration for someone or something  
+    7. A state of physical ease and freedom from pain or stress  
+    8. A small forest or an area covered with trees  
+    9. The natural world including plants, animals, and landscapes
     """)
+
+    # 정답 이미지 보기 버튼
+    if st.button("👀 Show Answers"):
+        st.image(
+            "https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C_%EC%A0%95%EB%8B%B5.png", 
+            caption="✅ Crossword Answers"
+        )
