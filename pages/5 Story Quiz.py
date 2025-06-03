@@ -11,7 +11,7 @@ sentences = [
     ["As", "they", "walked", "deeper", "into", "the", "woods", ",", "the", "trees", "started", "whispering"],
     ["Each", "tree", "told", "stories", "of", "ancient", "times", ",", "of", "battles", "fought", "and", "lovers", "separated"],
     ["The", "trees", "also", "warned", "them", "about", "the", "dangers", "of", "forgetting", "the", "past", "and", "the", "importance", "of", "nature"],
-    ["Moved", "by", "these", "stories,", "the", "friends", "promised", "to", "protect", "the", "woods", "and", "share", "their", "knowledge"],
+    ["Moved", "by", "these", "stories", "," "the", "friends", "promised", "to", "protect", "the", "woods", "and", "share", "their", "knowledge"],
     ["They", "left", "the", "woods", "wiser", "," "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories", ",", "ready", "to", "advocate", "for", "its", "preservation"]
 ]
 
@@ -22,7 +22,7 @@ important_indices = [
     [2, 3, 10, 11],
     [2, 3, 9, 10, 12, 13],
     [2, 3, 4, 7, 8, 9],
-    [1, 2, 3, 4, 7, 8, 9, 13],
+    [1, 2, 3, 4, 8, 9, 10, 14],
     [4, 8, 9, 13, 14, 15, 17, 18, 23]
 ]
 
