@@ -1,7 +1,6 @@
 import streamlit as st
 import requests
 from streamlit_drawable_canvas import st_canvas
-import numpy as np
 from PIL import Image
 from io import BytesIO
 
@@ -46,26 +45,26 @@ with tab1:
 # 🔈 Drawing Canvas
 # -------------------
 with tab2:
-    st.title("Streamlit 그림판")
+    st.title("🖍️ Drawing Canvas")
 
-    stroke_width = st.slider("선 굵기", 1, 25, 5)
-    stroke_color = st.color_picker("선 색깔", "#000000")
+    stroke_width = st.slider("✏️ 선 굵기", 1, 25, 5)
+    stroke_color = st.color_picker("🎨 선 색깔", "#000000")
 
-    # 지우기 버튼 처리
+    # 지우기 버튼을 누르면 key를 증가시켜 캔버스를 초기화
+    if "canvas_key" not in st.session_state:
+        st.session_state.canvas_key = 0
+
     if st.button("🧹 지우기"):
-        st.session_state.canvas_key = st.session_state.get("canvas_key", 0) + 1
-    else:
-        st.session_state.canvas_key = st.session_state.get("canvas_key", 0)
+        st.session_state.canvas_key += 1
 
-    # 캔버스
+    # 캔버스 위젯 표시
     canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",  
+        fill_color="rgba(255, 165, 0, 0.3)",  # 연한 주황 배경
         stroke_width=stroke_width,
         stroke_color=stroke_color,
         background_color="#FFFFFF",
         height=400,
         width=600,
         drawing_mode="freedraw",
-        key=f"canvas_{st.session_state.canvas_key}",
-        update_streamlit=True
+        key=f"canvas_{st.session_state.canvas_key}"
     )
