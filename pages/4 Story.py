@@ -110,5 +110,5 @@ with tab2:
     # 패들릿(외부 링크) 임베드 예시
     st.markdown("---")
     st.markdown("### 💬 Upload your drawing to Padlet:")
-    padlet_url = "https://padlet.com/embed/your_padlet_board_url_here"  # 실제 URL로 바꾸세요
+    padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"  
     st.components.v1.iframe(padlet_url, height=500, scrolling=True)
