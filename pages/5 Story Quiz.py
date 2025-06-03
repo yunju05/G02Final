@@ -2,6 +2,7 @@ import streamlit as st
 import random
 from gtts import gTTS
 import os
+import pandas as pd
 
 # 문장 리스트
 sentences = [
@@ -14,18 +15,18 @@ sentences = [
     ["They", "left", "the", "woods", "wiser", "," "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories", ",", "ready", "to", "advocate", "for", "its", "preservation"]
 ]
 
-# 각 문장에 해당하는 중요한 단어 인덱스 (예: 수동태, 동명사 등)
+# 중요 단어 인덱스
 important_indices = [
-    [6, 7, 10, 11, 17, 18, 19],   # "discovered", "Whispering", "talk"
-    [2, 6, 7, 13, 14, 15],    # "avoided", "was", "exploring"
-    [2, 3, 10, 11],       # "walked", "whispering"
-    [2, 3, 9, 10, 12, 13],    # "told", "battles", "separated"
-    [2, 3, 4, 7, 8, 9],    # "warned", "forgetting", "importance"
-    [1, 2, 3, 4, 7, 8, 9, 13],    # "promised", "protect", "share"
-    [4, 8, 9, 13, 14, 15, 17, 18, 23]     # "wiser", "respect", "advocate"
+    [6, 7, 10, 11, 17, 18, 19],
+    [2, 6, 7, 13, 14, 15],
+    [2, 3, 10, 11],
+    [2, 3, 9, 10, 12, 13],
+    [2, 3, 4, 7, 8, 9],
+    [1, 2, 3, 4, 7, 8, 9, 13],
+    [4, 8, 9, 13, 14, 15, 17, 18, 23]
 ]
 
-# 초기 상태 설정
+# 상태 초기화
 if 'current_index' not in st.session_state:
     st.session_state.current_index = 0
 if 'selected_words' not in st.session_state:
@@ -34,57 +35,102 @@ if 'quiz_started' not in st.session_state:
     st.session_state.quiz_started = False
 if 'shuffled_words' not in st.session_state:
     st.session_state.shuffled_words = []
+if 'score' not in st.session_state:
+    st.session_state.score = 0
+if 'feedback_shown' not in st.session_state:
+    st.session_state.feedback_shown = False
+if 'result_data' not in st.session_state:
+    st.session_state.result_data = []
 
+# 시작 함수
 def start_quiz():
     st.session_state.quiz_started = True
     st.session_state.current_index = 0
     st.session_state.selected_words = []
+    st.session_state.score = 0
+    st.session_state.result_data = []
+    st.session_state.feedback_shown = False
     update_shuffled_words()
 
+# 셔플된 중요 단어 준비
 def update_shuffled_words():
     important_words = [sentences[st.session_state.current_index][i] for i in important_indices[st.session_state.current_index]]
     st.session_state.shuffled_words = important_words.copy()
     random.shuffle(st.session_state.shuffled_words)
 
+# 음성 출력
 def play_tts():
     current_sentence = ' '.join(sentences[st.session_state.current_index])
     tts = gTTS(current_sentence)
-    tts.save("current_sentence.mp3")
-    with open("current_sentence.mp3", "rb") as audio_file:
-        audio_bytes = audio_file.read()
-    os.remove("current_sentence.mp3")
+    tts.save("tts.mp3")
+    with open("tts.mp3", "rb") as f:
+        audio_bytes = f.read()
+    os.remove("tts.mp3")
     return audio_bytes
 
+# 단어 선택
 def select_word(word):
     if word not in st.session_state.selected_words:
         st.session_state.selected_words.append(word)
+        if word in st.session_state.shuffled_words:
+            st.session_state.shuffled_words.remove(word)
 
+# 초기화
 def clear_selection():
     st.session_state.selected_words = []
 
+# 정답 제출
 def submit_answer():
+    if st.session_state.feedback_shown:
+        return
     correct = [sentences[st.session_state.current_index][i] for i in important_indices[st.session_state.current_index]]
-    if st.session_state.selected_words == correct:
-        st.success("✅ Correct!")
-    else:
-        st.error("❌ Incorrect. Try again.")
+    user = st.session_state.selected_words
+    is_correct = user == correct
 
+    if is_correct:
+        st.success("✅ Correct!")
+        st.session_state.score += 1
+        st.session_state.feedback_shown = True
+        st.session_state.result_data.append({
+            "Question": st.session_state.current_index + 1,
+            "Correct": True,
+            "Your Answer": ' '.join(user),
+            "Answer": ' '.join(correct)
+        })
+    else:
+        st.warning("❌ Incorrect. Try again.")
+
+# 정답 보기
+def show_answer():
+    correct = [sentences[st.session_state.current_index][i] for i in important_indices[st.session_state.current_index]]
+    st.info("✅ Correct Answer: " + ' '.join(correct))
+    st.session_state.result_data.append({
+        "Question": st.session_state.current_index + 1,
+        "Correct": False,
+        "Your Answer": ' '.join(st.session_state.selected_words),
+        "Answer": ' '.join(correct)
+    })
+    st.session_state.feedback_shown = True
+
+# 다음 문제
 def next_problem():
     if st.session_state.current_index < len(sentences) - 1:
         st.session_state.current_index += 1
         st.session_state.selected_words = []
+        st.session_state.feedback_shown = False
         update_shuffled_words()
     else:
-        st.success("🎉 You've completed all the sentences!")
-        st.balloons()
         st.session_state.quiz_started = False
+        st.success(f"🎉 Quiz completed! Final Score: {st.session_state.score} / {len(sentences)}")
+        st.balloons()
 
 # 인터페이스 시작
-st.title("🔡 Sentence Structure Quiz")
+st.title("📚 Sentence Structure Quiz")
 
 if not st.session_state.quiz_started:
-    st.write("Start Quiz to review the plot and grammar! You can Click the words in correct order to fill the blank.")
-    st.button("Start Quiz", on_click=start_quiz)
+    st.write("Click to begin your sentence ordering challenge!")
+    if st.button("Start Quiz"):
+        start_quiz()
 else:
     st.subheader(f"Question {st.session_state.current_index + 1}")
     audio_bytes = play_tts()
@@ -93,7 +139,7 @@ else:
     current_sentence = sentences[st.session_state.current_index]
     important_pos = important_indices[st.session_state.current_index]
 
-    # 문맥 문장 표시 (중요 단어는 빈칸으로)
+    # 문장 출력
     display = []
     for i, word in enumerate(current_sentence):
         if i in important_pos:
@@ -104,20 +150,31 @@ else:
             display.append(word)
     st.markdown("**Context:** " + ' '.join(display))
 
-    # 버튼으로 단어 선택
-    num_cols = 5
-    cols = st.columns(num_cols)
+    # 단어 버튼
+    cols = st.columns(5)
     for idx, word in enumerate(st.session_state.shuffled_words):
-        col = cols[idx % num_cols]
-        if col.button(word, key=f"{word}_{idx}"):
-            select_word(word)
+        if word:
+            col = cols[idx % 5]
+            if col.button(word, key=f"{word}_{idx}"):
+                select_word(word)
 
     st.markdown("**Selected:** " + ' '.join(st.session_state.selected_words))
+    st.markdown(f"**Score:** {st.session_state.score} / {len(sentences)}")
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.button("✅ Submit", on_click=submit_answer)
     with col2:
         st.button("🔄 Clear", on_click=clear_selection)
     with col3:
-        st.button("⏭️ Next", on_click=next_problem)
+        st.button("👀 Show Answer", on_click=show_answer, disabled=st.session_state.feedback_shown)
+    with col4:
+        st.button("⏭️ Next", on_click=next_problem, disabled=not st.session_state.feedback_shown)
+
+# 결과 저장
+if not st.session_state.quiz_started and st.session_state.result_data:
+    df = pd.DataFrame(st.session_state.result_data)
+    st.subheader("📊 Result Summary")
+    st.dataframe(df)
+    csv = df.to_csv(index=False).encode('utf-8-sig')
+    st.download_button("📥 Download Result (CSV)", data=csv, file_name="quiz_result.csv", mime="text/csv")
