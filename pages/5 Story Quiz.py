@@ -16,7 +16,7 @@ sentences = [
 
 # 각 문장에 해당하는 중요한 단어 인덱스 (예: 수동태, 동명사 등)
 important_indices = [
-    [4, 10, 18],   # "discovered", "Whispering", "talk"
+    [6, 7, 10, 11, 17, 18, 19],   # "discovered", "Whispering", "talk"
     [2, 6, 15],    # "avoided", "was", "exploring"
     [2, 10],       # "walked", "whispering"
     [2, 9, 13],    # "told", "battles", "separated"
