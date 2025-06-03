@@ -9,11 +9,6 @@ from io import BytesIO
 st.set_page_config(page_title="Story with Canvas", layout="centered")
 st.write("⭐ Learning Story")
 
-passages = [
-    "Leo and his friends discovered a path leading to the Whispering Woods, known for the trees that could talk.",
-    "As they walked deeper into the woods, the trees started whispering.",
-    "Moved by these stories, the friends promised to protect the woods and share their knowledge."
-]
 
 # 탭 구성
 tab1, tab2, tab3 = st.tabs([
@@ -27,6 +22,13 @@ tab1, tab2, tab3 = st.tabs([
 # -------------------
 with tab1:
     st.title("Listen and Read")
+    st.markdown("""
+    ### ✨ Instructions
+    1. Click the **"🔄 Play Random Audio"** button to listen to a short part of the story.  
+    2. Based on what you heard, draw a **four-panel comic (4컷 만화)** that matches the story.  
+    3. Use the tools below to adjust **line thickness** and **color**.  
+    4. When finished, download your comic and upload it in the next tab!
+    """)
 
     def play_audio():
         st.write("Click to play an audio.")
