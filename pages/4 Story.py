@@ -1,18 +1,18 @@
 import streamlit as st
 import requests
+import random
+from urllib.parse import quote
 from streamlit_drawable_canvas import st_canvas
 from PIL import Image
 from io import BytesIO
-import random
-from urllib.parse import quote
 
 st.set_page_config(page_title="Story with Canvas", layout="centered")
-st.title("⭐ Learning Story with Drawing & Padlet Upload")
+st.write("⭐ Learning Story")
 
 passages = [
-    "Leo and his friends discovered a path leading to the Whispering Woods, known for the trees that could talk. The locals avoided it, saying it was bewitched, but the adventurous teens couldn’t resist exploring.",
-    "As they walked deeper into the woods, the trees started whispering. Each tree told stories of ancient times, of battles fought and lovers separated. The trees also warned them about the dangers of forgetting the past and the importance of nature.",
-    "Moved by these stories, the friends promised to protect the woods and share their knowledge. They left the woods wiser, with a deeper respect for nature and its untold stories, ready to advocate for its preservation."
+    "Leo and his friends discovered a path leading to the Whispering Woods, known for the trees that could talk.",
+    "As they walked deeper into the woods, the trees started whispering.",
+    "Moved by these stories, the friends promised to protect the woods and share their knowledge."
 ]
 
 # 탭 구성
@@ -50,7 +50,7 @@ with tab1:
     )
 
 # -------------------
-# 🔈 Drawing Canvas
+# 🔈 Drawing Canvas with TTS
 # -------------------
 with tab2:
     st.header("🖍️ Drawing Canvas with Random TTS")
@@ -64,13 +64,13 @@ with tab2:
     if st.session_state.selected_paragraph:
         st.markdown(f"**📖 Paragraph:** {st.session_state.selected_paragraph}")
 
-        # TTS 재생용 mp3 불러오기 (Google Translate TTS API 무료 비공식 활용)
         try:
-            tts_url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={quote(st.session_state.selected_paragraph)}&tl=en&client=tw-ob"
+            text = quote(st.session_state.selected_paragraph)
+            tts_url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={text}&tl=en&client=tw-ob"
             audio_bytes = requests.get(tts_url, headers={"User-Agent": "Mozilla/5.0"}).content
             st.audio(audio_bytes, format="audio/mp3")
         except Exception as e:
-            st.error("TTS 재생 중 오류가 발생했습니다.")
+            st.error(f"TTS 재생 중 오류 발생: {e}")
 
     # 캔버스 설정
     stroke_width = st.slider("✏️ Line Thickness", 1, 25, 5)
@@ -110,5 +110,5 @@ with tab2:
     # 패들릿(외부 링크) 임베드 예시
     st.markdown("---")
     st.markdown("### 💬 Upload your drawing to Padlet:")
-    padlet_url = "https://padlet.com/embed/your_padlet_board_url_here"
+    padlet_url = "https://padlet.com/embed/your_padlet_board_url_here"  # 실제 URL로 바꾸세요
     st.components.v1.iframe(padlet_url, height=500, scrolling=True)
