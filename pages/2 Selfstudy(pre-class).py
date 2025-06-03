@@ -90,7 +90,7 @@ with tab3:
 
     if st.button("✅ Check the answer"):
         st.session_state.check_clicked = True
-
+    st.markdown("Great job! Now, shall we go to page?")
         if st.session_state.current_word:  
             if user_input.strip().lower() == st.session_state.current_word.lower():
                 st.success("✅ Correct!")
@@ -102,7 +102,7 @@ with tab3:
                 # Store incorrect words without duplicates
                 if st.session_state.current_word not in st.session_state.mistakes:
                     st.session_state.mistakes.append(st.session_state.current_word)
-                st.markdown("Great job! Now, shall we go to page?")
+                
 ######### TAB 4: 🔎Quiz (Meaning → English) #########
 
 # 초기 상태 변수 설정
