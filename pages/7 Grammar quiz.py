@@ -9,19 +9,19 @@ quiz_bank = [
     },
     {
         "active": "She cleans the room.",
-        "passive": ["The", "room", "is", "cleaned", "by", "She"]
+        "passive": ["The", "room", "is", "cleaned", "by", "her"]
     },
     {
         "active": "They watch a movie.",
-        "passive": ["A", "movie", "is", "watched", "by", "They"]
+        "passive": ["A", "movie", "is", "watched", "by", "them"]
     },
     {
         "active": "He reads a book.",
-        "passive": ["A", "book", "is", "read", "by", "He"]
+        "passive": ["A", "book", "is", "read", "by", "him"]
     },
     {
         "active": "The dog bites the man.",
-        "passive": ["The", "man", "is", "bitten", "by", "The", "dog"]
+        "passive": ["The", "man", "is", "bitten", "by", "the", "dog"]
     }
 ]
 
