@@ -62,7 +62,7 @@ for i, word in enumerate(st.session_state.shuffled_buttons):
         st.session_state.user_sentence.append(word)
 
 # 선택된 단어 출력 + 개별 삭제
-st.markdown("#### 만든 문장:")
+st.markdown("#### Your Sentence:")
 if st.session_state.user_sentence:
     for i, word in enumerate(st.session_state.user_sentence):
         col1, col2 = st.columns([4, 1])
@@ -75,15 +75,15 @@ if st.session_state.user_sentence:
                 # rerun 없이 로직 중단 (이후 루프 안 돌게)
                 st.stop()
 else:
-    st.write("단어를 선택해보세요!")
+    st.write("Please select words!")
 
 # 정답 제출
-if st.button("제출"):
+if st.button("Submit"):
     if st.session_state.user_sentence == correct_passive:
-        st.success("정답입니다! 🎉")
+        st.success("Correct!! 🎉")
     else:
-        st.error("틀렸어요. 다시 시도해보세요.")
+        st.error("Incorrect. Please try again.")
 
 # 새 문제
-if st.button("새 문제"):
+if st.button("New Question"):
     load_new_question()
