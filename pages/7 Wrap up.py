@@ -29,6 +29,7 @@ def quiz():
     st.set_page_config(page_title="OX Quiz")
     st.title("⭕✖️ Quiz on the Story")
 
+    # 초기 상태 설정
     if "remaining_questions" not in st.session_state:
         st.session_state.remaining_questions = random.sample(questions_data, len(questions_data))
         st.session_state.score = 0
@@ -36,42 +37,51 @@ def quiz():
         st.session_state.quiz_done = False
         st.session_state.answered = False
         st.session_state.feedback = ""
+        st.session_state.user_answer = None
 
+    # 퀴즈 완료 처리
     if st.session_state.quiz_done:
         st.success(f"✅ Quiz Complete! Your score: {st.session_state.score}/{len(questions_data)}")
         if st.button("Restart Quiz"):
             st.session_state.clear()
         return
 
+    # 현재 문제 설정
     if st.session_state.current_question is None and st.session_state.remaining_questions:
         st.session_state.current_question = st.session_state.remaining_questions.pop()
         st.session_state.answered = False
         st.session_state.feedback = ""
+        st.session_state.user_answer = None
 
     q = st.session_state.current_question
     st.write(f"Question: {q['question']}")
-    user_answer = st.radio("Choose one:", ("O", "X"), key=f"answer_{len(st.session_state.remaining_questions)}")
 
-    if st.button("Submit Answer") and not st.session_state.answered:
-        if user_answer == q["answer"]:
-            st.session_state.score += 1
-            st.session_state.feedback = "✅ Correct!"
-        else:
-            st.session_state.feedback = f"❌ Wrong! The correct answer was '{q['answer']}'."
-        st.session_state.answered = True
+    st.session_state.user_answer = st.radio("Choose one:", ("O", "X"), key=f"answer_{len(st.session_state.remaining_questions)}")
 
+    # 정답 제출
+    if not st.session_state.answered:
+        if st.button("Submit Answer"):
+            if st.session_state.user_answer == q["answer"]:
+                st.session_state.score += 1
+                st.session_state.feedback = "✅ Correct!"
+            else:
+                st.session_state.feedback = f"❌ Wrong! The correct answer was '{q['answer']}'."
+            st.session_state.answered = True
+
+    # 피드백 표시
     if st.session_state.feedback:
         st.info(st.session_state.feedback)
 
+    # 다음 문제로 이동
     if st.session_state.answered:
-        if st.button("Next Question"):
+        if st.button("Next Question", key="next"):
             if st.session_state.remaining_questions:
                 st.session_state.current_question = None
                 st.session_state.answered = False
                 st.session_state.feedback = ""
+                st.session_state.user_answer = None
             else:
                 st.session_state.quiz_done = True
 
 if __name__ == "__main__":
     quiz()
- 
