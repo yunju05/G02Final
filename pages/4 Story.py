@@ -3,6 +3,8 @@ import requests
 from streamlit_drawable_canvas import st_canvas
 from PIL import Image
 from io import BytesIO
+import random
+
 
 st.set_page_config(page_title="Story with Canvas", layout="centered")
 st.write("⭐ Learning Story")
