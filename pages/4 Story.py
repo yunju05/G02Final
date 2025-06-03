@@ -4,10 +4,16 @@ from streamlit_drawable_canvas import st_canvas
 from PIL import Image
 from io import BytesIO
 import random
-
+from urllib.parse import quote
 
 st.set_page_config(page_title="Story with Canvas", layout="centered")
-st.write("⭐ Learning Story")
+st.title("⭐ Learning Story with Drawing & Padlet Upload")
+
+passages = [
+    "Leo and his friends discovered a path leading to the Whispering Woods, known for the trees that could talk. The locals avoided it, saying it was bewitched, but the adventurous teens couldn’t resist exploring.",
+    "As they walked deeper into the woods, the trees started whispering. Each tree told stories of ancient times, of battles fought and lovers separated. The trees also warned them about the dangers of forgetting the past and the importance of nature.",
+    "Moved by these stories, the friends promised to protect the woods and share their knowledge. They left the woods wiser, with a deeper respect for nature and its untold stories, ready to advocate for its preservation."
+]
 
 # 탭 구성
 tab1, tab2 = st.tabs([
