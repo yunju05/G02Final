@@ -54,7 +54,7 @@ with tab1:
 # 🔈 Drawing Canvas with TTS
 # -------------------
 with tab2:
-    st.header("🖍️ Drawing Canvas with Random TTS")
+    st.header("🖍️ Drawing Canvas with TTS")
 
     if "selected_paragraph" not in st.session_state:
         st.session_state.selected_paragraph = ""
