@@ -2,7 +2,7 @@ import streamlit as st
 
 st.title("📘 Instruction")
 st.markdown("""
-Welcome! Here's what you'll do on each page:
+### 📃 Page Descriptions
 
 - **Self Study (Pre-class)**: Learn key vocabulary before the lesson
 - **Warm Up**: Activate your background knowledge with fun pre-lesson activities
