@@ -11,7 +11,7 @@ sentences = [
     ["Each", "tree", "told", "stories", "of", "ancient", "times", ",", "of", "battles", "fought", "and", "lovers", "separated"],
     ["The", "trees", "also", "warned", "them", "about", "the", "dangers", "of", "forgetting", "the", "past", "and", "the", "importance", "of", "nature"],
     ["Moved", "by", "these", "stories,", "the", "friends", "promised", "to", "protect", "the", "woods", "and", "share", "their", "knowledge"],
-    ["They", "left", "the", "woods", "wiser,", "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories", ",", "ready", "to", "advocate", "for", "its", "preservation"]
+    ["They", "left", "the", "woods", "wiser", "," "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories", ",", "ready", "to", "advocate", "for", "its", "preservation"]
 ]
 
 # 각 문장에 해당하는 중요한 단어 인덱스 (예: 수동태, 동명사 등)
@@ -20,9 +20,9 @@ important_indices = [
     [2, 6, 7, 13, 14, 15],    # "avoided", "was", "exploring"
     [2, 3, 10, 11],       # "walked", "whispering"
     [2, 3, 9, 10, 12, 13],    # "told", "battles", "separated"
-    [3, 9, 14],    # "warned", "forgetting", "importance"
-    [6, 8, 12],    # "promised", "protect", "share"
-    [4, 7, 17]     # "wiser,", "respect", "advocate"
+    [2, 3, 4, 7, 8, 9],    # "warned", "forgetting", "importance"
+    [1, 2, 3, 4, 7, 8, 9, 13],    # "promised", "protect", "share"
+    [4, 8, 9, 13, 14, 15, 17, 18, 23]     # "wiser", "respect", "advocate"
 ]
 
 # 초기 상태 설정
