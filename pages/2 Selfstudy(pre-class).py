@@ -90,7 +90,7 @@ with tab3:
 
     if st.button("✅ Check the answer"):
         st.session_state.check_clicked = True
-    st.markdown("Great job! Now, shall we go to page?")
+        
         if st.session_state.current_word:  
             if user_input.strip().lower() == st.session_state.current_word.lower():
                 st.success("✅ Correct!")
