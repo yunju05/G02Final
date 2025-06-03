@@ -113,7 +113,7 @@ with tab3:
     st.markdown(
         """
         Feel free to share your drawings by uploading them to our Padlet board below.  
-        Please make sure to upload your drawing to the correct section based on your assigned story:  
+        Please make sure to upload your drawing to the correct section based on your assigned story.   
         Each section is clearly labeled on the Padlet board for your convenience.
         """
     )
