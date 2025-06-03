@@ -11,4 +11,17 @@ Welcome! Here's what you'll do on each page:
 - **Grammar**: Learn the grammar used in the story
 - **Grammar Quiz**: Practice using the grammar you just learne
 - **Wrap Up**: Check what you learned today with an O/X quiz
+
+
+### 🧠 Lesson Goals
+
+1. **Expression & Vocabulary**  
+   - Learn and internalize expressions and vocabulary via spelling practice and meaning quiz.
+
+2. **Grammar**  
+   - Practice forming grammatically correct sentences through word arrangement tasks.
+
+3. **Listening**  
+   - Improve listening skills by matching spoken sentences with correct word order.
+
 """)
