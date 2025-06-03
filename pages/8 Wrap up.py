@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-# 퀴즈 데이터
+# 퀴즈 데이터 정의
 questions_data = [
     {
         "question": "Leo and his friends decided to explore the Whispering Woods because they were known for their beautiful scenery.",
@@ -25,29 +25,28 @@ questions_data = [
     }
 ]
 
-def reset_quiz():
-    st.session_state.remaining_questions = random.sample(questions_data, len(questions_data))
-    st.session_state.score = 0
-    st.session_state.current_question = None
-    st.session_state.quiz_done = False
-    st.session_state.answered = False
-    st.session_state.feedback = ""
-    st.session_state.user_answer = None
-
 def quiz():
     st.set_page_config(page_title="OX Quiz")
     st.title("⭕✖️ Quiz on the Story")
-    st.markdown("Test your understanding of the story with a quick OX quiz!")
 
+    # 초기 상태 설정
     if "remaining_questions" not in st.session_state:
-        reset_quiz()
+        st.session_state.remaining_questions = random.sample(questions_data, len(questions_data))
+        st.session_state.score = 0
+        st.session_state.current_question = None
+        st.session_state.quiz_done = False
+        st.session_state.answered = False
+        st.session_state.feedback = ""
+        st.session_state.user_answer = None
 
+    # 퀴즈 완료 처리
     if st.session_state.quiz_done:
-        st.success(f"🎉 Quiz Complete! Your score: **{st.session_state.score}/{len(questions_data)}**")
-        if st.button("🔁 Restart Quiz"):
-            reset_quiz()
+        st.success(f"✅ Quiz Complete! Your score: {st.session_state.score}/{len(questions_data)}")
+        if st.button("Restart Quiz"):
+            st.session_state.clear()
         return
 
+    # 현재 문제 설정
     if st.session_state.current_question is None and st.session_state.remaining_questions:
         st.session_state.current_question = st.session_state.remaining_questions.pop()
         st.session_state.answered = False
@@ -55,25 +54,27 @@ def quiz():
         st.session_state.user_answer = None
 
     q = st.session_state.current_question
-    st.subheader("📌 Question:")
-    st.write(q["question"])
+    st.write(f"Question: {q['question']}")
 
+    st.session_state.user_answer = st.radio("Choose one:", ("O", "X"), key=f"answer_{len(st.session_state.remaining_questions)}")
+
+    # 정답 제출
     if not st.session_state.answered:
-        with st.form(key="quiz_form"):
-            user_answer = st.radio("Choose your answer:", ["O", "X"])
-            submitted = st.form_submit_button("✅ Submit Answer")
-            if submitted:
-                st.session_state.user_answer = user_answer
-                if st.session_state.user_answer == q["answer"]:
-                    st.session_state.score += 1
-                    st.session_state.feedback = "✅ Correct!"
-                else:
-                    st.session_state.feedback = f"❌ Wrong! The correct answer was **'{q['answer']}'**."
-                st.session_state.answered = True
+        if st.button("Submit Answer"):
+            if st.session_state.user_answer == q["answer"]:
+                st.session_state.score += 1
+                st.session_state.feedback = "✅ Correct!"
+            else:
+                st.session_state.feedback = f"❌ Wrong! The correct answer was '{q['answer']}'."
+            st.session_state.answered = True
 
-    if st.session_state.answered:
+    # 피드백 표시
+    if st.session_state.feedback:
         st.info(st.session_state.feedback)
-        if st.button("➡️ Next Question"):
+
+    # 다음 문제로 이동
+    if st.session_state.answered:
+        if st.button("Next Question", key="next"):
             if st.session_state.remaining_questions:
                 st.session_state.current_question = None
                 st.session_state.answered = False
