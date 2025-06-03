@@ -165,6 +165,7 @@ with tab4:
 
 ######### TAB 5: Crossword #########
 with tab5:
+    with st.container():
     st.markdown("""
     <style>
     .crossword-input input {
@@ -182,28 +183,38 @@ with tab5:
     st.markdown("Let’s play a crossword puzzle game using the words you just learned!")
     st.markdown("### 🧩 Please enter the alphabet in the box below.")
 
+    # 단어 목록과 위치 설정
     words = {
-        'PYTHON': {'direction': 'across', 'row': 1, 'col': 0},
-        'STREAMLIT': {'direction': 'down', 'row': 0, 'col': 2},
-        'CODE': {'direction': 'down', 'row': 0, 'col': 4},
+        'BEWITCHED': {'direction': 'down', 'row': 0, 'col': 12},
+        'POLLUTION': {'direction': 'down', 'row': 0, 'col': 9},
+        'SCULPTURE': {'direction': 'across', 'row': 2, 'col': 6},
+        'PROTECTED': {'direction': 'down', 'row': 2, 'col': 5},
+        'AVOID': {'direction': 'across', 'row': 2, 'col': 0},
+        'RESPECT': {'direction': 'across', 'row': 3, 'col': 5},
+        'COMFORT': {'direction': 'across', 'row': 4, 'col': 1},
+        'WOODS': {'direction': 'across', 'row': 5, 'col': 0},
+        'NATURE': {'direction': 'across', 'row': 6, 'col': 5},
     }
 
-    grid_size = 10
-    grid = np.full((grid_size, grid_size), '', dtype=str)
+    grid_rows = 19
+    grid_cols = 13
+    grid = np.full((grid_rows, grid_cols), '', dtype=str)
+
+    # 정답 채우기
     for word, props in words.items():
         row, col = props['row'], props['col']
         if props['direction'] == 'across':
-            grid[row, col:col+len(word)] = list(word)
+            grid[row, col:col + len(word)] = list(word)
         elif props['direction'] == 'down':
-            grid[row:row+len(word), col] = list(word)
+            grid[row:row + len(word), col] = list(word)
 
-    user_grid = np.full((grid_size, grid_size), '', dtype=str)
+    user_grid = np.full((grid_rows, grid_cols), '', dtype=str)
 
-    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)  # 위 여백 추가
+    st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
-    for row_index in range(grid_size):
-        cols = st.columns(grid_size, gap="small")
-        for col_index in range(grid_size):
+    for row_index in range(grid_rows):
+        cols = st.columns(grid_cols, gap="small")
+        for col_index in range(grid_cols):
             if grid[row_index, col_index] != '':
                 with cols[col_index]:
                     user_input = st.text_input(
@@ -213,24 +224,24 @@ with tab5:
                         max_chars=1,
                         label_visibility="collapsed",
                         placeholder=" ",
-                        help=f"{row_index},{col_index}",
-                        type="default"
+                        help=f"{row_index},{col_index}"
                     )
                     st.markdown("<div class='crossword-input'></div>", unsafe_allow_html=True)
                     user_grid[row_index, col_index] = user_input.upper()
 
     if st.button("Submit"):
         correct = True
-        for row_index in range(grid_size):
-            for col_index in range(grid_size):
+        for row_index in range(grid_rows):
+            for col_index in range(grid_cols):
                 if grid[row_index, col_index] != '' and grid[row_index, col_index] != user_grid[row_index, col_index]:
                     correct = False
         if correct:
-            st.success("That's correct!")
+            st.success("That's correct! 🎉")
         else:
             st.error("That's wrong. Try again.")
 
     st.subheader("힌트 (Hints)")
     for word, props in words.items():
         direction = '가로' if props['direction'] == 'across' else '세로'
-        st.write(f"{direction} - {word} ({props['row']+1}, {props['col']+1})")
+        st.write(f"{direction} - {word} (시작 위치: {props['row']+1}행, {props['col']+1}열)")
+
