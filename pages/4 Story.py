@@ -68,3 +68,14 @@ with tab2:
         drawing_mode="freedraw",
         key=f"canvas_{st.session_state.canvas_key}"
     )
+      st.image(img, caption="🖼️ Your Drawing")Add commentMore actions
+
+    # 저장 버튼
+        buffered = BytesIO()
+        Image.fromarray(img).save(buffered, format="PNG")
+        st.download_button(
+            label="📥 그림 다운로드 (PNG)",
+            data=buffered.getvalue(),
+            file_name="drawing.png",
+            mime="image/png"
+        )
