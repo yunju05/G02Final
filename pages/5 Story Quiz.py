@@ -121,6 +121,7 @@ def next_problem():
         st.balloons()
         st.session_state.quiz_started = False
 
+
 # 인터페이스
 st.title("🧠 Sentence Structure Quiz")
 
