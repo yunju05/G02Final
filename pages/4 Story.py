@@ -120,9 +120,3 @@ with tab3:
     padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"
     st.components.v1.iframe(padlet_url, height=500, scrolling=True)
 
-
-with tab3:
-    st.header("💬 Upload Your Drawings to Padlet")
-    st.markdown("Feel free to share your drawings by uploading them to our Padlet board below:")
-    padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"
-    st.components.v1.iframe(padlet_url, height=500, scrolling=True)
