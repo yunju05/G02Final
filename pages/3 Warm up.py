@@ -21,31 +21,6 @@ with col2:
 # 설명 텍스트
 st.write("### Let's guess the content of this story and share it!")
 
-st.subheader("📓 Guess Notebook")
+# 하이퍼링크 만들기
+st.markdown("[Visit Padlat](https://padlet.com/yunju05325/padlet-l9dikrb4yijjudux)")
 
-# Initialize session state
-if "guess_notes" not in st.session_state:
-    st.session_state.guess_notes = []
-
-# Form to add new guesses
-with st.form("guess_form", clear_on_submit=True):
-    new_guess = st.text_area("💭 Add a new guess:", height=100)
-    submitted = st.form_submit_button("➕ Add")
-
-    if submitted and new_guess.strip():
-        st.session_state.guess_notes.append(new_guess.strip())
-        st.success("Guess added!")
-
-# Display saved guesses
-st.markdown("---")
-if st.session_state.guess_notes:
-    for i, guess in enumerate(reversed(st.session_state.guess_notes), 1):
-        st.markdown(f"**{len(st.session_state.guess_notes) - i + 1}.** {guess}")
-else:
-    st.info("No guesses yet. Start writing!")
-
-# Clear guesses option
-with st.expander("⚙️ Clear all guesses"):
-    if st.button("🗑️ Delete All Guesses", key="delete_guesses"):
-        st.session_state.guess_notes = []
-        st.success("All guesses cleared.")
