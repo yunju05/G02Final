@@ -45,41 +45,62 @@ with tab1:
 # 🔈 Drawing Canvas
 # -------------------
 with tab2:
-    st.title("🖍️ Drawing Canvas")
+    st.header("🖍️ Drawing Canvas with Random TTS")
 
-    stroke_width = st.slider("✏️ 선 굵기", 1, 25, 5)
-    stroke_color = st.color_picker("🎨 선 색깔", "#000000")
+    if "selected_paragraph" not in st.session_state:
+        st.session_state.selected_paragraph = ""
 
-    # 지우기 버튼을 누르면 key를 증가시켜 캔버스를 초기화
+    if st.button("🔄 Play Random Paragraph TTS"):
+        st.session_state.selected_paragraph = random.choice(passages)
+
+    if st.session_state.selected_paragraph:
+        st.markdown(f"**📖 Paragraph:** {st.session_state.selected_paragraph}")
+
+        # TTS 재생용 mp3 불러오기 (Google Translate TTS API 무료 비공식 활용)
+        try:
+            tts_url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={quote(st.session_state.selected_paragraph)}&tl=en&client=tw-ob"
+            audio_bytes = requests.get(tts_url, headers={"User-Agent": "Mozilla/5.0"}).content
+            st.audio(audio_bytes, format="audio/mp3")
+        except Exception as e:
+            st.error("TTS 재생 중 오류가 발생했습니다.")
+
+    # 캔버스 설정
+    stroke_width = st.slider("✏️ Line Thickness", 1, 25, 5)
+    stroke_color = st.color_picker("🎨 Line Color", "#000000")
+
     if "canvas_key" not in st.session_state:
         st.session_state.canvas_key = 0
 
-    if st.button("🔁 초기화"):
+    if st.button("🔁 Reset Canvas"):
         st.session_state.canvas_key += 1
 
-  # 캔버스 위젯 표시
     canvas_result = st_canvas(
-        fill_color="rgba(255, 165, 0, 0.3)",  # 연한 주황 배경
+        fill_color="rgba(255, 165, 0, 0.3)",
         stroke_width=stroke_width,
         stroke_color=stroke_color,
         background_color="#FFFFFF",
         height=600,
         width=600,
         drawing_mode="freedraw",
-        key=f"canvas_{st.session_state.canvas_key}"
-)
+        key=f"canvas_{st.session_state.canvas_key}",
+    )
 
-# 저장 및 다운로드 기능 (그림이 있을 경우에만)
     if canvas_result.image_data is not None:
         img = canvas_result.image_data.astype("uint8")
         st.image(img, caption="🖼️ Your Drawing")
 
-    # 저장 버튼
-    buffered = BytesIO()
-    Image.fromarray(img).save(buffered, format="PNG")
-    st.download_button(
-        label="📥 그림 다운로드 (PNG)",
-        data=buffered.getvalue(),
-        file_name="drawing.png",
-        mime="image/png"
-    )
+        buffered = BytesIO()
+        Image.fromarray(img).save(buffered, format="PNG")
+
+        st.download_button(
+            label="📥 Download Your Drawing (PNG)",
+            data=buffered.getvalue(),
+            file_name="drawing.png",
+            mime="image/png"
+        )
+
+    # 패들릿(외부 링크) 임베드 예시
+    st.markdown("---")
+    st.markdown("### 💬 Upload your drawing to Padlet:")
+    padlet_url = "https://padlet.com/embed/your_padlet_board_url_here"
+    st.components.v1.iframe(padlet_url, height=500, scrolling=True)
