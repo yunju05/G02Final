@@ -1,6 +1,5 @@
 import streamlit as st
 
-st.title("📘 Instruction")
 st.markdown("""
 ### 📃 Page Descriptions
 
