@@ -108,12 +108,13 @@ with tab2:
             mime="image/png"
         )
 
-    # 패들릿(외부 링크) 임베드 예시
-    st.markdown("---")
-    st.markdown("### 💬 Upload your drawing to Padlet:")
-    padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"  
-    st.components.v1.iframe(padlet_url, height=500, scrolling=True)
 
 
 with tab3:
-    st.markdown("Uploade Your Drawings to Padlet")
+    st.header("💬 Uploade Your Drawings to Padlet")
+    
+    # 패들릿(외부 링크) 임베드 예시
+    st.markdown("---")
+    st.markdown("###Upload your drawing to Padlet:")
+    padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"  
+    st.components.v1.iframe(padlet_url, height=500, scrolling=True)
