@@ -9,7 +9,7 @@ with tab1:
     st.header("🧠 What is Passive Voice?")
     st.markdown("Write here.")
     📝 Understanding Passive Voice and Gerunds
-1. Passive Voice
+st. write (1. Passive Voice
 Passive voice is used when the subject receives the action instead of doing it.
 
 📌 Structure:
@@ -27,13 +27,13 @@ Passive: The project will be finished (by them).
 🔍 Tips:
 Use passive voice when who did the action is unknown or unimportant.
 
-Focus is on the result or object, not the doer.
+Focus is on the result or object, not the doer.)
  
 
 with tab2:
     st.header("🔁 동명사 탭 내용 작성하세요")
     st.markdown("Write here.")
-Gerunds
+    st.write (Gerunds
 A gerund is the -ing form of a verb used as a noun.
 
 📌 Structure:
@@ -55,4 +55,4 @@ enjoy, avoid, finish, consider, mind, suggest, keep
 🎯 Quick Comparison:
 Concept   Function   Example
 Passive Voice   Focus on object   The book was written by her.
-Gerund   Verb as a noun   Reading helps you learn.
+Gerund   Verb as a noun   Reading helps you learn.)
