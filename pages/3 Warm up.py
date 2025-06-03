@@ -14,6 +14,14 @@ with col1:
 with col2:
     st.image(url2)
 
+st.markdown("""
+### Activity Instructions
+
+1. Observe the two images above: the photo related to today’s English passage and the word cloud.
+2. Based on these, **guess the content or story** and write down your thoughts.
+3. Upload your ideas and guesses to the Padlet board embedded below to share with your classmates.
+""")
+
 st.write("### Let's guess the content of this story and share it!")
 
 # Padlet 페이지를 iframe으로 임베드
