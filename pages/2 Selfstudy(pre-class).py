@@ -179,6 +179,7 @@ with tab5:
     """, unsafe_allow_html=True)
 
     st.title("Crossword puzzle")
+    st.markdown("Let’s play a crossword puzzle game using the words you just learned!")
     st.markdown("### 🧩 Please enter the alphabet in the box below.")
 
     words = {
