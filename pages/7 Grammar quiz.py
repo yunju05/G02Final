@@ -74,8 +74,7 @@ if st.session_state.user_sentence:
                 st.session_state.user_sentence.pop(i)
                 # rerun 없이 로직 중단 (이후 루프 안 돌게)
                 st.stop()
-else:
-    st.write("Please select words!")
+
 
 # 정답 제출
 if st.button("Submit"):
