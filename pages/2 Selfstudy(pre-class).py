@@ -102,7 +102,7 @@ with tab3:
                 # Store incorrect words without duplicates
                 if st.session_state.current_word not in st.session_state.mistakes:
                     st.session_state.mistakes.append(st.session_state.current_word)
-    st.markdown("Great job! Now, shall we go to page?")
+    st.markdown("Great job! Now, shall we go to 🔎page?")
                 
 ######### TAB 4: 🔎Quiz (Meaning → English) #########
 
@@ -142,6 +142,9 @@ def check_quiz_answer():
 # TAB 4: 퀴즈 화면
 with tab4:
     st.markdown("### 📝 Write the English word from the Korean meaning")
+    st.markdown("Look at the Korean meaning and write the English word!")
+
+    
     st.write(f"**📊 Your Score:** {st.session_state.quiz_score} / {st.session_state.quiz_total}")
 
     if st.session_state.quiz_current_idx is None:
@@ -158,7 +161,7 @@ with tab4:
         st.success("✅ Correct! Let's move on to the next question.")
     elif st.session_state.quiz_feedback.startswith("wrong"):
         st.error(st.session_state.quiz_feedback.split(": ")[1])
-
+    st.markdown("Did you get a good score? Then let’s go to the final page!")
 
 ######### TAB 5: Crossword #########
 with tab5:
