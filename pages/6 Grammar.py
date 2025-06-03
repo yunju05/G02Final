@@ -3,7 +3,7 @@ import streamlit as st
 st.title("Grammar")
 
 # 탭 2개 만들기
-tab1, tab2 = st.tabs(["Passive Voice", "동명사"])
+tab1, tab2 = st.tabs(["Passive Voice", "Gerund"])
 
 with tab1:
     st.header("🧠 What is Passive Voice?")
