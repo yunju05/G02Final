@@ -195,8 +195,18 @@ with tab5:
         'NATURE': {'direction': 'across', 'row': 6, 'col': 5},
     }
 
-    grid_rows = 19
-    grid_cols = 13
+    # ✅ 단어에 따라 자동으로 필요한 그리드 크기 계산
+    max_row = max(
+        props['row'] + (len(word) if props['direction'] == 'down' else 1)
+        for word, props in words.items()
+    )
+    max_col = max(
+        props['col'] + (len(word) if props['direction'] == 'across' else 1)
+        for word, props in words.items()
+    )
+    grid_rows = max(max_row, 10)
+    grid_cols = max(max_col, 10)
+
     grid = np.full((grid_rows, grid_cols), '', dtype=str)
 
     # 정답 채우기
