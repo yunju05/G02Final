@@ -62,26 +62,36 @@ with tab3:
     import streamlit as st
     active_sentence = "Tom eats an apple."
     correct_passive = ["An", "apple", "is", "eaten", "by", "Tom"]
+    
     st.title("수동태 퀴즈")
-    st.write("### 능동태 문장을 보고 수동태 문장을 완성하세요.")
-    st.write(f"**능동태 문장:** {active_sentence}")
+    st.markdown("**능동태 문장:** Tom eats an apple.")
+    st.write("아래 단어 버튼을 눌러 수동태 문장을 완성해보세요.")
+    
     word_buttons = ["An", "apple", "is", "eaten", "by", "Tom"]
+    
     if "user_sentence" not in st.session_state:
         st.session_state.user_sentence = []
-    cols = st.columns(len(word_buttons))
-    for i, word in enumerate(word_buttons):
-        if cols[i].button(word):
-            st.session_state.user_sentence.append(word)
-    st.write("#### 만든 문장:")
-    st.write(" ".join(st.session_state.user_sentence))
+        
+        cols = st.columns(len(word_buttons))
+        for i, word in enumerate(word_buttons):
+            if cols[i].button(word, key=f"btn_{i}"):
+                st.session_state.user_sentence.append(word)
+        
+    user_sentence = st.session_state.user_sentence
+    st.markdown("#### 만든 문장:")
+    st.write(" ".join(user_sentence))
+    
     if st.button("제출"):
-    if st.session_state.user_sentence == correct_passive:
-        st.success("정답입니다! 🎉")
-    else:
-        st.error("틀렸어요. 다시 시도해보세요!")
+        if user_sentence == correct_passive:
+            st.success("정답입니다! 🎉")
+        else:
+            st.error("틀렸어요. 다시 시도해보세요.")
+            
     if st.button("초기화"):
         st.session_state.user_sentence = []
+        st.experimental_rerun()
 
+ 
     
 
 
