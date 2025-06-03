@@ -39,18 +39,15 @@ def quiz():
     st.title("⭕✖️ Quiz on the Story")
     st.markdown("Test your understanding of the story with a quick OX quiz!")
 
-    # 세션 상태 초기화
     if "remaining_questions" not in st.session_state:
         reset_quiz()
 
-    # 퀴즈 완료
     if st.session_state.quiz_done:
         st.success(f"🎉 Quiz Complete! Your score: **{st.session_state.score}/{len(questions_data)}**")
         if st.button("🔁 Restart Quiz"):
             reset_quiz()
         return
 
-    # 현재 문제 설정
     if st.session_state.current_question is None and st.session_state.remaining_questions:
         st.session_state.current_question = st.session_state.remaining_questions.pop()
         st.session_state.answered = False
@@ -61,26 +58,21 @@ def quiz():
     st.subheader("📌 Question:")
     st.write(q["question"])
 
-    # 사용자 선택
     if not st.session_state.answered:
-        st.session_state.user_answer = st.radio(
-            "Choose your answer:", 
-            options=["O", "X"], 
-            key=f"radio_{len(st.session_state.remaining_questions)}"
-        )
+        with st.form(key="quiz_form"):
+            user_answer = st.radio("Choose your answer:", ["O", "X"])
+            submitted = st.form_submit_button("✅ Submit Answer")
+            if submitted:
+                st.session_state.user_answer = user_answer
+                if st.session_state.user_answer == q["answer"]:
+                    st.session_state.score += 1
+                    st.session_state.feedback = "✅ Correct!"
+                else:
+                    st.session_state.feedback = f"❌ Wrong! The correct answer was **'{q['answer']}'**."
+                st.session_state.answered = True
 
-        if st.button("✅ Submit Answer"):
-            if st.session_state.user_answer == q["answer"]:
-                st.session_state.score += 1
-                st.session_state.feedback = "✅ Correct!"
-            else:
-                st.session_state.feedback = f"❌ Wrong! The correct answer was **'{q['answer']}'**."
-            st.session_state.answered = True
-
-    # 피드백
     if st.session_state.answered:
         st.info(st.session_state.feedback)
-
         if st.button("➡️ Next Question"):
             if st.session_state.remaining_questions:
                 st.session_state.current_question = None
