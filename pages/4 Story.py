@@ -16,9 +16,10 @@ passages = [
 ]
 
 # 탭 구성
-tab1, tab2 = st.tabs([
+tab1, tab2, tab3 = st.tabs([
     "1. 📋Listen and Read", 
-    "2. 🖍️Drawing Canvas"
+    "2. 🖍️Drawing Canvas",
+    "3. 💬 Share Your Drawing"
 ])
 
 # -------------------
@@ -112,3 +113,7 @@ with tab2:
     st.markdown("### 💬 Upload your drawing to Padlet:")
     padlet_url = "https://padlet.com/yunju05325/digital-classroom-l9dikrb4yijjudux"  
     st.components.v1.iframe(padlet_url, height=500, scrolling=True)
+
+
+with tab3:
+    st.markdown("Uploade Your Drawings to Padlet")
