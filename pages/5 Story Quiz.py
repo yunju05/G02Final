@@ -172,4 +172,3 @@ if not st.session_state.quiz_started and st.session_state.result_data:
     st.subheader("📊 Results Summary")
     st.dataframe(df)
     csv = df.to_csv(index=False).encode('utf-8-sig')
-    st.download_button("📥 Download Result (CSV)", data=csv, file_name="quiz_results.csv", mime="text/csv")
