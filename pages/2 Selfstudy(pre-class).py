@@ -165,7 +165,6 @@ with tab4:
 
 ######### TAB 5: Crossword #########
 with tab5:
-    with st.container():
     st.markdown("""
     <style>
     .crossword-input input {
