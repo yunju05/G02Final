@@ -54,24 +54,27 @@ with tab1:
 # 🔈 Drawing Canvas with TTS
 # -------------------
 with tab2:
-    st.header("🖍️ Drawing Canvas with TTS")
+    st.header("🖍️ Drawing Canvas with Random Audio")
 
-    if "selected_paragraph" not in st.session_state:
-        st.session_state.selected_paragraph = ""
+    # GitHub에 저장된 mp3 파일 URL 리스트 (실제 URL로 바꾸세요)
+    audio_files = [
+        "https://github.com/yunju05/G02Final/raw/main/pages/text%201.mp3",
+        "https://github.com/yunju05/G02Final/raw/main/pages/text%202.mp3",
+        "https://github.com/yunju05/G02Final/raw/main/pages/text%203.mp3"
+    ]
 
-    if st.button("🔄 Play Random Paragraph TTS"):
-        st.session_state.selected_paragraph = random.choice(passages)
+    if "selected_audio_url" not in st.session_state:
+        st.session_state.selected_audio_url = ""
 
-    if st.session_state.selected_paragraph:
-        st.markdown(f"**📖 Paragraph:** {st.session_state.selected_paragraph}")
+    if st.button("🔄 Play Random Audio"):
+        st.session_state.selected_audio_url = random.choice(audio_files)
 
+    if st.session_state.selected_audio_url:
         try:
-            text = quote(st.session_state.selected_paragraph)
-            tts_url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={text}&tl=en&client=tw-ob"
-            audio_bytes = requests.get(tts_url, headers={"User-Agent": "Mozilla/5.0"}).content
-            st.audio(audio_bytes, format="audio/mp3")
+            response = requests.get(st.session_state.selected_audio_url)
+            st.audio(response.content, format="audio/mp3")
         except Exception as e:
-            st.error(f"TTS 재생 중 오류 발생: {e}")
+            st.error(f"오디오 재생 중 오류 발생: {e}")
 
     # 캔버스 설정
     stroke_width = st.slider("✏️ Line Thickness", 1, 25, 5)
