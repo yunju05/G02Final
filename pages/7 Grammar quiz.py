@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-# 문제은행
+# 문제 은행
 quiz_bank = [
     {
         "active": "Tom eats an apple.",
@@ -25,64 +25,76 @@ quiz_bank = [
     }
 ]
 
-# 문제 로드 함수
-def load_new_question():
-    question = random.choice(quiz_bank)
-    st.session_state.current_question = question
-    st.session_state.user_sentence = []
-    shuffled = question["passive"].copy()
-    random.shuffle(shuffled)
-    st.session_state.shuffled_buttons = shuffled
+# 상태 초기화
+if 'current_index' not in st.session_state:
+    st.session_state.current_index = 0
+if 'selected_words' not in st.session_state:
+    st.session_state.selected_words = []
+if 'used_words' not in st.session_state:
+    st.session_state.used_words = []
+if 'shuffled_words' not in st.session_state:
+    st.session_state.shuffled_words = []
+if 'score' not in st.session_state:
+    st.session_state.score = 0
+if 'feedback_shown' not in st.session_state:
+    st.session_state.feedback_shown = False
 
-# 세션 상태 점검 및 초기화
-if "current_question" not in st.session_state or st.session_state.current_question is None:
-    load_new_question()
+# 새 문제 로드
+def load_question():
+    question = quiz_bank[st.session_state.current_index]
+    st.session_state.selected_words = []
+    st.session_state.used_words = []
+    st.session_state.feedback_shown = False
+    st.session_state.shuffled_words = random.sample(question["passive"], len(question["passive"]))
 
-if "user_sentence" not in st.session_state:
-    st.session_state.user_sentence = []
+# 단어 선택
+def select_word(word):
+    if word not in st.session_state.used_words:
+        st.session_state.selected_words.append(word)
+        st.session_state.used_words.append(word)
 
-if "shuffled_buttons" not in st.session_state:
-    st.session_state.shuffled_buttons = st.session_state.current_question["passive"].copy()
-    random.shuffle(st.session_state.shuffled_buttons)
+# 초기 문제 로딩
+if not st.session_state.shuffled_words:
+    load_question()
 
-# 현재 문제 정보
-question_data = st.session_state.current_question
-active_sentence = question_data.get("active", "Click new question.")
-correct_passive = question_data.get("passive", [])
+# UI
+st.title("🔠 Passive Voice Word Order Quiz")
+question = quiz_bank[st.session_state.current_index]
+st.markdown(f"### ✅ Active Sentence:\n`{question['active']}`")
 
-# UI 출력
-st.title("🔎Passive Voice Quiz")
-st.markdown(f"**active sentence:** {active_sentence}")
-st.write("👉 Click the words below to make a passive voice sentence.")
+st.markdown("### 🔤 Arrange the Passive Sentence:")
 
-# 단어 선택 버튼
-cols = st.columns(len(st.session_state.shuffled_buttons))
-for i, word in enumerate(st.session_state.shuffled_buttons):
-    if cols[i].button(word, key=f"select_{i}_{word}"):
-        st.session_state.user_sentence.append(word)
+# 선택 UI
+cols = st.columns(5)
+for idx, word in enumerate(st.session_state.shuffled_words):
+    if word not in st.session_state.used_words:
+        if cols[idx % 5].button(word, key=f"word_{idx}"):
+            select_word(word)
 
-# 선택된 단어 출력 + 개별 삭제
-st.markdown("#### Your Sentence:")
-if st.session_state.user_sentence:
-    for i, word in enumerate(st.session_state.user_sentence):
-        col1, col2 = st.columns([4, 1])
-        with col1:
-            st.write(f"`{word}`")
-        with col2:
-            # 삭제 요청을 감지하는 고유 버튼 키 사용
-            if st.button("❌", key=f"del_{i}_{word}"):
-                st.session_state.user_sentence.pop(i)
-                # rerun 없이 로직 중단 (이후 루프 안 돌게)
-                st.stop()
+# 선택된 단어 보기
+st.markdown("**📝 Your Sentence:**")
+st.markdown(" ".join(st.session_state.selected_words) or "`(No words selected yet)`")
 
+# 버튼 조작 영역
+col1, col2, col3 = st.columns(3)
+with col1:
+    if st.button("✅ Submit"):
+        if st.session_state.selected_words == question["passive"]:
+            st.success("🎉 Correct!")
+            st.session_state.score += 1
+            st.session_state.feedback_shown = True
+        else:
+            st.error("❌ Incorrect. Try again.")
 
-# 정답 제출
-if st.button("Submit"):
-    if st.session_state.user_sentence == correct_passive:
-        st.success("Correct!! 🎉")
-    else:
-        st.error("Incorrect. Please try again.")
+with col2:
+    if st.button("🔄 Clear"):
+        st.session_state.selected_words = []
+        st.session_state.used_words = []
 
-# 새 문제
-if st.button("New Question"):
-    load_new_question()
+with col3:
+    if st.button("⏭️ Next") and st.session_state.feedback_shown:
+        st.session_state.current_index = (st.session_state.current_index + 1) % len(quiz_bank)
+        load_question()
+
+st.markdown(f"### 📊 Score: {st.session_state.score} / {len(quiz_bank)}")
+
