@@ -19,6 +19,7 @@ st.markdown("""
 
 2. **Grammar**  
    - Practice forming grammatically correct sentences through word arrangement tasks.
+   - Key grammars for this class: Passive voice, Gerund
 
 3. **Listening**  
    - Improve listening skills by matching spoken sentences with correct word order.
