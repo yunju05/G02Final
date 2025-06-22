@@ -156,7 +156,7 @@ else:
     st.subheader(f"Question {st.session_state.current_index + 1} ({st.session_state.difficulty})")
 
     if st.session_state.difficulty == "Hard":
-        st.markdown("### 📘 Korean Translation (힌트)")
+        st.markdown("### 📘 Korean Translation ")
         st.info(translations[st.session_state.current_index])
 
     st.markdown("### ✍️ Arrange the words to form the correct sentence:")
