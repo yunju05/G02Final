@@ -59,12 +59,12 @@ def start_quiz():
     prepare_new_question()
 
 def prepare_new_question():
-    important_words = [sentences[st.session_state.current_index][i] for i in get_current_indices()[st.session_state.current_index]]
-    st.session_state.shuffled_words = random.sample(important_words, len(important_words))
+    sentence = sentences[st.session_state.current_index]
+    st.session_state.shuffled_words = random.sample(sentence, len(sentence))  # 전체 문장 섞기
     st.session_state.selected_words = []
     st.session_state.used_words = []
     st.session_state.feedback_shown = False
-
+    
 def play_tts():
     sentence = ' '.join(sentences[st.session_state.current_index])
     tts = gTTS(sentence)
@@ -86,21 +86,21 @@ def clear_selection():
 def submit_answer():
     if st.session_state.feedback_shown:
         return
-    correct = [sentences[st.session_state.current_index][i] for i in get_current_indices()[st.session_state.current_index]]
+    correct = sentences[st.session_state.current_index]
     is_correct = st.session_state.selected_words == correct
     if is_correct:
-        st.success("✅ Correct!")
+        st.success("✅ Correct sentence structure!")
         st.session_state.score += 1
-        st.session_state.result_data.append({
-            "Question": st.session_state.current_index + 1,
-            "Correct": True,
-            "Your Answer": ' '.join(st.session_state.selected_words),
-            "Answer": ' '.join(correct)
-        })
-        st.session_state.feedback_shown = True
     else:
-        st.warning("❌ Incorrect. Try again.")
-
+        st.warning("❌ Incorrect sentence structure.")
+    st.session_state.result_data.append({
+        "Question": st.session_state.current_index + 1,
+        "Correct": is_correct,
+        "Your Answer": ' '.join(st.session_state.selected_words),
+        "Answer": ' '.join(correct)
+    })
+    st.session_state.feedback_shown = True
+    
 def show_answer():
     correct = [sentences[st.session_state.current_index][i] for i in get_current_indices()[st.session_state.current_index]]
     st.info("✅ Answer: " + ' '.join(correct))
@@ -134,18 +134,10 @@ else:
     st.audio(play_tts(), format="audio/mp3")
 
     current_sentence = sentences[st.session_state.current_index]
-    important_pos = get_current_indices()[st.session_state.current_index]
 
-    display = []
-    for i, word in enumerate(current_sentence):
-        if i in important_pos:
-            idx = important_pos.index(i)
-            filled = st.session_state.selected_words[idx] if idx < len(st.session_state.selected_words) else "___"
-            display.append(f"**{filled}**")
-        else:
-            display.append(word)
-    st.markdown("**Context:** " + ' '.join(display))
-
+    st.markdown("### ✍️ Arrange the words to form the correct sentence:")
+    st.markdown("**Your Sentence:** " + ' '.join(st.session_state.selected_words))
+    
     st.markdown("### 🔡 Select the key words:")
     cols = st.columns(5)
     for idx, word in enumerate(st.session_state.shuffled_words):
