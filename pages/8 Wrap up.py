@@ -38,6 +38,7 @@ def quiz():
         st.session_state.answered = False
         st.session_state.feedback = ""
         st.session_state.user_answer = None
+        st.session_state.question_index = 0  # 새로 추가됨
 
     # 퀴즈 완료 처리
     if st.session_state.quiz_done:
@@ -46,26 +47,18 @@ def quiz():
             st.session_state.clear()
         return
 
-    # 다음 질문 바로 설정 (Next 버튼 클릭했을 때)
-    if "go_next" in st.session_state and st.session_state.go_next:
-        if st.session_state.remaining_questions:
-            st.session_state.current_question = st.session_state.remaining_questions.pop()
-            st.session_state.answered = False
-            st.session_state.feedback = ""
-            st.session_state.user_answer = None
+    # 다음 질문 바로 설정
+    if st.session_state.current_question is None:
+        if st.session_state.question_index < len(questions_data):
+            st.session_state.current_question = st.session_state.remaining_questions[st.session_state.question_index]
         else:
             st.session_state.quiz_done = True
-        st.session_state.go_next = False  # 플래그 초기화
+            return
 
-    # 현재 질문 설정
-    if st.session_state.current_question is None and st.session_state.remaining_questions:
-        st.session_state.current_question = st.session_state.remaining_questions.pop()
-
-    # 문제 표시
     q = st.session_state.current_question
     st.write(f"Question: {q['question']}")
 
-    st.session_state.user_answer = st.radio("Choose one:", ("O", "X"), key=f"answer_{len(st.session_state.remaining_questions)}")
+    st.session_state.user_answer = st.radio("Choose one:", ("O", "X"), key=f"answer_{st.session_state.question_index}")
 
     # 정답 제출
     if not st.session_state.answered:
@@ -81,11 +74,17 @@ def quiz():
     if st.session_state.feedback:
         st.info(st.session_state.feedback)
 
-    # 다음 문제 버튼 (클릭 시 플래그를 설정하여 바로 다음 질문 로드)
+    # 다음 문제로 이동
     if st.session_state.answered:
         if st.button("Next Question"):
-            st.session_state.go_next = True
-            st.experimental_rerun()  # 즉시 rerun으로 다음 문제 반영
+            st.session_state.question_index += 1
+            if st.session_state.question_index < len(questions_data):
+                st.session_state.current_question = None
+                st.session_state.answered = False
+                st.session_state.feedback = ""
+                st.session_state.user_answer = None
+            else:
+                st.session_state.quiz_done = True
 
 if __name__ == "__main__":
     quiz()
