@@ -37,7 +37,7 @@ def quiz():
         st.session_state.answered = False
         st.session_state.feedback = ""
         st.session_state.finished = False
-        st.session_state.user_answers = {}
+        st.session_state.user_answers = {}  # <-- 이 줄이 핵심
 
     # 퀴즈 종료
     if st.session_state.finished:
@@ -47,20 +47,20 @@ def quiz():
         return
 
     # 현재 질문
-    current_q = st.session_state.questions[st.session_state.q_index]
-    st.write(f"Question {st.session_state.q_index + 1}: {current_q['question']}")
+    question = st.session_state.questions[st.session_state.q_index]
+    st.write(f"Question {st.session_state.q_index + 1}: {question['question']}")
 
     # 사용자 응답
     if not st.session_state.answered:
         selected = st.radio("Choose one:", ("O", "X"), key=f"radio_{st.session_state.q_index}")
         if st.button("Submit Answer"):
-            st.session_state.user_answers[st.session_state.q_index] = selected
+            st.session_state.user_answers[st.session_state.q_index] = selected  # 오류났던 부분
             st.session_state.answered = True
-            if selected == current_q["answer"]:
+            if selected == question["answer"]:
                 st.session_state.score += 1
                 st.session_state.feedback = "✅ Correct!"
             else:
-                st.session_state.feedback = f"❌ Wrong! The correct answer was '{current_q['answer']}'."
+                st.session_state.feedback = f"❌ Wrong! The correct answer was '{question['answer']}'."
 
     # 피드백 및 다음 문제
     if st.session_state.answered:
