@@ -61,8 +61,10 @@ else:
         result = "✅ Correct" if user_answer == correct_answer else "❌ Incorrect"
         if user_answer == correct_answer:
             score += 1
-        st.markdown(f"**Q{i+1}: {q['question']}**  
-        Your answer: {user_answer} | Correct answer: {correct_answer} → {result}")
+        st.markdown(
+            f"""**Q{i+1}: {q['question']}**  
+Your answer: {user_answer} | Correct answer: {correct_answer} → {result}"""
+        )
 
     st.markdown("---")
     st.success(f"Your total score: **{score} / {len(questions_data)}**")
@@ -71,3 +73,4 @@ else:
         st.session_state.q_index = 0
         st.session_state.user_answers = []
         st.experimental_rerun()
+
