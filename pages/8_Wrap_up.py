@@ -1,6 +1,5 @@
 import streamlit as st
 
-# 문제 데이터
 questions_data = [
     {"question": "Leo and his friends decided to explore the Whispering Woods because they were known for their beautiful scenery.", "answer": "X"},
     {"question": "The Whispering Woods were avoided by locals due to the belief that they were bewitched.", "answer": "O"},
@@ -9,20 +8,17 @@ questions_data = [
     {"question": "After leaving the woods, Leo and his friends felt a stronger commitment to protecting nature.", "answer": "O"}
 ]
 
-# 상태 초기화
 if "q_index" not in st.session_state:
     st.session_state.q_index = 0
 if "user_answers" not in st.session_state:
     st.session_state.user_answers = []
 
-# 버튼 콜백 함수
 def submit_answer(answer):
     st.session_state.user_answers.append(answer)
     st.session_state.q_index += 1
 
 st.title("🌲 Whispering Woods OX Quiz 🌲")
 
-# 퀴즈 진행
 if st.session_state.q_index < len(questions_data):
     q = questions_data[st.session_state.q_index]
     st.write(f"**Question {st.session_state.q_index + 1} of {len(questions_data)}**")
@@ -33,7 +29,6 @@ if st.session_state.q_index < len(questions_data):
         st.button("O", on_click=submit_answer, args=("O",), key=f"O_{st.session_state.q_index}")
     with col2:
         st.button("X", on_click=submit_answer, args=("X",), key=f"X_{st.session_state.q_index}")
-
 else:
     st.subheader("🎉 Quiz Complete!")
     score = 0
@@ -53,4 +48,4 @@ Your answer: {user} | Correct answer: {correct} → {result}"""
     if st.button("🔄 Restart Quiz"):
         st.session_state.q_index = 0
         st.session_state.user_answers = []
-        st.experimental_rerun()
+        # rerun 없이도 정상 작동
