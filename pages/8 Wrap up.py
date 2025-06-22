@@ -1,7 +1,6 @@
 import streamlit as st
-import random
 
-# 퀴즈 데이터
+# 질문 데이터
 questions_data = [
     {
         "question": "Leo and his friends decided to explore the Whispering Woods because they were known for their beautiful scenery.",
@@ -25,53 +24,51 @@ questions_data = [
     }
 ]
 
-def quiz():
-    st.set_page_config(page_title="OX Quiz")
-    st.title("⭕✖️ Quiz on the Story")
+# 상태 초기화
+if 'q_index' not in st.session_state:
+    st.session_state.q_index = 0
+if 'score' not in st.session_state:
+    st.session_state.score = 0
+if 'answered' not in st.session_state:
+    st.session_state.answered = False
 
-    # 상태 초기화
-    if "questions" not in st.session_state:
-        st.session_state.questions = random.sample(questions_data, len(questions_data))
-        st.session_state.q_index = 0
-        st.session_state.score = 0
-        st.session_state.answered = False
-        st.session_state.feedback = ""
-        st.session_state.finished = False
-        st.session_state.user_answers = {}  # <-- 이 줄이 핵심
+# 현재 문제 가져오기
+current_question = questions_data[st.session_state.q_index]
 
-    # 퀴즈 종료
-    if st.session_state.finished:
-        st.success(f"🎉 Quiz Finished! Your score: {st.session_state.score}/{len(questions_data)}")
-        if st.button("Restart Quiz"):
-            st.session_state.clear()
-        return
+st.title("🌲 Whispering Woods OX Quiz 🌲")
+st.write(f"**Question {st.session_state.q_index + 1} of {len(questions_data)}**")
+st.write(current_question["question"])
 
-    # 현재 질문
-    question = st.session_state.questions[st.session_state.q_index]
-    st.write(f"Question {st.session_state.q_index + 1}: {question['question']}")
+# 정답 버튼
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("O") and not st.session_state.answered:
+        st.session_state.answered = True
+        if current_question["answer"] == "O":
+            st.success("✅ Correct!")
+            st.session_state.score += 1
+        else:
+            st.error("❌ Incorrect!")
+with col2:
+    if st.button("X") and not st.session_state.answered:
+        st.session_state.answered = True
+        if current_question["answer"] == "X":
+            st.success("✅ Correct!")
+            st.session_state.score += 1
+        else:
+            st.error("❌ Incorrect!")
 
-    # 사용자 응답
-    if not st.session_state.answered:
-        selected = st.radio("Choose one:", ("O", "X"), key=f"radio_{st.session_state.q_index}")
-        if st.button("Submit Answer"):
-            st.session_state.user_answers[st.session_state.q_index] = selected  # 오류났던 부분
-            st.session_state.answered = True
-            if selected == question["answer"]:
-                st.session_state.score += 1
-                st.session_state.feedback = "✅ Correct!"
-            else:
-                st.session_state.feedback = f"❌ Wrong! The correct answer was '{question['answer']}'."
-
-    # 피드백 및 다음 문제
-    if st.session_state.answered:
-        st.info(st.session_state.feedback)
-        if st.button("Next Question"):
+# 다음 문제로 넘어가기
+if st.session_state.answered:
+    if st.session_state.q_index < len(questions_data) - 1:
+        if st.button("Next Question ➡️"):
             st.session_state.q_index += 1
-            if st.session_state.q_index >= len(st.session_state.questions):
-                st.session_state.finished = True
-            else:
-                st.session_state.answered = False
-                st.session_state.feedback = ""
-
-if __name__ == "__main__":
-    quiz()
+            st.session_state.answered = False
+    else:
+        st.markdown("---")
+        st.subheader("🎉 Quiz Complete!")
+        st.write(f"Your final score: **{st.session_state.score} / {len(questions_data)}**")
+        if st.button("Restart Quiz 🔄"):
+            st.session_state.q_index = 0
+            st.session_state.score = 0
+            st.session_state.answered = False
