@@ -112,7 +112,3 @@ st.markdown("""
 - 파이썬 객관식 문제: [[5]](https://www.ccbp.in/blog/articles/python-mcqs)
 - 스트림릿으로 퀴즈 페이지 만들기: [[7]](https://myun9-cloud.tistory.com/24)
 """)
-
----
-
-아직 계정을 만들지 않으셨다면, 지금 바로 가입해서 더 많은 재미있는 기능들을 만나보세요! 🚀
