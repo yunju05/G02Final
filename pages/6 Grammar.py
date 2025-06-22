@@ -2,6 +2,9 @@ import streamlit as st
 
 st.title("Grammar")
 st.header("🧠 What is Passive Voice?")
+
+youtube_url = "https://youtu.be/W1_IRU6zx9g?si=THh2dBfLriBgkPeA"
+st.video(youtube_url)
 st.subheader("📌 Definition")
 st.markdown("""
 Passive voice is used when the subject **receives** the action instead of doing it.
