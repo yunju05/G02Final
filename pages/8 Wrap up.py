@@ -46,13 +46,22 @@ def quiz():
             st.session_state.clear()
         return
 
-    # 현재 문제 설정
+    # 다음 질문 바로 설정 (Next 버튼 클릭했을 때)
+    if "go_next" in st.session_state and st.session_state.go_next:
+        if st.session_state.remaining_questions:
+            st.session_state.current_question = st.session_state.remaining_questions.pop()
+            st.session_state.answered = False
+            st.session_state.feedback = ""
+            st.session_state.user_answer = None
+        else:
+            st.session_state.quiz_done = True
+        st.session_state.go_next = False  # 플래그 초기화
+
+    # 현재 질문 설정
     if st.session_state.current_question is None and st.session_state.remaining_questions:
         st.session_state.current_question = st.session_state.remaining_questions.pop()
-        st.session_state.answered = False
-        st.session_state.feedback = ""
-        st.session_state.user_answer = None
 
+    # 문제 표시
     q = st.session_state.current_question
     st.write(f"Question: {q['question']}")
 
@@ -72,16 +81,11 @@ def quiz():
     if st.session_state.feedback:
         st.info(st.session_state.feedback)
 
-    # 다음 문제로 이동
+    # 다음 문제 버튼 (클릭 시 플래그를 설정하여 바로 다음 질문 로드)
     if st.session_state.answered:
-        if st.button("Next Question", key="next"):
-            if st.session_state.remaining_questions:
-                st.session_state.current_question = None
-                st.session_state.answered = False
-                st.session_state.feedback = ""
-                st.session_state.user_answer = None
-            else:
-                st.session_state.quiz_done = True
+        if st.button("Next Question"):
+            st.session_state.go_next = True
+            st.experimental_rerun()  # 즉시 rerun으로 다음 문제 반영
 
 if __name__ == "__main__":
     quiz()
