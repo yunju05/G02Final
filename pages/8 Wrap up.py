@@ -30,61 +30,49 @@ def quiz():
     st.title("⭕✖️ Quiz on the Story")
 
     # 초기 상태 설정
-    if "remaining_questions" not in st.session_state:
-        st.session_state.remaining_questions = random.sample(questions_data, len(questions_data))
+    if "shuffled_questions" not in st.session_state:
+        st.session_state.shuffled_questions = random.sample(questions_data, len(questions_data))
+        st.session_state.question_index = 0
         st.session_state.score = 0
-        st.session_state.current_question = None
-        st.session_state.quiz_done = False
         st.session_state.answered = False
         st.session_state.feedback = ""
         st.session_state.user_answer = None
-        st.session_state.question_index = 0  # 새로 추가됨
+        st.session_state.quiz_done = False
 
-    # 퀴즈 완료 처리
+    # 퀴즈 종료 처리
     if st.session_state.quiz_done:
         st.success(f"✅ Quiz Complete! Your score: {st.session_state.score}/{len(questions_data)}")
         if st.button("Restart Quiz"):
             st.session_state.clear()
         return
 
-    # 다음 질문 바로 설정
-    if st.session_state.current_question is None:
-        if st.session_state.question_index < len(questions_data):
-            st.session_state.current_question = st.session_state.remaining_questions[st.session_state.question_index]
-        else:
-            st.session_state.quiz_done = True
-            return
+    # 현재 질문
+    current_q = st.session_state.shuffled_questions[st.session_state.question_index]
+    st.write(f"Question {st.session_state.question_index + 1}: {current_q['question']}")
 
-    q = st.session_state.current_question
-    st.write(f"Question: {q['question']}")
-
-    st.session_state.user_answer = st.radio("Choose one:", ("O", "X"), key=f"answer_{st.session_state.question_index}")
-
-    # 정답 제출
+    # 사용자 선택
     if not st.session_state.answered:
+        st.session_state.user_answer = st.radio("Choose one:", ("O", "X"), key=f"q_{st.session_state.question_index}")
         if st.button("Submit Answer"):
-            if st.session_state.user_answer == q["answer"]:
+            st.session_state.answered = True
+            if st.session_state.user_answer == current_q["answer"]:
                 st.session_state.score += 1
                 st.session_state.feedback = "✅ Correct!"
             else:
-                st.session_state.feedback = f"❌ Wrong! The correct answer was '{q['answer']}'."
-            st.session_state.answered = True
+                st.session_state.feedback = f"❌ Wrong! The correct answer was '{current_q['answer']}'."
 
-    # 피드백 표시
-    if st.session_state.feedback:
-        st.info(st.session_state.feedback)
-
-    # 다음 문제로 이동
+    # 피드백 및 다음 버튼
     if st.session_state.answered:
+        st.info(st.session_state.feedback)
         if st.button("Next Question"):
             st.session_state.question_index += 1
-            if st.session_state.question_index < len(questions_data):
-                st.session_state.current_question = None
+            if st.session_state.question_index >= len(st.session_state.shuffled_questions):
+                st.session_state.quiz_done = True
+            else:
+                # 다음 문제로 넘어갈 준비
                 st.session_state.answered = False
                 st.session_state.feedback = ""
                 st.session_state.user_answer = None
-            else:
-                st.session_state.quiz_done = True
 
 if __name__ == "__main__":
     quiz()
