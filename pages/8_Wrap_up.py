@@ -15,6 +15,11 @@ if "q_index" not in st.session_state:
 if "user_answers" not in st.session_state:
     st.session_state.user_answers = []
 
+# 버튼 콜백 함수
+def submit_answer(answer):
+    st.session_state.user_answers.append(answer)
+    st.session_state.q_index += 1
+
 st.title("🌲 Whispering Woods OX Quiz 🌲")
 
 # 퀴즈 진행
@@ -25,15 +30,10 @@ if st.session_state.q_index < len(questions_data):
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("O"):
-            st.session_state.user_answers.append("O")
-            st.session_state.q_index += 1
-            st.experimental_rerun()  # ✅ 버튼 내부에서만 실행됨
+        st.button("O", on_click=submit_answer, args=("O",), key=f"O_{st.session_state.q_index}")
     with col2:
-        if st.button("X"):
-            st.session_state.user_answers.append("X")
-            st.session_state.q_index += 1
-            st.experimental_rerun()
+        st.button("X", on_click=submit_answer, args=("X",), key=f"X_{st.session_state.q_index}")
+
 else:
     st.subheader("🎉 Quiz Complete!")
     score = 0
