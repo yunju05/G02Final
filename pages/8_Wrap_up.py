@@ -1,5 +1,6 @@
 import streamlit as st
 
+# 문제 데이터
 questions_data = [
     {"question": "Leo and his friends decided to explore the Whispering Woods because they were known for their beautiful scenery.", "answer": "X"},
     {"question": "The Whispering Woods were avoided by locals due to the belief that they were bewitched.", "answer": "O"},
@@ -9,13 +10,14 @@ questions_data = [
 ]
 
 # 상태 초기화
-if 'q_index' not in st.session_state:
+if "q_index" not in st.session_state:
     st.session_state.q_index = 0
-if 'user_answers' not in st.session_state:
+if "user_answers" not in st.session_state:
     st.session_state.user_answers = []
 
 st.title("🌲 Whispering Woods OX Quiz 🌲")
 
+# 퀴즈 진행
 if st.session_state.q_index < len(questions_data):
     q = questions_data[st.session_state.q_index]
     st.write(f"**Question {st.session_state.q_index + 1} of {len(questions_data)}**")
@@ -26,7 +28,7 @@ if st.session_state.q_index < len(questions_data):
         if st.button("O"):
             st.session_state.user_answers.append("O")
             st.session_state.q_index += 1
-            st.experimental_rerun()  # ✅ 버튼 이벤트 안에서만 실행
+            st.experimental_rerun()  # ✅ 버튼 내부에서만 실행됨
     with col2:
         if st.button("X"):
             st.session_state.user_answers.append("X")
@@ -36,14 +38,14 @@ else:
     st.subheader("🎉 Quiz Complete!")
     score = 0
     for i, q in enumerate(questions_data):
-        user_answer = st.session_state.user_answers[i]
-        correct_answer = q["answer"]
-        result = "✅ Correct" if user_answer == correct_answer else "❌ Incorrect"
-        if user_answer == correct_answer:
+        user = st.session_state.user_answers[i]
+        correct = q["answer"]
+        result = "✅ Correct" if user == correct else "❌ Incorrect"
+        if user == correct:
             score += 1
         st.markdown(
             f"""**Q{i+1}: {q['question']}**  
-Your answer: {user_answer} | Correct answer: {correct_answer} → {result}"""
+Your answer: {user} | Correct answer: {correct} → {result}"""
         )
 
     st.success(f"Total Score: {score} / {len(questions_data)}")
