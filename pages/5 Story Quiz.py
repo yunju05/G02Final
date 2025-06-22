@@ -78,7 +78,7 @@ def prepare_new_question():
     st.session_state.shuffled_words = random.sample(selected, len(selected))
     st.session_state.selected_words = []
     st.session_state.used_words = []
-    st.session_state.feedback_shown = Fals
+    st.session_state.feedback_shown = False
 
 def play_tts():
     sentence = ' '.join(sentences[st.session_state.current_index])
