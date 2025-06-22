@@ -1,12 +1,11 @@
 import streamlit as st
 
 st.title("Grammar")
-
-    st.header("🧠 What is Passive Voice?")
-    st.subheader("📌 Definition")
-    st.markdown("""
-    Passive voice is used when the subject **receives** the action instead of doing it.
-    """)
+st.header("🧠 What is Passive Voice?")
+st.subheader("📌 Definition")
+st.markdown("""
+Passive voice is used when the subject **receives** the action instead of doing it.
+""")
 
     st.subheader("🔧 Structure")
     st.markdown("""
