@@ -15,6 +15,16 @@ sentences = [
     ["They", "left", "the", "woods", "wiser", ",", "with", "a", "deeper", "respect", "for", "nature", "and", "its", "untold", "stories", ",", "ready", "to", "advocate", "for", "its", "preservation"]
 ]
 
+translations = [
+    "리오와 그의 친구들은 속삭이는 숲으로 이어지는 길을 발견했다.",
+    "현지인들은 그 숲이 마법에 걸렸다고 해서 피했지만, 모험심 강한 십대들은 탐험을 멈추지 않았다.",
+    "그들이 숲 속으로 더 깊이 들어가자, 나무들이 속삭이기 시작했다.",
+    "각 나무는 오래전의 전쟁과 이별 이야기를 들려주었다.",
+    "나무들은 과거를 잊지 말고 자연을 소중히 하라고 경고했다.",
+    "그 이야기에 감동한 친구들은 숲을 보호하고 이야기를 전하기로 약속했다.",
+    "그들은 자연과 그것의 숨겨진 이야기들에 대한 깊은 존경심을 가지고 숲을 떠났다."
+]
+
 # Hard 모드용 핵심 단어 인덱스
 important_indices_hard = [
     [6, 7, 10, 11, 17, 18, 19],
@@ -60,11 +70,16 @@ def start_quiz():
 
 def prepare_new_question():
     sentence = sentences[st.session_state.current_index]
-    st.session_state.shuffled_words = random.sample(sentence, len(sentence))  # 전체 문장 섞기
+    if st.session_state.difficulty == "Easy":
+        indices = get_current_indices()[st.session_state.current_index]
+        selected = [sentence[i] for i in indices]
+    else:
+        selected = sentence
+    st.session_state.shuffled_words = random.sample(selected, len(selected))
     st.session_state.selected_words = []
     st.session_state.used_words = []
-    st.session_state.feedback_shown = False
-    
+    st.session_state.feedback_shown = Fals
+
 def play_tts():
     sentence = ' '.join(sentences[st.session_state.current_index])
     tts = gTTS(sentence)
@@ -86,7 +101,11 @@ def clear_selection():
 def submit_answer():
     if st.session_state.feedback_shown:
         return
-    correct = sentences[st.session_state.current_index]
+    sentence = sentences[st.session_state.current_index]
+    if st.session_state.difficulty == "Easy":
+        correct = [sentence[i] for i in get_current_indices()[st.session_state.current_index]]
+    else:
+        correct = sentence
     is_correct = st.session_state.selected_words == correct
     if is_correct:
         st.success("✅ Correct sentence structure!")
@@ -102,7 +121,11 @@ def submit_answer():
     st.session_state.feedback_shown = True
     
 def show_answer():
-    correct = [sentences[st.session_state.current_index][i] for i in get_current_indices()[st.session_state.current_index]]
+    sentence = sentences[st.session_state.current_index]
+    if st.session_state.difficulty == "Easy":
+        correct = [sentence[i] for i in get_current_indices()[st.session_state.current_index]]
+    else:
+        correct = sentence
     st.info("✅ Answer: " + ' '.join(correct))
     st.session_state.result_data.append({
         "Question": st.session_state.current_index + 1,
@@ -131,18 +154,19 @@ if not st.session_state.quiz_started:
         start_quiz()
 else:
     st.subheader(f"Question {st.session_state.current_index + 1} ({st.session_state.difficulty})")
-    st.audio(play_tts(), format="audio/mp3")
 
-    current_sentence = sentences[st.session_state.current_index]
+    if st.session_state.difficulty == "Hard":
+        st.markdown("### 📘 Korean Translation (힌트)")
+        st.info(translations[st.session_state.current_index])
 
     st.markdown("### ✍️ Arrange the words to form the correct sentence:")
     st.markdown("**Your Sentence:** " + ' '.join(st.session_state.selected_words))
-    
+
     st.markdown("### 🔡 Select the key words:")
-    cols = st.columns(5)
+    cols = st.columns(6)
     for idx, word in enumerate(st.session_state.shuffled_words):
         if word not in st.session_state.used_words:
-            if cols[idx % 5].button(word, key=f"{word}_{idx}"):
+            if cols[idx % 6].button(word, key=f"{word}_{idx}"):
                 select_word(word)
 
     st.markdown("**Selected:** " + ' '.join(st.session_state.selected_words))
@@ -157,6 +181,10 @@ else:
         st.button("👀 Show Answer", on_click=show_answer, disabled=st.session_state.feedback_shown)
     with col4:
         st.button("⏭️ Next", on_click=next_problem, disabled=not st.session_state.feedback_shown)
+
+    with st.expander("🔊 Need to hear the sentence? (Click to expand)"):
+        if st.button("▶️ Play Sentence Audio"):
+            st.audio(play_tts(), format="audio/mp3")
 
 if not st.session_state.quiz_started and st.session_state.result_data:
     df = pd.DataFrame(st.session_state.result_data)
