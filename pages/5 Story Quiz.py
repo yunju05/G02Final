@@ -4,7 +4,7 @@ from gtts import gTTS
 import os
 import pandas as pd
 
-# 문장 리스트 및 번역
+# 데이터
 sentences = [
     ["Leo", "and", "his", "friends", "discovered", "a", "path", "leading", "to", "the", "Whispering", "Woods", ",", "known", "for", "the", "trees", "that", "could", "talk"],
     ["The", "locals", "avoided", "it,", "saying", "it", "was", "bewitched", ",", "but", "the", "adventurous", "teens", "couldn’t", "resist", "exploring"],
@@ -25,174 +25,149 @@ translations = [
     "그들은 자연과 그것의 숨겨진 이야기들에 대한 깊은 존경심을 가지고 숲을 떠났다."
 ]
 
-important_indices_hard = [
-    [6, 7, 10, 11, 17, 18, 19],
-    [2, 6, 7, 13, 14, 15],
-    [2, 3, 10, 11],
-    [2, 3, 9, 10, 12, 13],
-    [2, 3, 4, 7, 8, 9],
-    [1, 2, 3, 8, 9, 10, 14],
-    [4, 8, 9, 13, 14, 15, 17, 18, 22]
-]
-
-important_indices_easy = [
-    [4], [2], [2], [2], [3], [7], [4]
-]
-
-# 🔧 상태 초기화
-defaults = {
-    'current_index': 0,
-    'selected_words': [],
-    'used_words': [],
-    'quiz_started': False,
-    'shuffled_words': [],
-    'score': 0,
-    'feedback_shown': False,
-    'result_data': [],
-    'difficulty': 'Hard'  # 기본값 설정
+important_indices = {
+    "Easy": [
+        [4], [2], [2], [2], [3], [7], [4]
+    ],
+    "Hard": [
+        [6, 7, 10, 11, 17, 18, 19],
+        [2, 6, 7, 13, 14, 15],
+        [2, 3, 10, 11],
+        [2, 3, 9, 10, 12, 13],
+        [2, 3, 4, 7, 8, 9],
+        [1, 2, 3, 8, 9, 10, 14],
+        [4, 8, 9, 13, 14, 15, 17, 18, 22]
+    ]
 }
-for key, value in defaults.items():
-    if key not in st.session_state:
-        st.session_state[key] = value
 
-# 추가 안전장치 (예방적 중복 방지)
-if 'difficulty' not in st.session_state:
-    st.session_state.difficulty = 'Hard'
+# 공통 함수 정의
+def get_key(mode, name):
+    return f"{mode.lower()}_{name}"
 
-def get_current_indices():
-    return important_indices_easy if st.session_state.difficulty == "Easy" else important_indices_hard
+def init_state(mode):
+    for key, value in {
+        'current_index': 0,
+        'selected_words': [],
+        'used_words': [],
+        'quiz_started': False,
+        'shuffled_words': [],
+        'score': 0,
+        'feedback_shown': False,
+        'result_data': []
+    }.items():
+        session_key = get_key(mode, key)
+        if session_key not in st.session_state:
+            st.session_state[session_key] = value
 
-def start_quiz():
-    st.session_state.quiz_started = True
-    st.session_state.current_index = 0
-    st.session_state.score = 0
-    st.session_state.result_data = []
-    prepare_new_question()
+def prepare_new_question(mode):
+    idx = st.session_state[get_key(mode, 'current_index')]
+    sentence = sentences[idx]
+    indices = important_indices[mode][idx]
+    selected = sentence if mode == "Hard" else [sentence[i] for i in indices]
+    st.session_state[get_key(mode, 'shuffled_words')] = random.sample(selected, len(selected))
+    st.session_state[get_key(mode, 'selected_words')] = []
+    st.session_state[get_key(mode, 'used_words')] = []
+    st.session_state[get_key(mode, 'feedback_shown')] = False
 
-def prepare_new_question():
-    sentence = sentences[st.session_state.current_index]
-    if st.session_state.difficulty == "Easy":
-        indices = get_current_indices()[st.session_state.current_index]
-        selected = [sentence[i] for i in indices]
-    else:
-        selected = sentence
-    st.session_state.shuffled_words = random.sample(selected, len(selected))
-    st.session_state.selected_words = []
-    st.session_state.used_words = []
-    st.session_state.feedback_shown = False
-
-def play_tts():
-    sentence = ' '.join(sentences[st.session_state.current_index])
-    tts = gTTS(sentence)
+def play_tts(sentence):
+    tts = gTTS(' '.join(sentence))
     tts.save("tts.mp3")
-    with open("tts.mp3", "rb") as f:
-        audio = f.read()
+    audio = open("tts.mp3", "rb").read()
     os.remove("tts.mp3")
     return audio
 
-def select_word(word):
-    if word not in st.session_state.used_words:
-        st.session_state.selected_words.append(word)
-        st.session_state.used_words.append(word)
-
-def clear_selection():
-    st.session_state.selected_words = []
-    st.session_state.used_words = []
-
-def submit_answer():
-    if st.session_state.feedback_shown:
+def submit_answer(mode):
+    if st.session_state[get_key(mode, 'feedback_shown')]:
         return
-    sentence = sentences[st.session_state.current_index]
-    if st.session_state.difficulty == "Easy":
-        correct = [sentence[i] for i in get_current_indices()[st.session_state.current_index]]
-    else:
-        correct = sentence
-    is_correct = st.session_state.selected_words == correct
+    idx = st.session_state[get_key(mode, 'current_index')]
+    sentence = sentences[idx]
+    correct = sentence if mode == "Hard" else [sentence[i] for i in important_indices[mode][idx]]
+    selected = st.session_state[get_key(mode, 'selected_words')]
+    is_correct = selected == correct
     if is_correct:
-        st.success("✅ Correct sentence structure!")
-        st.session_state.score += 1
+        st.success("✅ Correct!")
+        st.session_state[get_key(mode, 'score')] += 1
     else:
-        st.warning("❌ Incorrect sentence structure.")
-    st.session_state.result_data.append({
-        "Question": st.session_state.current_index + 1,
+        st.warning("❌ Incorrect.")
+    st.session_state[get_key(mode, 'result_data')].append({
+        "Question": idx + 1,
         "Correct": is_correct,
-        "Your Answer": ' '.join(st.session_state.selected_words),
+        "Your Answer": ' '.join(selected),
         "Answer": ' '.join(correct)
     })
-    st.session_state.feedback_shown = True
+    st.session_state[get_key(mode, 'feedback_shown')] = True
 
-def show_answer():
-    if 'difficulty' not in st.session_state:
-        st.warning("⚠️ Please start the quiz first.")
-        return
-    sentence = sentences[st.session_state.current_index]
-    if st.session_state.difficulty == "Easy":
-        correct = [sentence[i] for i in get_current_indices()[st.session_state.current_index]]
+def next_problem(mode):
+    if st.session_state[get_key(mode, 'current_index')] < len(sentences) - 1:
+        st.session_state[get_key(mode, 'current_index')] += 1
+        prepare_new_question(mode)
     else:
-        correct = sentence
-    st.info("✅ Answer: " + ' '.join(correct))
-    st.session_state.result_data.append({
-        "Question": st.session_state.current_index + 1,
-        "Correct": False,
-        "Your Answer": ' '.join(st.session_state.selected_words),
-        "Answer": ' '.join(correct)
-    })
-    st.session_state.feedback_shown = True
-
-def next_problem():
-    if st.session_state.current_index < len(sentences) - 1:
-        st.session_state.current_index += 1
-        prepare_new_question()
-    else:
-        st.success(f"🎉 Quiz Complete! Final Score: {st.session_state.score} / {len(sentences)}")
+        st.success(f"🎉 Quiz Complete! Final Score: {st.session_state[get_key(mode, 'score')]} / {len(sentences)}")
         st.balloons()
-        st.session_state.quiz_started = False
+        st.session_state[get_key(mode, 'quiz_started')] = False
 
-# 📋 UI 시작
+# 탭 UI
 st.title("🧠 Sentence Structure Quiz")
+tabs = st.tabs(["🟢 Easy Mode", "🔴 Hard Mode"])
 
-if not st.session_state.quiz_started:
-    st.selectbox("🧩 Choose difficulty level:", ["Easy", "Hard"], key='difficulty')
-    st.write("Choose the correct words to complete the story sentences based on the difficulty.")
-    if st.button("Start Quiz"):
-        start_quiz()
-else:
-    st.subheader(f"Question {st.session_state.current_index + 1} ({st.session_state.difficulty})")
+for i, mode in enumerate(["Easy", "Hard"]):
+    with tabs[i]:
+        init_state(mode)
+        quiz_started = st.session_state[get_key(mode, 'quiz_started')]
 
-    if st.session_state.difficulty == "Hard":
-        st.markdown("### 📘 Korean Translation")
-        st.info(translations[st.session_state.current_index])
+        if not quiz_started:
+            if st.button(f"Start {mode} Quiz", key=f"start_{mode}"):
+                st.session_state[get_key(mode, 'quiz_started')] = True
+                st.session_state[get_key(mode, 'current_index')] = 0
+                st.session_state[get_key(mode, 'score')] = 0
+                st.session_state[get_key(mode, 'result_data')] = []
+                prepare_new_question(mode)
+        else:
+            idx = st.session_state[get_key(mode, 'current_index')]
+            sentence = sentences[idx]
 
-    st.markdown("### ✍️ Arrange the words to form the correct sentence:")
-    st.markdown("**Your Sentence:** " + ' '.join(st.session_state.selected_words))
+            st.subheader(f"Question {idx + 1} ({mode})")
 
-    st.markdown("### 🔡 Select the key words:")
-    cols = st.columns(6)
-    for idx, word in enumerate(st.session_state.shuffled_words):
-        if word not in st.session_state.used_words:
-            if cols[idx % 6].button(word, key=f"{word}_{idx}"):
-                select_word(word)
+            if mode == "Hard":
+                st.markdown("### 📘 Korean Translation")
+                st.info(translations[idx])
 
-    st.markdown("**Selected:** " + ' '.join(st.session_state.selected_words))
-    st.markdown(f"**Score:** {st.session_state.score} / {len(sentences)}")
+            st.markdown("### ✍️ Arrange the words to form the correct sentence:")
+            st.markdown("**Your Sentence:** " + ' '.join(st.session_state[get_key(mode, 'selected_words')]))
 
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.button("✅ Submit", on_click=submit_answer)
-    with col2:
-        st.button("🔄 Clear", on_click=clear_selection)
-    with col3:
-        st.button("👀 Show Answer", on_click=show_answer, disabled=st.session_state.feedback_shown)
-    with col4:
-        st.button("⏭️ Next", on_click=next_problem, disabled=not st.session_state.feedback_shown)
+            st.markdown("### 🔡 Select the key words:")
+            cols = st.columns(6)
+            for j, word in enumerate(st.session_state[get_key(mode, 'shuffled_words')]):
+                if word not in st.session_state[get_key(mode, 'used_words')]:
+                    if cols[j % 6].button(word, key=f"{mode}_{word}_{j}"):
+                        st.session_state[get_key(mode, 'selected_words')].append(word)
+                        st.session_state[get_key(mode, 'used_words')].append(word)
 
-    with st.expander("🔊 Need to hear the sentence? (Click to expand)"):
-        if st.button("▶️ Play Sentence Audio"):
-            st.audio(play_tts(), format="audio/mp3")
+            st.markdown(f"**Score:** {st.session_state[get_key(mode, 'score')]} / {len(sentences)}")
 
-if not st.session_state.quiz_started and st.session_state.result_data:
-    df = pd.DataFrame(st.session_state.result_data)
-    st.subheader("📊 Results Summary")
-    st.dataframe(df)
-    csv = df.to_csv(index=False).encode('utf-8-sig')
-    st.download_button("Download CSV", data=csv, file_name="quiz_results.csv", mime="text/csv")
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.button("✅ Submit", on_click=submit_answer, args=(mode,))
+            with col2:
+                if st.button("🔄 Clear"):
+                    st.session_state[get_key(mode, 'selected_words')] = []
+                    st.session_state[get_key(mode, 'used_words')] = []
+            with col3:
+                if st.button("👀 Show Answer", disabled=st.session_state[get_key(mode, 'feedback_shown')]):
+                    correct = sentence if mode == "Hard" else [sentence[i] for i in important_indices[mode][idx]]
+                    st.info("✅ Answer: " + ' '.join(correct))
+                    st.session_state[get_key(mode, 'feedback_shown')] = True
+            with col4:
+                st.button("⏭️ Next", on_click=next_problem, args=(mode,), disabled=not st.session_state[get_key(mode, 'feedback_shown')])
+
+            with st.expander("🔊 Need to hear the sentence?"):
+                if st.button("▶️ Play Sentence Audio", key=f"{mode}_tts"):
+                    st.audio(play_tts(sentence), format="audio/mp3")
+
+        # 결과 요약
+        if not st.session_state[get_key(mode, 'quiz_started')] and st.session_state[get_key(mode, 'result_data')]:
+            st.subheader("📊 Results Summary")
+            df = pd.DataFrame(st.session_state[get_key(mode, 'result_data')])
+            st.dataframe(df)
+            csv = df.to_csv(index=False).encode('utf-8-sig')
+            st.download_button("Download CSV", data=csv, file_name=f"{mode.lower()}_quiz_results.csv", mime="text/csv")
