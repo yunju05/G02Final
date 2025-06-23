@@ -181,15 +181,8 @@ with tab5:
         caption="🧩 Crossword Puzzle"
     
     )
-    response = requests.get(image_url)
-    if response.status_code == 200:
-        st.download_botton(
-            label="⬇️ Download Puzzle Image",
-            data=response.content,
-            file_name="crossword_puzzle.png",
-            mime="image/png"
-        )
-        
+    st.write("you can download the image by right-clicking with your mouse or touchpad")
+
     st.subheader("📝 Definitions")
 
     st.markdown("""
