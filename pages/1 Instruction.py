@@ -9,7 +9,7 @@ st.markdown("""
 - **Story Quiz**: Check your understanding of the story with a quiz
 - **Grammar**: Learn the grammar used in the story
 - **Grammar Quiz**: Practice using the grammar you just learne
-- **Wrap Up**: Check what you learned today with an O/X quiz 444444
+- **Wrap Up**: Check what you learned today with an O/X quiz 
 
 
 
@@ -20,9 +20,20 @@ st.markdown("""
 
 2. **Grammar**  
    - Practice forming grammatically correct sentences through word arrangement tasks.
-   - Key grammars for this class: Passive voice, Gerund
+   - Key grammars for this class: Passive voice 
 
 3. **Listening**  
    - Improve listening skills by matching spoken sentences with correct word order.
+
+
+
+
+###  🎊Learning achievement
+
+- You can learn expressions and vocabulary from the story through 'Self-study'. You can also practice spelling and solve crossword puzzles using English-to-English definitions.
+- You can learn the passive voice through 'Grammar and Grammar Quiz'. We provide detailed instructions and videos to help you understand the passive voice.
+- You can enhance your listening skills through 'Story and Story Quiz'. We provide story audio along with the matching text.
+
+
 
 """)
