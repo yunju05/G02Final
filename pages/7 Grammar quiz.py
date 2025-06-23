@@ -4,9 +4,6 @@ import random
 # UI 제목
 st.title("🔠 Passive Voice Word Order Quiz")
 
-# 📘 Instructions
-st.title("🔠 Passive Voice Word Order Quiz")
-
 st.markdown("""
 ### 📘 How to Play
 
