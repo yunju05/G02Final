@@ -178,7 +178,7 @@ with tab5:
     # 퍼즐 이미지 불러오기 (문제 이미지)
     st.image(
         "https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C.png", 
-        caption: "🧩 Crossword Puzzle"
+        caption= "🧩 Crossword Puzzle"
     )
 
 
