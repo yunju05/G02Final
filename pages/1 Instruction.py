@@ -35,5 +35,11 @@ st.markdown("""
 - You can enhance your listening skills through 'Story and Story Quiz'. We provide story audio along with the matching text.
 
 
+### 📒 Story:Group Activity
+
+1. First, in Listen and Read, you can listen to the story audio and read along with the text.
+2. Second, in Drawing Canvas, you can listen to a short part of the story. Based on what you heard, draw a four-panel comic using the canvas.
+3. Third, you can share your drawings on Padlet, and we will talk about each other's four-panel comics.
+
 
 """)
