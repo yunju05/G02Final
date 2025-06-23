@@ -4,7 +4,7 @@ from gtts import gTTS
 import os
 import pandas as pd
 
-# 문장 리스트 및 인덱스
+# 문장 리스트 및 번역
 sentences = [
     ["Leo", "and", "his", "friends", "discovered", "a", "path", "leading", "to", "the", "Whispering", "Woods", ",", "known", "for", "the", "trees", "that", "could", "talk"],
     ["The", "locals", "avoided", "it,", "saying", "it", "was", "bewitched", ",", "but", "the", "adventurous", "teens", "couldn’t", "resist", "exploring"],
@@ -25,7 +25,6 @@ translations = [
     "그들은 자연과 그것의 숨겨진 이야기들에 대한 깊은 존경심을 가지고 숲을 떠났다."
 ]
 
-# Hard 모드용 핵심 단어 인덱스
 important_indices_hard = [
     [6, 7, 10, 11, 17, 18, 19],
     [2, 6, 7, 13, 14, 15],
@@ -36,12 +35,11 @@ important_indices_hard = [
     [4, 8, 9, 13, 14, 15, 17, 18, 22]
 ]
 
-# Easy 모드용 더 짧은 핵심 단어 인덱스 (주로 동사 위주)
 important_indices_easy = [
     [4], [2], [2], [2], [3], [7], [4]
 ]
 
-# 상태 초기화
+# 🔧 상태 초기화
 defaults = {
     'current_index': 0,
     'selected_words': [],
@@ -51,16 +49,19 @@ defaults = {
     'score': 0,
     'feedback_shown': False,
     'result_data': [],
-    'difficulty': 'Hard'
+    'difficulty': 'Hard'  # 기본값 설정
 }
 for key, value in defaults.items():
     if key not in st.session_state:
         st.session_state[key] = value
 
+# 추가 안전장치 (예방적 중복 방지)
+if 'difficulty' not in st.session_state:
+    st.session_state.difficulty = 'Hard'
+
 def get_current_indices():
     return important_indices_easy if st.session_state.difficulty == "Easy" else important_indices_hard
 
-# 퀴즈 시작
 def start_quiz():
     st.session_state.quiz_started = True
     st.session_state.current_index = 0
@@ -119,8 +120,11 @@ def submit_answer():
         "Answer": ' '.join(correct)
     })
     st.session_state.feedback_shown = True
-    
+
 def show_answer():
+    if 'difficulty' not in st.session_state:
+        st.warning("⚠️ Please start the quiz first.")
+        return
     sentence = sentences[st.session_state.current_index]
     if st.session_state.difficulty == "Easy":
         correct = [sentence[i] for i in get_current_indices()[st.session_state.current_index]]
@@ -144,7 +148,7 @@ def next_problem():
         st.balloons()
         st.session_state.quiz_started = False
 
-# UI
+# 📋 UI 시작
 st.title("🧠 Sentence Structure Quiz")
 
 if not st.session_state.quiz_started:
@@ -156,7 +160,7 @@ else:
     st.subheader(f"Question {st.session_state.current_index + 1} ({st.session_state.difficulty})")
 
     if st.session_state.difficulty == "Hard":
-        st.markdown("### 📘 Korean Translation ")
+        st.markdown("### 📘 Korean Translation")
         st.info(translations[st.session_state.current_index])
 
     st.markdown("### ✍️ Arrange the words to form the correct sentence:")
