@@ -4,6 +4,7 @@ import numpy as np
 from gtts import gTTS
 from io import BytesIO
 import random
+import requests
 
 st.write("⭐ Vocabulary learning")
 
