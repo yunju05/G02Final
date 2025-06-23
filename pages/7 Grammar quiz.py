@@ -1,6 +1,49 @@
 import streamlit as st
 import random
 
+with st.expander("📘 How to Play / Instructions (Click to Expand)"):
+    st.markdown("""
+    ## 🧑‍🏫 Passive Voice Word Order Quiz Guide
+
+    This app helps you **practice changing active voice sentences into passive voice** by arranging shuffled words in the correct order.
+
+    ---
+
+    ### 🟩 Instructions
+
+    1. **Read the active sentence** at the top.  
+       Example: `Tom eats an apple.`
+
+    2. **Select the words** from the buttons below to form the correct passive sentence.  
+       Example: `An apple is eaten by Tom`
+
+    3. The words you select will appear under **📝 Your Sentence**.
+
+    4. Use the buttons below to control your progress:
+       - ✅ **Submit**: Check if your sentence is correct.
+       - 🔄 **Clear**: Reset your selection and try again.
+       - ⏭️ **Next**: Move to the next question *only after a correct answer*.
+
+    5. Your current score is displayed under **📊 Score**.
+
+    ---
+
+    ### 📌 Notes
+
+    - You can **only select each word once**.
+    - You **must match the exact word order** to get the answer right.
+    - You can’t move to the next question **unless your answer is correct**.
+
+    ---
+
+    ### 🎯 Learning Goal
+
+    This quiz is designed to help you:
+    - Understand how to construct passive voice sentences.
+    - Practice English grammar in a fun and interactive way!
+    """)
+
+
 # 문제 은행
 quiz_bank = [
     {
