@@ -1,15 +1,19 @@
 import streamlit as st
 import random
 
+# UI 제목
+st.title("🔠 Passive Voice Word Order Quiz")
+
+# 📘 Instructions with expander
 with st.expander("📘 How to Play / Instructions (Click to Expand)"):
     st.markdown("""
-    ## 🧑‍🏫 Passive Voice Word Order Quiz Guide
+    ### 🧑‍🏫 Passive Voice Word Order Quiz Guide
 
     This app helps you **practice changing active voice sentences into passive voice** by arranging shuffled words in the correct order.
 
     ---
 
-    ### 🟩 Instructions
+    #### 🟩 Instructions
 
     1. **Read the active sentence** at the top.  
        Example: `Tom eats an apple.`
@@ -28,7 +32,7 @@ with st.expander("📘 How to Play / Instructions (Click to Expand)"):
 
     ---
 
-    ### 📌 Notes
+    #### 📌 Notes
 
     - You can **only select each word once**.
     - You **must match the exact word order** to get the answer right.
@@ -36,13 +40,12 @@ with st.expander("📘 How to Play / Instructions (Click to Expand)"):
 
     ---
 
-    ### 🎯 Learning Goal
+    #### 🎯 Learning Goal
 
     This quiz is designed to help you:
     - Understand how to construct passive voice sentences.
     - Practice English grammar in a fun and interactive way!
     """)
-
 
 # 문제 은행
 quiz_bank = [
@@ -100,26 +103,27 @@ def select_word(word):
 if not st.session_state.shuffled_words:
     load_question()
 
-# UI
-st.title("🔠 Passive Voice Word Order Quiz")
+# 현재 문제 가져오기
 question = quiz_bank[st.session_state.current_index]
 st.markdown(f"### ✅ Active Sentence:\n`{question['active']}`")
 
 st.markdown("### 🔤 Arrange the Passive Sentence:")
 
-# 선택 UI
+# 단어 선택 버튼
 cols = st.columns(5)
 for idx, word in enumerate(st.session_state.shuffled_words):
     if word not in st.session_state.used_words:
         if cols[idx % 5].button(word, key=f"word_{idx}"):
             select_word(word)
 
-# 선택된 단어 보기
+# 선택한 문장 표시
 st.markdown("**📝 Your Sentence:**")
 st.markdown(" ".join(st.session_state.selected_words) or "`(No words selected yet)`")
 
-# 버튼 조작 영역
+# 버튼 영역
 col1, col2, col3 = st.columns(3)
+
+# Submit
 with col1:
     if st.button("✅ Submit"):
         if st.session_state.selected_words == question["passive"]:
@@ -129,15 +133,21 @@ with col1:
         else:
             st.error("❌ Incorrect. Try again.")
 
+# Clear
 with col2:
     if st.button("🔄 Clear"):
         st.session_state.selected_words = []
         st.session_state.used_words = []
+        st.session_state.feedback_shown = False
 
+# Next
 with col3:
-    if st.button("⏭️ Next") and st.session_state.feedback_shown:
-        st.session_state.current_index = (st.session_state.current_index + 1) % len(quiz_bank)
-        load_question()
+    if st.button("⏭️ Next"):
+        if st.session_state.feedback_shown:
+            st.session_state.current_index = (st.session_state.current_index + 1) % len(quiz_bank)
+            load_question()
+        else:
+            st.warning("⚠️ Please submit the correct answer before moving on.")
 
+# 점수 표시
 st.markdown(f"### 📊 Score: {st.session_state.score} / {len(quiz_bank)}")
-
