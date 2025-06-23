@@ -172,6 +172,7 @@ with tab5:
     st.markdown("""
     Let's solve a crossword puzzle using the words you've learned from the story.  
     Look at the image below and try to guess the words using the definitions provided.
+    You can download the image by right-clicking with your mouth or touchpad.
     """)
 
     # 퍼즐 이미지 불러오기 (문제 이미지)
