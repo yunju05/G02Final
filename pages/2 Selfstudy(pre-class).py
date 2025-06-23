@@ -179,6 +179,14 @@ with tab5:
         "https://github.com/yunju05/G02Final/raw/main/images/%ED%81%AC%EB%A1%9C%EC%8A%A4%EC%9B%8C%EB%93%9C.png", 
         caption="🧩 Crossword Puzzle"
     )
+    response = requests.get(image_url)
+if response.status_code == 200:
+    st.download_button(
+        label="⬇️ Download Puzzle Image",
+        data=response.content,
+        file_name="crossword_puzzle.png",
+        mime="image/png"
+    )
 
     st.subheader("📝 Definitions")
 
