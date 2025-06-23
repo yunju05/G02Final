@@ -40,7 +40,6 @@ important_indices = {
     ]
 }
 
-# 공통 함수 정의
 def get_key(mode, name):
     return f"{mode.lower()}_{name}"
 
@@ -106,7 +105,23 @@ def next_problem(mode):
         st.balloons()
         st.session_state[get_key(mode, 'quiz_started')] = False
 
-# 탭 UI
+def clear_selection(mode):
+    st.session_state[get_key(mode, 'selected_words')] = []
+    st.session_state[get_key(mode, 'used_words')] = []
+
+def show_answer(mode):
+    idx = st.session_state[get_key(mode, 'current_index')]
+    sentence = sentences[idx]
+    correct = sentence if mode == "Hard" else [sentence[i] for i in important_indices[mode][idx]]
+    st.info("✅ Answer: " + ' '.join(correct))
+    st.session_state[get_key(mode, 'feedback_shown')] = True
+    st.session_state[get_key(mode, 'result_data')].append({
+        "Question": idx + 1,
+        "Correct": False,
+        "Your Answer": ' '.join(st.session_state[get_key(mode, 'selected_words')]),
+        "Answer": ' '.join(correct)
+    })
+
 st.title("🧠 Sentence Structure Quiz")
 tabs = st.tabs(["🟢 Easy Mode", "🔴 Hard Mode"])
 
@@ -147,24 +162,18 @@ for i, mode in enumerate(["Easy", "Hard"]):
 
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                st.button("✅ Submit", on_click=submit_answer, args=(mode,))
+                col1.button("✅ Submit", on_click=submit_answer, args=(mode,), key=f"{mode}_submit")
             with col2:
-                if st.button("🔄 Clear"):
-                    st.session_state[get_key(mode, 'selected_words')] = []
-                    st.session_state[get_key(mode, 'used_words')] = []
+                col2.button("🔄 Clear", on_click=lambda: clear_selection(mode), key=f"{mode}_clear")
             with col3:
-                if st.button("👀 Show Answer", disabled=st.session_state[get_key(mode, 'feedback_shown')]):
-                    correct = sentence if mode == "Hard" else [sentence[i] for i in important_indices[mode][idx]]
-                    st.info("✅ Answer: " + ' '.join(correct))
-                    st.session_state[get_key(mode, 'feedback_shown')] = True
+                col3.button("👀 Show Answer", on_click=lambda: show_answer(mode), disabled=st.session_state[get_key(mode, 'feedback_shown')], key=f"{mode}_show")
             with col4:
-                st.button("⏭️ Next", on_click=next_problem, args=(mode,), disabled=not st.session_state[get_key(mode, 'feedback_shown')])
+                col4.button("⏭️ Next", on_click=next_problem, args=(mode,), disabled=not st.session_state[get_key(mode, 'feedback_shown')], key=f"{mode}_next")
 
             with st.expander("🔊 Need to hear the sentence?"):
                 if st.button("▶️ Play Sentence Audio", key=f"{mode}_tts"):
                     st.audio(play_tts(sentence), format="audio/mp3")
 
-        # 결과 요약
         if not st.session_state[get_key(mode, 'quiz_started')] and st.session_state[get_key(mode, 'result_data')]:
             st.subheader("📊 Results Summary")
             df = pd.DataFrame(st.session_state[get_key(mode, 'result_data')])
