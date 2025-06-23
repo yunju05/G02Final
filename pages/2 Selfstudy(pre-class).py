@@ -181,6 +181,7 @@ with tab5:
         caption="🧩 Crossword Puzzle"
     
     )
+    
     st.write("you can download the image by right-clicking with your mouse or touchpad")
 
     st.subheader("📝 Definitions")
