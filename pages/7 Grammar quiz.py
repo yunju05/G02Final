@@ -4,48 +4,36 @@ import random
 # UI 제목
 st.title("🔠 Passive Voice Word Order Quiz")
 
-# 📘 Instructions with expander
-with st.expander("📘 How to Play / Instructions (Click to Expand)"):
-    st.markdown("""
-    ### 🧑‍🏫 Passive Voice Word Order Quiz Guide
+# 📘 Instructions
+st.title("🔠 Passive Voice Word Order Quiz")
 
-    This app helps you **practice changing active voice sentences into passive voice** by arranging shuffled words in the correct order.
+st.markdown("""
+### 📘 How to Play
 
-    ---
+Practice forming passive voice sentences by arranging the shuffled words.
 
-    #### 🟩 Instructions
+**Instructions:**
+1. Read the **active sentence** at the top.  
+   Example: `Tom eats an apple.`
 
-    1. **Read the active sentence** at the top.  
-       Example: `Tom eats an apple.`
+2. Click the words **in the correct order** to form the passive voice.  
+   Example: `An apple is eaten by Tom`
 
-    2. **Select the words** from the buttons below to form the correct passive sentence.  
-       Example: `An apple is eaten by Tom`
+3. Selected words will appear under **📝 Your Sentence**.
 
-    3. The words you select will appear under **📝 Your Sentence**.
+4. Use the buttons below:
+   - ✅ **Submit**: Check your answer.
+   - 🔄 **Clear**: Reset your selection.
+   - ⏭️ **Next**: Move to the next sentence *(only after a correct answer)*.
 
-    4. Use the buttons below to control your progress:
-       - ✅ **Submit**: Check if your sentence is correct.
-       - 🔄 **Clear**: Reset your selection and try again.
-       - ⏭️ **Next**: Move to the next question *only after a correct answer*.
+**Note:**  
+- Each word can be selected **only once**.  
+- You must match the **exact word order** to be correct.
 
-    5. Your current score is displayed under **📊 Score**.
+---
 
-    ---
-
-    #### 📌 Notes
-
-    - You can **only select each word once**.
-    - You **must match the exact word order** to get the answer right.
-    - You can’t move to the next question **unless your answer is correct**.
-
-    ---
-
-    #### 🎯 Learning Goal
-
-    This quiz is designed to help you:
-    - Understand how to construct passive voice sentences.
-    - Practice English grammar in a fun and interactive way!
-    """)
+🎯 *This activity helps you understand passive voice structure and improves your English grammar skills!*
+""")
 
 # 문제 은행
 quiz_bank = [
